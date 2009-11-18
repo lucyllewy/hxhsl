@@ -48,7 +48,7 @@ interface ISignaler<D> {
 	 * dispatcher. The data property of the signal will equal to the data that is passed. The dispatcher property will be equal
 	 * to the dispatcher property of this signaler. If the type parameter is Void, the data should be null.
 	 */
-	public function dispatchSignal(data:D):Void;
+	public function dispatchSignal(?data:D):Void;
 	private function setBubbler(value:IBubbler<D>):IBubbler<D>;
 }
 /**
@@ -105,7 +105,7 @@ class Signaler<D> implements ISignaler<D> {
 	public inline function disconnectFromSlotList():Void {
 		signalerSlotListBridge = new NullSignalerSlotListBridge<D>();
 	}
-	public function dispatchSignal(data:D):Void {
+	public function dispatchSignal(?data:D):Void {
 		dispatchSignalWithDispatcher(data, dispatcher);
 	}
 	public inline function dispatchSignalWithDispatcher(data:D, dispatcher:IDispatcher):Void {

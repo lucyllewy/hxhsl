@@ -15,11 +15,11 @@ class BubblerTester extends TestCase, implements IDispatcher {
 	public var parentSlotList(default, null):ISlotList<TestData>;
 	public function new():Void {
 		super();
-		this.instantiateSignalerWithSlotList("parent", TestData);
-		parentSlotList.createSlot(storeParentSignal);
-		this.instantiateSignalerWithSlotList("child", TestData);
+		this.setupSignalType("parent", TestData);
+		parentSlotList.createRegular(storeParentSignal);
+		this.setupSignalType("child", TestData);
 		childSignaler.bubbler = new FixedBubbler<TestData>(parentSignaler);
-		childSlotList.createSlot(storeChildSignal);
+		childSlotList.createRegular(storeChildSignal);
 	}
 	private function storeChildSignal(signal:Signal<TestData>):Void {
 		childSignalData = signal.data;

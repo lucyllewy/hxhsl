@@ -25,10 +25,10 @@ import org.hsl.slotlist.SlotList;
 class Facade {
 	public function new():Void {
 	}
-	public static function instantiateNullSlotList<D>(dispatcher:IDispatcher, signalType:String, ?signalDataType:Class<D>):Void {
+	public static function setupNullSlotList<D>(dispatcher:IDispatcher, signalType:String, ?signalDataType:Class<D>):Void {
 		setField(dispatcher, signalType, "SlotList", new NullSlotList<D>());
 	}
-	public static function instantiateSignalerWithSlotList<D>(dispatcher:IDispatcher, signalType:String, ?signalDataType:Class<D>):Void {
+	public static function setupSignalType<D>(dispatcher:IDispatcher, signalType:String, ?signalDataType:Class<D>):Void {
 		var signaler:ISignaler<D> = new Signaler<D>(dispatcher);
 		setField(dispatcher, signalType, "Signaler", signaler);
 		setField(dispatcher, signalType, "SlotList", new SlotList<D>(signaler));

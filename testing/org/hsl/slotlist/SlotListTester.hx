@@ -26,7 +26,7 @@ class SlotListTester extends TestCase {
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 		// Create one slot.
-		slotList.createNiladicSlot(increaseCallCount);
+		slotList.createNiladic(increaseCallCount);
 		// Assert that there are is one slot in the slot list.
 		assertEquals(1, slotList.numberOfSlots);
 		// Call the slots.
@@ -34,7 +34,7 @@ class SlotListTester extends TestCase {
 		// Assert that the call count is now 1.
 		assertEquals(1, callCount);
 		// Create another slot.
-		slotList.createNiladicSlot(increaseCallCount);
+		slotList.createNiladic(increaseCallCount);
 		// Assert that there are two slots in the slot list.
 		assertEquals(2, slotList.numberOfSlots);
 		// Call the slots.
@@ -42,9 +42,9 @@ class SlotListTester extends TestCase {
 		// Assert that the call count is now 3.
 		assertEquals(3, callCount);
 		// Assert that destroying those slots works twice, but then fails.
-		assertTrue(slotList.destroyNiladicSlot(increaseCallCount));
-		assertTrue(slotList.destroyNiladicSlot(increaseCallCount));
-		assertFalse(slotList.destroyNiladicSlot(increaseCallCount));
+		assertTrue(slotList.destroyNiladic(increaseCallCount));
+		assertTrue(slotList.destroyNiladic(increaseCallCount));
+		assertFalse(slotList.destroyNiladic(increaseCallCount));
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 	}
@@ -54,7 +54,7 @@ class SlotListTester extends TestCase {
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 		// Create one slot.
-		slotList.createSlot(increaseCallCountBySignal);
+		slotList.createRegular(increaseCallCountBySignal);
 		// Assert that there are is one slot in the slot list.
 		assertEquals(1, slotList.numberOfSlots);
 		// Call the slots.
@@ -62,7 +62,7 @@ class SlotListTester extends TestCase {
 		// Assert that the call count is now 1.
 		assertEquals(1, callCount);
 		// Create another slot.
-		slotList.createSlot(increaseCallCountBySignal);
+		slotList.createRegular(increaseCallCountBySignal);
 		// Assert that there are two slots in the slot list.
 		assertEquals(2, slotList.numberOfSlots);
 		// Call the slots.
@@ -70,22 +70,24 @@ class SlotListTester extends TestCase {
 		// Assert that the call count is now 3.
 		assertEquals(3, callCount);
 		// Assert that destroying those slots works twice, but then fails.
-		assertTrue(slotList.destroySlot(increaseCallCountBySignal));
-		assertTrue(slotList.destroySlot(increaseCallCountBySignal));
-		assertFalse(slotList.destroySlot(increaseCallCountBySignal));
+		assertTrue(slotList.destroyRegular(increaseCallCountBySignal));
+		assertTrue(slotList.destroyRegular(increaseCallCountBySignal));
+		assertFalse(slotList.destroyRegular(increaseCallCountBySignal));
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 	}
 }
 class NullSignaler<D> implements ISignaler<D> {
 	public var advanced(default, null):IAdvanced<D>;
+	public var bubbler(default, setBubbler):IBubbler<D>;
 	public var dispatcher(default, null):IDispatcher;
 	public function new():Void {
 		advanced = new NullAdvanced<D>();
 	}
-	public function dispatchSignal(data:D):Void {
+	public function dispatchSignal(?data:D):Void {
 	}
-	public function setBubbler(value:IBubbler<D> ):Void {
+	public function setBubbler(value:IBubbler<D>):IBubbler<D> {
+		return null;
 	}
 }
 class NullAdvanced<D> implements IAdvanced<D> {

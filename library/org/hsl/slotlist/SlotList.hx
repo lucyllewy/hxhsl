@@ -32,24 +32,24 @@ interface ISlotList<D> {
 	public var numberOfSlots(default, null):#if flash9 UInt #else Int #end;
 	/**
 	 * Adds a method that accepts nothing, and returns nothing, as a slot. The spreader will call that slot every time it spreads
-	 * a signal, until destroyNiladicSlot is called for that slot.
+	 * a signal, until destroyNiladic is called for that slot.
 	 */
-	public function createNiladicSlot(method:Void -> Void):Void;
+	public function createNiladic(method:Void -> Void):Void;
 	/**
-	 * Adds a method that accepts a signal with the same type parameters as this spreader, and returns nothing, as a slot. This
-	 * spreader will call that slot every time it spreads a signal, until destroySlot is called for that slot.
+	 * Adds a method that accepts a signal with the same type parameter as this spreader, and returns nothing, as a slot. This
+	 * spreader will call that slot every time it spreads a signal, until destroyRegular is called for that slot.
 	 */
-	public function createSlot(method:Signal<D> -> Void):Void;
+	public function createRegular(method:Signal<D> -> Void):Void;
 	/**
-	 * Removes a slot added by the createNiladicSlot method. Returns true if the removal succeeded, false if this spreader does
-	 * not have the passed method registered as a niladic slot.
+	 * Removes a slot added by the createNiladic method. Returns true if the removal succeeded, false if this spreader does not
+	 * have the passed method registered as a niladic slot.
 	 */
-	public function destroyNiladicSlot(method:Void -> Void):Bool;
+	public function destroyNiladic(method:Void -> Void):Bool;
 	/**
-	 * Removes a slot added by the createSlot method. Returns true if the removal succeeded, false if this spreader does not have
-	 * the passed method registered as a slot.
+	 * Removes a slot added by the createRegular method. Returns true if the removal succeeded, false if this spreader does not
+	 * have the passed method registered as a slot.
 	 */
-	public function destroySlot(method:Signal<D> -> Void):Bool;
+	public function destroyRegular(method:Signal<D> -> Void):Bool;
 }
 /**
  * A common ISlotList implementation.
@@ -67,11 +67,11 @@ class SlotList<D> implements ISlotList<D> {
 			slot.call(signal);
 		}
 	}
-	public function createNiladicSlot(method:Void -> Void):Void {
+	public function createNiladic(method:Void -> Void):Void {
 		slots.add(new NiladicSlot<D>(method));
 		++numberOfSlots;
 	}
-	public function createSlot(method:Signal<D> -> Void):Void {
+	public function createRegular(method:Signal<D> -> Void):Void {
 		slots.add(new RegularSlot<D>(method));
 		++numberOfSlots;
 	}
@@ -87,10 +87,10 @@ class SlotList<D> implements ISlotList<D> {
 		}
 		return result;
 	}
-	public function destroyNiladicSlot(method:Void -> Void):Bool {
+	public function destroyNiladic(method:Void -> Void):Bool {
 		return destroySlotByWrapper(new NiladicSlot<D>(method));
 	}
-	public function destroySlot(method:Signal<D> -> Void):Bool {
+	public function destroyRegular(method:Signal<D> -> Void):Bool {
 		return destroySlotByWrapper(new RegularSlot<D>(method));
 	}
 	private function toString():String {
@@ -160,17 +160,17 @@ class NullSlotList<D> implements ISlotList<D> {
 	public function new():Void {
 		numberOfSlots = 0;
 	}
-	public function createNiladicSlot(method:Void -> Void):Void {
+	public function createNiladic(method:Void -> Void):Void {
 	}
-	public function createSlot(method:Signal<D> -> Void):Void {
+	public function createRegular(method:Signal<D> -> Void):Void {
 	}
-	public function destroyNiladicSlot(method:Void -> Void):Bool {
+	public function destroyNiladic(method:Void -> Void):Bool {
 		return false;
 	}
-	public function destroySlot(method:Signal<D> -> Void):Bool {
+	public function destroyRegular(method:Signal<D> -> Void):Bool {
 		return false;
 	}
 	private function toString():String {
-		return "[NullSlotList]";
+		return "[SlotList]";
 	}
 }

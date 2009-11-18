@@ -17,13 +17,13 @@ class FacadeTester extends TestCase, implements IDispatcher {
 		// Test the Void signaler. First, set the slotlist to null.
 		voidSlotList = null;
 		// Use the facade to instantiate it.
-		this.instantiateNullSlotList("void");
+		this.setupNullSlotList("void");
 		// Assert that it is not null.
 		assertTrue(voidSlotList != null);
 		// Test the String signaler. First, set the slotlist to null.
 		stringSlotList = null;
 		// Use the facade to instantiate it.
-		this.instantiateNullSlotList("string", String);
+		this.setupNullSlotList("string", String);
 		// Assert that it is not null.
 		assertTrue(voidSlotList != null);
 	}
@@ -32,7 +32,7 @@ class FacadeTester extends TestCase, implements IDispatcher {
 		voidSignaler = null;
 		voidSlotList = null;
 		// Use the facade to instantiate both.
-		this.instantiateSignalerWithSlotList("void");
+		this.setupSignalType("void");
 		// Assert that they are both not null.
 		assertTrue(voidSignaler != null);
 		assertTrue(voidSlotList != null);
@@ -40,7 +40,7 @@ class FacadeTester extends TestCase, implements IDispatcher {
 		stringSignaler = null;
 		stringSlotList = null;
 		// Use the facade to instantiate both.
-		this.instantiateSignalerWithSlotList("string", String);
+		this.setupSignalType("string", String);
 		// Assert that they are both not null.
 		assertTrue(voidSignaler != null);
 		assertTrue(voidSlotList != null);
