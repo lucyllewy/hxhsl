@@ -41,6 +41,11 @@ interface ISlotList<D> {
 	 */
 	public function createRegular(method:Signal<D> -> Void):Void;
 	/**
+	 * Adds a method that accepts data of the type that equals the type parameter of this spreader, and returns nothing, as a
+	 * slot. This spreader will call that slot every time it spreads a signal, until destroySimple is called for that slot.
+	 */
+	public function createSimple(method:D -> Void):Void;
+	/**
 	 * Removes a slot added by the createNiladic method. Returns true if the removal succeeded, false if this spreader does not
 	 * have the passed method registered as a niladic slot.
 	 */
@@ -50,6 +55,11 @@ interface ISlotList<D> {
 	 * have the passed method registered as a slot.
 	 */
 	public function destroyRegular(method:Signal<D> -> Void):Bool;
+	/**
+	 * Removes a slot added by the createSimple method. Returns true if the removal succeeded, false if this spreader does not
+	 * have the passed method registered as a slot.
+	 */
+	public function destroySimple(method:D -> Void):Bool;
 }
 /**
  * A common ISlotList implementation.
@@ -75,6 +85,10 @@ class SlotList<D> implements ISlotList<D> {
 		slots.add(new RegularSlot<D>(method));
 		++numberOfSlots;
 	}
+	public function createSimple(method:D -> Void):Void {
+		slots.add(new SimpleSlot<D>(method));
+		++numberOfSlots;
+	}
 	private inline function destroySlotByWrapper(value:ISlot<D>):Bool {
 		var result:Bool = false;
 		for (slot in slots) {
@@ -92,6 +106,9 @@ class SlotList<D> implements ISlotList<D> {
 	}
 	public function destroyRegular(method:Signal<D> -> Void):Bool {
 		return destroySlotByWrapper(new RegularSlot<D>(method));
+	}
+	public function destroySimple(method:D -> Void):Bool {
+		return destroySlotByWrapper(new SimpleSlot<D>(method));
 	}
 	private function toString():String {
 		return "[SlotList]";
@@ -153,6 +170,21 @@ class RegularSlot<D> implements ISlot<D> {
 	}
 }
 /**
+ * The ISlot implementation for D -> Void methods.
+ */
+class SimpleSlot<D> implements ISlot<D> {
+	private var method:D -> Void;
+	public function new(method:D -> Void):Void {
+		this.method = method;
+	}
+	public function call(signal:Signal<D>):Void {
+		method(signal.data);
+	}
+	public function determineEquality(slot:ISlot<D>):Bool {
+		return Std.is(slot, SimpleSlot) && Reflect.compareMethods((untyped slot).method, method);
+	}
+}
+/**
  * A null object implementation of the ISlotList interface.
  */
 class NullSlotList<D> implements ISlotList<D> {
@@ -164,10 +196,15 @@ class NullSlotList<D> implements ISlotList<D> {
 	}
 	public function createRegular(method:Signal<D> -> Void):Void {
 	}
+	public function createSimple(method:D -> Void):Void {
+	}
 	public function destroyNiladic(method:Void -> Void):Bool {
 		return false;
 	}
 	public function destroyRegular(method:Signal<D> -> Void):Bool {
+		return false;
+	}
+	public function destroySimple(method:D -> Void):Bool {
 		return false;
 	}
 	private function toString():String {

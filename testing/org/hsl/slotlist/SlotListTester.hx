@@ -14,7 +14,7 @@ class SlotListTester extends TestCase {
 		super();
 		slotList = new SlotList<Void>(new NullSignaler<Void>());
 	}
-	public function increaseCallCountBySignal(signal:Signal<Void>):Void {
+	public function increaseCallCountByArgument(argument:Dynamic):Void {
 		callCount++;
 	}
 	public function increaseCallCount():Void {
@@ -30,7 +30,7 @@ class SlotListTester extends TestCase {
 		// Assert that there are is one slot in the slot list.
 		assertEquals(1, slotList.numberOfSlots);
 		// Call the slots.
-		slotList.callSlots(null);
+		slotList.callSlots(new Signal<Void>(null, null, null));
 		// Assert that the call count is now 1.
 		assertEquals(1, callCount);
 		// Create another slot.
@@ -38,7 +38,7 @@ class SlotListTester extends TestCase {
 		// Assert that there are two slots in the slot list.
 		assertEquals(2, slotList.numberOfSlots);
 		// Call the slots.
-		slotList.callSlots(null);
+		slotList.callSlots(new Signal<Void>(null, null, null));
 		// Assert that the call count is now 3.
 		assertEquals(3, callCount);
 		// Assert that destroying those slots works twice, but then fails.
@@ -48,31 +48,59 @@ class SlotListTester extends TestCase {
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 	}
-	public function testSlots():Void {
+	public function testRegularSlots():Void {
 		// Reset the call count.
 		callCount = 0;
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 		// Create one slot.
-		slotList.createRegular(increaseCallCountBySignal);
+		slotList.createRegular(increaseCallCountByArgument);
 		// Assert that there are is one slot in the slot list.
 		assertEquals(1, slotList.numberOfSlots);
 		// Call the slots.
-		slotList.callSlots(null);
+		slotList.callSlots(new Signal<Void>(null, null, null));
 		// Assert that the call count is now 1.
 		assertEquals(1, callCount);
 		// Create another slot.
-		slotList.createRegular(increaseCallCountBySignal);
+		slotList.createRegular(increaseCallCountByArgument);
 		// Assert that there are two slots in the slot list.
 		assertEquals(2, slotList.numberOfSlots);
 		// Call the slots.
-		slotList.callSlots(null);
+		slotList.callSlots(new Signal<Void>(null, null, null));
 		// Assert that the call count is now 3.
 		assertEquals(3, callCount);
 		// Assert that destroying those slots works twice, but then fails.
-		assertTrue(slotList.destroyRegular(increaseCallCountBySignal));
-		assertTrue(slotList.destroyRegular(increaseCallCountBySignal));
-		assertFalse(slotList.destroyRegular(increaseCallCountBySignal));
+		assertTrue(slotList.destroyRegular(increaseCallCountByArgument));
+		assertTrue(slotList.destroyRegular(increaseCallCountByArgument));
+		assertFalse(slotList.destroyRegular(increaseCallCountByArgument));
+		// Assert that there are no slots in the slot list.
+		assertEquals(0, slotList.numberOfSlots);
+	}
+	public function testSimpleSlots():Void {
+		// Reset the call count.
+		callCount = 0;
+		// Assert that there are no slots in the slot list.
+		assertEquals(0, slotList.numberOfSlots);
+		// Create one slot.
+		slotList.createSimple(increaseCallCountByArgument);
+		// Assert that there are is one slot in the slot list.
+		assertEquals(1, slotList.numberOfSlots);
+		// Call the slots.
+		slotList.callSlots(new Signal<Void>(null, null, null));
+		// Assert that the call count is now 1.
+		assertEquals(1, callCount);
+		// Create another slot.
+		slotList.createSimple(increaseCallCountByArgument);
+		// Assert that there are two slots in the slot list.
+		assertEquals(2, slotList.numberOfSlots);
+		// Call the slots.
+		slotList.callSlots(new Signal<Void>(null, null, null));
+		// Assert that the call count is now 3.
+		assertEquals(3, callCount);
+		// Assert that destroying those slots works twice, but then fails.
+		assertTrue(slotList.destroySimple(increaseCallCountByArgument));
+		assertTrue(slotList.destroySimple(increaseCallCountByArgument));
+		assertFalse(slotList.destroySimple(increaseCallCountByArgument));
 		// Assert that there are no slots in the slot list.
 		assertEquals(0, slotList.numberOfSlots);
 	}
