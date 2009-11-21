@@ -122,9 +122,9 @@ class Signaler<D> implements ISignaler<D> {
 	}
 	private function setBubbler(value:IBubbler<D>):IBubbler<D> {
 		// If the passed value is null, use a null object implementation instead of the actual null value.
-		//if (value == null) {
-			//return bubbler = new NullBubbler<D>();
-		//}
+		if (value == null) {
+			return bubbler = new NullBubbler<D>();
+		}
 		// Check for recursive bubbling paths.
 		if (determineRecursive(value)) {
 			throw "The bubbler property of a signaler was set to a value that would result in recursive bubbling. The bubbler property has not been unset.";
