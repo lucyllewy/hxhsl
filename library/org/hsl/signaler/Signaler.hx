@@ -83,10 +83,13 @@ class Signaler<D> implements ISignaler<D> {
 		if (dispatcher == null) {
 			throw "The dispatcher argument must be non-null.";
 		}
+		// Store the dispatcher.
 		this.dispatcher = dispatcher;
+		// Setup the advanced API.
 		advanced = new Advanced<D>(this);
-		// This also calls the determineRecursive method, which is pointless. Could be fixed.
-		bubbler = new NullBubbler<D>();
+		// Set the bubbler to a null object implementation (see the setBubbler method.)
+		bubbler = null;
+		// Set the signaler-slot list bridge to a null object implementation (see the disconnectFromSlotList method.)
 		disconnectFromSlotList();
 	}
 	public inline function connectWithSlotList(signalerSlotListBridge:ISignalerSlotListBridge<D>):Void {
@@ -109,6 +112,7 @@ class Signaler<D> implements ISignaler<D> {
 		dispatchSignalWithDispatcher(data, dispatcher);
 	}
 	public inline function dispatchSignalWithDispatcher(data:D, dispatcher:IDispatcher):Void {
+		// Order the slot list to call its slots, passing a newly created signal.
 		signalerSlotListBridge.callSlots(createSignal(data, this.dispatcher, dispatcher));
 		// Start the bubbling process.
 		var parentSignaler:ISignaler<D> = bubbler.findParentSignaler(dispatcher);
@@ -117,10 +121,15 @@ class Signaler<D> implements ISignaler<D> {
 		}
 	}
 	private function setBubbler(value:IBubbler<D>):IBubbler<D> {
+		// If the passed value is null, use a null object implementation instead of the actual null value.
+		//if (value == null) {
+			//return bubbler = new NullBubbler<D>();
+		//}
 		// Check for recursive bubbling paths.
 		if (determineRecursive(value)) {
 			throw "The bubbler property of a signaler was set to a value that would result in recursive bubbling. The bubbler property has not been unset.";
 		}
+		// Store the passed bubbler.
 		return bubbler = value;
 	}
 	private function toString():String {
