@@ -43,6 +43,7 @@ class ErrorMessageTranslator implements Translator<String> {
 		try {
 			errorEvent = cast(nativeEvent, ErrorEvent);
 		} catch (error:Dynamic) {
+			// TODO: throw a more exception instead of this lame one.
 			throw "The nativeEvent argument must be an ErrorEvent.";
 		}
 		return new Translation<String>(errorEvent.text, nativeEvent.target);

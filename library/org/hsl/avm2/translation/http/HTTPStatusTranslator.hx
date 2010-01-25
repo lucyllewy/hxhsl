@@ -43,6 +43,7 @@ class HTTPStatusTranslator implements Translator<HTTPStatus> {
 		try {
 			httpStatusEvent = cast(nativeEvent, HTTPStatusEvent);
 		} catch (error:Dynamic) {
+			// TODO: throw a more exception instead of this lame one.
 			throw "The nativeEvent argument must be a HTTPStatusEvent.";
 		}
 		return new Translation<HTTPStatus>(new HTTPStatus(httpStatusEvent.status), httpStatusEvent.target);

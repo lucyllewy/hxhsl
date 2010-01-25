@@ -46,6 +46,7 @@ import org.hsl.haxe.translation.NativeEvent;
 		try {
 			mouseEvent = cast(nativeEvent, MouseEvent);
 		} catch (error:Dynamic) {
+			// TODO: throw a more exception instead of this lame one.
 			throw "The nativeEvent argument must be a MouseEvent.";
 		}
 		return new Translation<Int>(mouseEvent.delta, mouseEvent.target);

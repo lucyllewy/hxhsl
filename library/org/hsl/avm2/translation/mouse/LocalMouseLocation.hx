@@ -45,6 +45,7 @@ class LocalMouseLocation extends MouseLocation {
 		// If scope is null, throw an exception. Having null for a scope might produce null object reference errors later on: when
 		// the globalLocation property is called.
 		if (scope == null) {
+			// TODO: throw a more exception instead of this lame one.
 			throw "The scope argument must be non-null.";
 		}
 		this.scope = scope;
@@ -61,11 +62,12 @@ class LocalMouseLocation extends MouseLocation {
 	public override function translateToScope(targetScope:DisplayObject):LocalMouseLocation {
 		// If the passed target scope is equal to the scope of this location, return this object itself. No clone is needed as this
 		// object is immutable. Note that if this class is made mutable by extending it, this behavior should be replaced.
-		if (targetScope == scope) {
-			return this;
-		} else {
-			var point:Point = targetScope.globalToLocal(scope.localToGlobal(new Point(x, y)));
-			return new LocalMouseLocation(point.x, point.y, targetScope);
-		}
+		return
+			if (targetScope == scope) {
+				this;
+			} else {
+				var point:Point = targetScope.globalToLocal(scope.localToGlobal(new Point(x, y)));
+				new LocalMouseLocation(point.x, point.y, targetScope);
+			}
 	}
 }

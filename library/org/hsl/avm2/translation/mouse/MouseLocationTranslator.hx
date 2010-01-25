@@ -45,11 +45,12 @@ class MouseLocationTranslator implements Translator<LocalMouseLocation> {
 		try {
 			mouseEvent = cast(nativeEvent, MouseEvent);
 		} catch (error:Dynamic) {
+			// TODO: throw a more exception instead of this lame one.
 			throw "The nativeEvent argument must be a MouseEvent.";
 		}
 		// The scope argument of the local mouse location constructor is a display object. The target property of the mouseEvent
-		// variable is dynamic, but since mouse events are dispatched by display objects only in the common cases we'll assume that
-		// the target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
+		// variable is dynamic, but since mouse events are dispatched by display objects only in most cases we'll assume that the
+		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
 		// them.
 		#if as3
 		return new Translation<LocalMouseLocation>(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), mouseEvent.target);

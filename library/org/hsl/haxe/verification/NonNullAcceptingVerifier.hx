@@ -37,10 +37,11 @@ class NonNullAcceptingVerifier<D> implements DataVerifier<D> {
 	}
 	#end
 	public function verify(data:D):String {
-		if (data == null) {
-			return "The passed data must be non-null";
-		} else {
-			return null;
-		}
+		return 
+			if (data == null) {
+				"The passed data must be non-null";
+			} else {
+				null;
+			}
 	}
 }

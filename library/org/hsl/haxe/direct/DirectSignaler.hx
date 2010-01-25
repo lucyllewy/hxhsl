@@ -68,12 +68,13 @@ class DirectSignaler<D> implements Signaler<D> {
 		}
 		this.subject = subject;
 		// If the rejectNullData flag is set, use the non-null accepting verifier.
-		if (rejectNullData) {
-			dataVerifier = new NonNullAcceptingVerifier<D>();
-		// If the rejectNullData flag isn't set, use an all accepting verifier.
-		} else {
-			dataVerifier = new AllAcceptingVerifier<D>();
-		}
+		dataVerifier =
+			untyped if (rejectNullData) {
+				new NonNullAcceptingVerifier<D>();
+			// If the rejectNullData flag isn't set, use an all accepting verifier.
+			} else {
+				new AllAcceptingVerifier<D>();
+			}
 		// Prepare the linked list structure by instantiating the sentinel.
 		sentinel = new Sentinel<D>();
 	}

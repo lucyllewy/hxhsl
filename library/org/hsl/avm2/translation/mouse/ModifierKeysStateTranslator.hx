@@ -44,6 +44,7 @@ import org.hsl.haxe.translation.NativeEvent;
 		try {
 			mouseEvent = cast(nativeEvent, MouseEvent);
 		} catch (error:Dynamic) {
+			// TODO: throw a more exception instead of this lame one.
 			throw "The nativeEvent argument must be a MouseEvent.";
 		}
 		return new Translation<ModifierKeysState>(new ModifierKeysState(mouseEvent.altKey, mouseEvent.ctrlKey, mouseEvent.shiftKey), mouseEvent.target);
