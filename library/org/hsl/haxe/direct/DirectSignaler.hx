@@ -38,6 +38,9 @@ import org.hsl.haxe.Subject;
  * subject.
  */
 class DirectSignaler<D> implements Signaler<D> {
+	/**
+	 * The signalers this signaler will bubble to.
+	 */
 	private var bubblingTargets:List<Signaler<D>>;
 	/**
 	 * The data verifier used to verify data that is to be sent in a signal, before actually dispatching the signal. If the data
@@ -48,6 +51,10 @@ class DirectSignaler<D> implements Signaler<D> {
 	 */
 	public var dataVerifier(default, null):DataVerifier<D>;
 	public var hasSlots(getHasSlots, null):Bool;
+	/**
+	 * The sentinel "slot". The sentinel is not a real slot, as it is never called. Rather it is the value before the first node
+	 * and after the last node. It contains logic that helps the direct signaler working with the linked list structure.
+	 */
 	private var sentinel:Sentinel<D>;
 	public var subject(default, null):Subject;
 	/**
@@ -92,17 +99,21 @@ class DirectSignaler<D> implements Signaler<D> {
 	public function addSimpleSlot(method:D -> Void): Slot<D> {
 		return sentinel.add(new SimpleSlot<D>(method));
 	}
-	private function bubble(data:D, initialSubject:Subject):Void {
+	private /*inline*/ function bubble(data:D, initialSubject:Subject):Void {
+		// Call the dispatch method of all the bubbling targets.
 		for (target in bubblingTargets) {
 			target.dispatch(data, initialSubject);
 		}
 	}
 	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void {
 		// Check whether the caller of this method is the subject of this signaler, as this method should only be called by the
-		// subject. Two notes here. One, the following line checks whether the caller is of the same type as the subject, which
+		// subject. Three notes here. One, the following line checks whether the caller is of the same type as the subject, which
 		// does not necessarily mean it's the same instance. This is the expected behavior, as it is consistent with private
 		// fields. Two, one could hack his or her way around this check. How to do this should be obvious. The check is not
-		// designed to be unhackable; rather it is designed to prevent developers from accidentally misapplying HSL.
+		// designed to be unhackable; rather it is designed to prevent developers from accidentally misapplying HSL. Three, the
+		// line below contains a fairly nasty hack around the check in case the name of the method that called this one is
+		// "bubble". This is obviously far from perfect, but this allows us to add the bubbling functionality without polluting the
+		// API.
 		if (positionInformation.methodName != "bubble" && positionInformation.className != subjectClassName) {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The dispatch method may only be called by the subject.";

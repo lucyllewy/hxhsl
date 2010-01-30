@@ -41,6 +41,9 @@ interface Signaler<D> {
 	 * value if that value will only be sent in a signal.
 	 */
 	public var hasSlots(getHasSlots, null):Bool;
+	/**
+	 * Adds a bubbling target. The signaler will bubble to this bubbling target in a bubbling process.
+	 */
 	public function addBubblingTarget(value:Signaler<D>):Void;
 	/**
 	 * Adds a slot containing a method that accepts nothing, and returns nothing, and returns that slot. The slot can be removed
@@ -66,10 +69,15 @@ interface Signaler<D> {
 	public function addSimpleSlot(method:D -> Void):Slot<D>;
 	/**
 	 * Dispatches a signal, containing the passed data. All the listeners that added slots to this signaler will be notified,
-	 * through those slots. This method may only be called by the subject of the signaler.
+	 * through those slots. The signal will bubble to all of the bubbling targets that were added to this signaler. This method
+	 * may only be called by the subject of the signaler.
 	 */
 	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void;
 	private function getHasSlots():Bool;
+	/**
+	 * Removes a bubbling target that was added by the addBubblingTarget method. Returns true if the removal succeeded; false if
+	 * the signaler does not have the passed value as a bubbling target.
+	 */
 	public function removeBubblingTarget(value:Signaler<D>):Bool;
 	/**
 	 * Removes a slot added by the addNiladicSlot method. Returns true if the removal succeeded; false if this signaler does not
