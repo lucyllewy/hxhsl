@@ -47,7 +47,7 @@ class NullSignaler<D> implements Signaler<D> {
 	public function addSimpleSlot(method:D -> Void):Slot<D> {
 		return new NullSlot<D>();
 	}
-	public function dispatch(?data:D, ?positionInformation:PosInfos):Void {
+	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void {
 	}
 	private function getHasSlots():Bool {
 		return false;

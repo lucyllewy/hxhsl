@@ -38,6 +38,7 @@ import org.hsl.haxe.Subject;
  * subject.
  */
 class DirectSignaler<D> implements Signaler<D> {
+	private var bubblingTargets:List<Signaler<D>>;
 	/**
 	 * The data verifier used to verify data that is to be sent in a signal, before actually dispatching the signal. If the data
 	 * does not pass the verification, the signaler will throw an exception.
@@ -75,8 +76,12 @@ class DirectSignaler<D> implements Signaler<D> {
 			} else {
 				new AllAcceptingVerifier<D>();
 			}
+		bubblingTargets = new List<Signaler<D>>();
 		// Prepare the linked list structure by instantiating the sentinel.
 		sentinel = new Sentinel<D>();
+	}
+	public function addBubblingTarget(value:Signaler<D>):Void {
+		bubblingTargets.add(value);
 	}
 	public function addNiladicSlot(method:Void -> Void):Slot<D> {
 		return sentinel.add(new NiladicSlot<D>(method));
@@ -87,20 +92,33 @@ class DirectSignaler<D> implements Signaler<D> {
 	public function addSimpleSlot(method:D -> Void): Slot<D> {
 		return sentinel.add(new SimpleSlot<D>(method));
 	}
-	public function dispatch(?data:D, ?positionInformation:PosInfos):Void {
+	private function bubble(data:D, initialSubject:Subject):Void {
+		for (target in bubblingTargets) {
+			target.dispatch(data, initialSubject);
+		}
+	}
+	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void {
 		// Check whether the caller of this method is the subject of this signaler, as this method should only be called by the
 		// subject. Two notes here. One, the following line checks whether the caller is of the same type as the subject, which
 		// does not necessarily mean it's the same instance. This is the expected behavior, as it is consistent with private
 		// fields. Two, one could hack his or her way around this check. How to do this should be obvious. The check is not
 		// designed to be unhackable; rather it is designed to prevent developers from accidentally misapplying HSL.
-		if (positionInformation.className != subjectClassName) {
+		if (positionInformation.methodName != "bubble" && positionInformation.className != subjectClassName) {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The dispatch method may only be called by the subject.";
 		}
 		// Verify the passed data.
 		verifyData(data);
 		// Dispatch the signal.
-		dispatchUnsafe(data, subject);
+		dispatchUnsafe(data, 
+			if (initialSubject == null) {
+				subject;
+			} else {
+				initialSubject;
+			}
+		);
+		// Bubble the signal.
+		bubble(data, initialSubject);
 	}
 	/**
 	 * Dispatches a signal without verifying the data.
@@ -123,6 +141,9 @@ class DirectSignaler<D> implements Signaler<D> {
 			subjectClassName = Type.getClassName(Type.getClass(subject));
 		}
 		return subjectClassName;
+	}
+	public function removeBubblingTarget(value:Signaler<D>):Bool {
+		return bubblingTargets.remove(value);
 	}
 	public function removeNiladicSlot(method:Void -> Void):Bool {
 		return sentinel.remove(new NiladicSlot<D>(method));
