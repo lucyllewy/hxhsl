@@ -38,6 +38,8 @@ class NullSignaler<D> implements Signaler<D> {
 	public function new(subject:Subject):Void {
 		this.subject = subject;
 	}
+	public function addBubblingTarget(value:Signaler<D>):Void {
+	}
 	public function addNiladicSlot(method:Void -> Void):Slot<D> {
 		return new NullSlot<D>();
 	}
@@ -50,6 +52,9 @@ class NullSignaler<D> implements Signaler<D> {
 	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void {
 	}
 	private function getHasSlots():Bool {
+		return false;
+	}
+	public function removeBubblingTarget(value:Signaler<D>):Bool {
 		return false;
 	}
 	public function removeNiladicSlot(method:Void -> Void):Bool {

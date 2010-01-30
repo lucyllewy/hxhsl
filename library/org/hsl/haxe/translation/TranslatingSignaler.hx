@@ -56,14 +56,17 @@ class TranslatingSignaler<D> extends DirectSignaler<D> {
 		var data:D = translation.data;
 		// Verify the passed data.
 		verifyData(data);
-		// Dispatch the signal. Set the initial subject of the signal to the initial subject in the translation, or to the 
-		// subject of this signaler if the translation does not contain one.
-		dispatchUnsafe(data, 
+		// Set the initial subject of the signal to the initial subject in the translation, or to the subject of this signaler 
+		// if the translation does not contain one.
+		var initialSubject:Subject = 
 			if (translation.initialSubject == null) {
 				subject;
 			} else {
 				translation.initialSubject;
 			}
-		);
+		// Dispatch the signal. 
+		dispatchUnsafe(data, initialSubject);
+		// Bubble the signal.
+		bubble(data, initialSubject);
 	}
 }
