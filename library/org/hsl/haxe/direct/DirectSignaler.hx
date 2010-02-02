@@ -153,17 +153,17 @@ class DirectSignaler<D> implements Signaler<D> {
 		}
 		return subjectClassName;
 	}
-	public function removeBubblingTarget(value:Signaler<D>):Bool {
-		return bubblingTargets.remove(value);
+	public function removeBubblingTarget(value:Signaler<D>):Void {
+		bubblingTargets.remove(value);
 	}
-	public function removeNiladicSlot(method:Void -> Void):Bool {
-		return sentinel.remove(new NiladicSlot<D>(method));
+	public function removeNiladicSlot(method:Void -> Void):Void {
+		sentinel.remove(new NiladicSlot<D>(method));
 	}
-	public function removeSlot(method:Signal<D> -> Void):Bool {
-		return sentinel.remove(new RegularSlot<D>(method));
+	public function removeSlot(method:Signal<D> -> Void):Void {
+		sentinel.remove(new RegularSlot<D>(method));
 	}
-	public function removeSimpleSlot(method:D -> Void):Bool {
-		return sentinel.remove(new SimpleSlot<D>(method));
+	public function removeSimpleSlot(method:D -> Void):Void {
+		sentinel.remove(new SimpleSlot<D>(method));
 	}
 	private inline function setSubjectClassName(value:String):String {
 		return subjectClassName = value;
@@ -228,17 +228,14 @@ private class Sentinel<D> extends LinkedSlot<D> {
 	 * The sentinel will look for a slot equal to the passed value directy or indirectly connected to it, and destroy it. Returns
 	 * true if a slot equal to the passed value is found and destroyed; false otherwise.
 	 */
-	public inline function remove(value:LinkedSlot<D>):Bool {
+	public inline function remove(value:LinkedSlot<D>):Void {
 		var node:LinkedSlot<D> = next;
-		var result:Bool = false;
 		while (node != this) {
 			if (node.determineEquality(value)) {
 				node.destroy();
-				result = true;
 				break;
 			}
 			node = node.next;
 		}
-		return result;
 	}
 }

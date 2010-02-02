@@ -54,17 +54,13 @@ class NullSignaler<D> implements Signaler<D> {
 	private function getHasSlots():Bool {
 		return false;
 	}
-	public function removeBubblingTarget(value:Signaler<D>):Bool {
-		return false;
+	public function removeBubblingTarget(value:Signaler<D>):Void {
 	}
-	public function removeNiladicSlot(method:Void -> Void):Bool {
-		return false;
+	public function removeNiladicSlot(method:Void -> Void):Void {
 	}
-	public function removeSlot(method:Signal<D> -> Void):Bool {
-		return false;
+	public function removeSlot(method:Signal<D> -> Void):Void {
 	}
-	public function removeSimpleSlot(method:D -> Void):Bool {
-		return false;
+	public function removeSimpleSlot(method:D -> Void):Void {
 	}
 	#if debug
 	private function toString():String {

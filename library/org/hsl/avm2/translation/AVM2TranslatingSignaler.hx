@@ -25,6 +25,7 @@
  */
 package org.hsl.avm2.translation;
 import flash.events.EventDispatcher;
+import haxe.PosInfos;
 import org.hsl.haxe.Subject;
 import org.hsl.haxe.translation.TranslatingSignaler;
 import org.hsl.haxe.translation.Translator;
@@ -33,6 +34,8 @@ import org.hsl.haxe.translation.Translator;
  * The AVM2 translating signaler translates AVM2 specific events, and re-dispatches them as HSL signals.
  */
 class AVM2TranslatingSignaler<D> extends TranslatingSignaler<D> {
+	private var nativeDispatcher:EventDispatcher;
+	private var nativeEventType:String;
 	/**
 	 * Creates a new AVM2 translating signaler. The passed subject will be considered the subject that owns the signaler, and
 	 * will be allowed to call the dispatch method of the signaler. The passed translator will be used to translate events. If
@@ -49,7 +52,13 @@ class AVM2TranslatingSignaler<D> extends TranslatingSignaler<D> {
 			translator = new DatalessTranslator<D>();
 		}
 		super(subject, translator, rejectNullData);
+		this.nativeDispatcher = nativeDispatcher;
+		this.nativeEventType = nativeEventType;
 		// Add a listener to the passed native dispatcher.
 		nativeDispatcher.addEventListener(nativeEventType, dispatchNative);
+	}
+	public override function stop(?positionInformation:PosInfos):Void {
+		super.stop(positionInformation);
+		nativeDispatcher.removeEventListener(nativeEventType, dispatchNative);
 	}
 }

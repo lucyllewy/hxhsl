@@ -24,6 +24,7 @@
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
 package org.hsl.haxe.translation;
+import haxe.PosInfos;
 import org.hsl.haxe.direct.DirectSignaler;
 import org.hsl.haxe.Subject;
 
@@ -64,9 +65,21 @@ class TranslatingSignaler<D> extends DirectSignaler<D> {
 			} else {
 				translation.initialSubject;
 			}
-		// Dispatch the signal. 
+		// Dispatch the signal.
 		dispatchUnsafe(data, initialSubject);
 		// Bubble the signal.
 		bubble(data, initialSubject);
+	}
+	/**
+	 * Stops translating translating and re-dispatching native events/signals. Translating signalers will likely add references
+	 * to native dispatchers. Calling this method will remove those references, allowing the translating signaler to be garbage
+	 * collected even if the native dispatchers are not.
+	 */
+	public function stop(?positionInformation:PosInfos):Void {
+		// Perform the same check as in the dispatch method.
+		if (positionInformation.className != subjectClassName) {
+			// TODO: throw a more exception instead of this lame one.
+			throw "The stop method may only be called by the subject.";
+		}
 	}
 }

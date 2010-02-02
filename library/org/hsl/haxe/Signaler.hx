@@ -75,23 +75,23 @@ interface Signaler<D> {
 	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void;
 	private function getHasSlots():Bool;
 	/**
-	 * Removes a bubbling target that was added by the addBubblingTarget method. Returns true if the removal succeeded; false if
-	 * the signaler does not have the passed value as a bubbling target.
+	 * Removes a bubbling target that was added by the addBubblingTarget method. If the signaler does not have the passed value
+	 * as a bubbling target, calling this method has no effect.
 	 */
-	public function removeBubblingTarget(value:Signaler<D>):Bool;
+	public function removeBubblingTarget(value:Signaler<D>):Void;
 	/**
-	 * Removes a slot added by the addNiladicSlot method. Returns true if the removal succeeded; false if this signaler does not
-	 * have a slot with a method equal the passed one.
+	 * Removes a slot added by the addNiladicSlot method. If this signaler does not have a slot with a method equal the passed
+	 * one, calling this method has no effect.
 	 */
-	public function removeNiladicSlot(method:Void -> Void):Bool;
+	public function removeNiladicSlot(method:Void -> Void):Void;
 	/**
-	 * Removes a slot added by the addSlot method. Returns true if the removal succeeded; false if this signaler does not have a
-	 * slot with a method equal the passed one.
+	 * Removes a slot added by the addSlot method. If this signaler does not have a slot with a method equal the passed one,
+	 * calling this method has no effect.
 	 */
-	public function removeSlot(method:Signal<D> -> Void):Bool;
+	public function removeSlot(method:Signal<D> -> Void):Void;
 	/**
-	 * Removes a slot added by the addSimpleSlot method. Returns true if the removal succeeded; false if this signaler does not
-	 * have a slot with a method equal the passed one.
+	 * Removes a slot added by the addSimpleSlot method. If this signaler does not have a slot with a method equal the passed
+	 * one, calling this method has no effect.
 	 */
-	public function removeSimpleSlot(method:D -> Void):Bool;
+	public function removeSimpleSlot(method:D -> Void):Void;
 }
