@@ -146,12 +146,20 @@ class DirectSignaler<D> implements Signaler<D> {
 	private inline function getSubjectClassName():String {
 		// As both Type.getClassName and Type.getClass can be quite expensive, we only call them the first time this method is
 		// called and store the result. We'll just use the stored result from that point on.
-		if (subjectClassName == null) {
-			// The following line is, to my knowledge, the only way to get the fully qualified class name of an object without the
-			// use of target-specific code. It could be faster though, because the combination of the two methods is not optimal.
-			subjectClassName = Type.getClassName(Type.getClass(subject));
-		}
-		return subjectClassName;
+		return
+			if (subjectClassName == null) {
+				subjectClassName = Type.getClassName(
+					// If the subject is a class, the result will be the name of that class.
+					untyped if (Std.is(subject, Class)) {
+						subject;
+					// If the subject is an instance of a class, the result will be the name of the class that it is an instance of.
+					} else {
+						Type.getClass(subject);
+					}
+				);
+			} else {
+				subjectClassName;
+			}
 	}
 	public function removeBubblingTarget(value:Signaler<D>):Void {
 		bubblingTargets.remove(value);

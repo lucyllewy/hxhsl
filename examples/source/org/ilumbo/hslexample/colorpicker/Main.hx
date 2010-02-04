@@ -1,6 +1,7 @@
 ﻿package org.ilumbo.hslexample.colorpicker;
 import flash.events.Event;
 import flash.Lib;
+import org.hsl.avm2.translation.AVM2TranslatingSignaler;
 import org.hsl.avm2.translation.mouse.ModifierKeysState;
 import org.hsl.haxe.Signal;
 import org.ilumbo.hslexample.colorpicker.colorpicker.ColorPicker;
@@ -96,12 +97,12 @@ class Main {
 		// When the color of the color picker changes, reset the countdown timer. This way, the color picker will not be closed for
 		// as long as the user is using it.
 		colorPicker.colorChangedSignaler.addNiladicSlot(countdownTimer.reset);
-		Lib.current.addEventListener(Event.ENTER_FRAME, step);
+		new AVM2TranslatingSignaler<Void>(this, Lib.current.stage, Event.ENTER_FRAME).addNiladicSlot(step);
 	}
 	/**
 	 * Steps the color picker, and the countdown timer.
 	 */
-	private function step(event:Event):Void {
+	private function step():Void {
 		colorPicker.step();
 		countdownTimer.step();
 	}
