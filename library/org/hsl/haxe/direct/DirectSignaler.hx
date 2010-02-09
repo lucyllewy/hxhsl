@@ -60,7 +60,7 @@ class DirectSignaler<D> implements Signaler<D> {
 	/**
 	 * The fully qualified class name of the subject.
 	 */
-	private var subjectClassName(getSubjectClassName, setSubjectClassName):String;
+	private var subjectClassName(getSubjectClassName, #if as3 setSubjectClassName #else null #end):String;
 	/**
 	 * Creates a new direct signaler. The passed subject will be considered the subject that owns the signaler, and will be
 	 * allowed to call the dispatch method of the signaler. If the rejectNullData flag is set, a non-null accepting verifier will
@@ -173,9 +173,14 @@ class DirectSignaler<D> implements Signaler<D> {
 	public function removeSimpleSlot(method:D -> Void):Void {
 		sentinel.remove(new SimpleSlot<D>(method));
 	}
-	private inline function setSubjectClassName(value:String):String {
+	// Because of a bug in the haXe compiler version 2.05, this method is needed when compiling to AS3. This has been fixed, but
+	// the latest official build of the compiler still has this bug. This method could be removed if a new official build of the
+	// haXe compiler is released. For more information, see http://code.google.com/p/haxe/issues/detail?id=47
+	#if as3
+	private function setSubjectClassName(value:String):String {
 		return subjectClassName = value;
 	}
+	#end
 	#if debug
 	private function toString():String {
 		return "[Signaler hasSlots=" + hasSlots + "]";

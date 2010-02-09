@@ -4,6 +4,7 @@ import flash.Lib;
 import org.hsl.avm2.translation.AVM2TranslatingSignaler;
 import org.hsl.avm2.translation.mouse.ModifierKeysState;
 import org.hsl.haxe.Signal;
+import org.hsl.haxe.Slot;
 import org.ilumbo.hslexample.colorpicker.colorpicker.ColorPicker;
 import org.ilumbo.hslexample.colorpicker.colorpicker.HueSaturationLightnessType;
 import org.ilumbo.hslexample.colorpicker.colorpicker.RedGreenBlueType;
@@ -21,6 +22,7 @@ class Main {
 	private var colorPicker:ColorPicker;
 	private var countdownTimer:CountdownTimer;
 	private var countdownTimerProvider:CountdownTimerProvider;
+	private var stepSlot:Slot<Void>;
 	public function new():Void {
 		createSquares();
 		countdownTimerProvider = new CountdownTimerProvider();
@@ -73,7 +75,7 @@ class Main {
 			// when the countdown timer is complete.
 			countdownTimer.completedSignaler.removeNiladicSlot(removeColorPicker);
 			countdownTimer = null;
-			Lib.current.removeEventListener(Event.ENTER_FRAME, step);
+			stepSlot.destroy();
 		}
 	}
 	/**
@@ -97,7 +99,7 @@ class Main {
 		// When the color of the color picker changes, reset the countdown timer. This way, the color picker will not be closed for
 		// as long as the user is using it.
 		colorPicker.colorChangedSignaler.addNiladicSlot(countdownTimer.reset);
-		new AVM2TranslatingSignaler<Void>(this, Lib.current.stage, Event.ENTER_FRAME).addNiladicSlot(step);
+		stepSlot = new AVM2TranslatingSignaler<Void>(this, Lib.current.stage, Event.ENTER_FRAME).addNiladicSlot(step);
 	}
 	/**
 	 * Steps the color picker, and the countdown timer.
