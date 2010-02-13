@@ -40,8 +40,17 @@ class RegularSlot<D> extends LinkedSlot<D> {
 		super();
 		this.method = method;
 	}
-	public override function call(data:D, currentSubject:Subject, initialSubject:Subject):Void {
-		method(new Signal<D>(data, this, currentSubject, initialSubject));
+	public override function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
+		var signal:Signal<D> = new Signal<D>(data, this, currentSubject, initialSubject);
+		method(signal);
+		// If the bubbling stopped property of the signal is set, set that property in slot call status.
+		if (signal.bubblingStopped) {
+			slotCallStatus.bubblingStopped = true;
+		}
+		// If the propagation stopped property of the signal is set, set that property in slot call status.
+		if (signal.propagationStopped) {
+			slotCallStatus.propagationStopped = true;
+		}
 	}
 	#if as3 public #else private #end override function determineEquality(slot:Slot<D>):Bool {
 		// Since the first check makes sure the type of the passed slot is equal to this one, it is safe to assume that the passed

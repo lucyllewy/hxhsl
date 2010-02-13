@@ -30,6 +30,11 @@ package org.hsl.haxe;
  */
 class Signal<D> {
 	/**
+	 * Indicates whether the bubbling has been stopped by this signal (true) or not (false). Bubbling can be stopped by calling
+	 * the stopBubbling method.
+	 */
+	public var bubblingStopped(default, null):Bool;
+	/**
 	 * The slot that is currently processing the signal.
 	 */
 	public var currentSlot(default, null):Slot<D>;
@@ -51,6 +56,11 @@ class Signal<D> {
 	 */
 	public var initialSubject(default, null):Subject;
 	/**
+	 * Indicates whether the propagation has been stopped by this signal (true) or not (false). Propagation can be stopped by
+	 * calling the stopPropagation method.
+	 */
+	public var propagationStopped(default, null):Bool;
+	/**
 	 * Creates a new signal.
 	 */
 	public function new(data:D, currentSlot:Slot<D>, currentSubject:Subject, initialSubject:Subject):Void {
@@ -58,6 +68,26 @@ class Signal<D> {
 		this.currentSubject = currentSubject;
 		this.currentSlot = currentSlot;
 		this.initialSubject = initialSubject;
+		// Set bubblingStopped and propagationStopped to false, unless the target is flash9, as in that case the default value
+		// is false anyway.
+		#if !flash9
+		bubblingStopped = false;
+		propagationStopped = false;
+		#end
+	}
+	/**
+	 * Stops the bubbling of the signal. The subject currently dispatching this signal will not bubble it to its bubbling
+	 * targets.
+	 */
+	public inline function stopBubbling():Void {
+		bubblingStopped = true;
+	}
+	/**
+	 * Stops the propagation of the signal. The subject currently dispatching this signal will not call any slots after the
+	 * current one.
+	 */
+	public inline function stopPropagation():Void {
+		propagationStopped = true;
 	}
 	#if debug
 	private function toString():String {

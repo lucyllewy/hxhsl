@@ -120,22 +120,28 @@ class DirectSignaler<D> implements Signaler<D> {
 		}
 		// Verify the passed data.
 		verifyData(data);
-		// Dispatch the signal.
-		dispatchUnsafe(data, 
+		// Set the initial subject of the signal to the passed initial subject, or to the subject of this signaler if one was
+		// not passed.
+		var initialSubject:Subject = 
 			if (initialSubject == null) {
 				subject;
 			} else {
 				initialSubject;
 			}
-		);
-		// Bubble the signal.
-		bubble(data, initialSubject);
+		// Dispatch the signal.
+		var status:SlotCallStatus = dispatchUnsafe(data, initialSubject);
+		// Bubble the signal, if propagation and bubbling have not been stopped.
+		if (status.propagationStopped == false && status.bubblingStopped == false) {
+			bubble(data, initialSubject);
+		}
 	}
 	/**
-	 * Dispatches a signal without verifying the data.
+	 * Dispatches a signal without verifying the data, and returns the resulting slot call status.
 	 */
-	private /*inline*/ function dispatchUnsafe(data:D, initialSubject:Subject):Void {
-		sentinel.callConnected(data, subject, initialSubject);
+	private /*inline*/ function dispatchUnsafe(data:D, initialSubject:Subject):SlotCallStatus {
+		var status:SlotCallStatus = new SlotCallStatus();
+		sentinel.callConnected(data, subject, initialSubject, status);
+		return status;
 	}
 	private function getHasSlots():Bool {
 		return sentinel.isConnected;
@@ -222,10 +228,10 @@ private class Sentinel<D> extends LinkedSlot<D> {
 	/**
 	 * Calls every slot connected to the sentinel.
 	 */
-	public inline function callConnected(data:D, currentSubject:Subject, initialSubject:Subject):Void {
+	public inline function callConnected(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
 		var node:LinkedSlot<D> = next;
-		while (node != this) {
-			node.call(data, currentSubject, initialSubject);
+		while (node != this && slotCallStatus.propagationStopped == false) {
+			node.call(data, currentSubject, initialSubject, slotCallStatus);
 			node = node.next;
 		}
 	}

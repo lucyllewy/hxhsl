@@ -39,7 +39,7 @@ class LinkedSlot<D> implements Slot<D> {
 	public function new():Void {
 		destroyed = false;
 	}
-	public function call(data:D, currentSubject:Subject, initialSubject:Subject):Void {
+	public function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
 	}
 	/**
 	 * Determines whether this slot and the passed slot are equal (true) or not (false).

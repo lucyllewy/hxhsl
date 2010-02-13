@@ -26,6 +26,7 @@
 package org.hsl.haxe.translation;
 import haxe.PosInfos;
 import org.hsl.haxe.direct.DirectSignaler;
+import org.hsl.haxe.direct.SlotCallStatus;
 import org.hsl.haxe.Subject;
 
 /**
@@ -66,9 +67,11 @@ class TranslatingSignaler<D> extends DirectSignaler<D> {
 				translation.initialSubject;
 			}
 		// Dispatch the signal.
-		dispatchUnsafe(data, initialSubject);
-		// Bubble the signal.
-		bubble(data, initialSubject);
+		var status:SlotCallStatus = dispatchUnsafe(data, initialSubject);
+		// Bubble the signal, if propagation and bubbling have not been stopped.
+		if (status.propagationStopped == false && status.bubblingStopped == false) {
+			bubble(data, initialSubject);
+		}
 	}
 	/**
 	 * Stops translating translating and re-dispatching native events/signals. Translating signalers will likely add references

@@ -24,6 +24,7 @@
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
 package org.hsl.haxe;
+import org.hsl.haxe.direct.SlotCallStatus;
 
 /**
  * Slots represent the relation between a signaler, and one of its listeners. 
@@ -36,7 +37,7 @@ interface Slot<D> {
 	/**
 	 * Calls the slot to notify a listener.
 	 */
-	public function call(data:D, currentSubject:Subject, initialSubject:Subject):Void;
+	public function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void;
 	/**
 	 * Destroys the slot: removes it from the signaler it is in. Once destroyed, the call method of the slot might malfunction,
 	 * or stop functioning at all.

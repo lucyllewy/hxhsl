@@ -24,6 +24,7 @@
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
 package org.hsl.haxe;
+import org.hsl.haxe.direct.SlotCallStatus;
 
 /**
  * A null object implementation of the slot interface.
@@ -36,7 +37,7 @@ class NullSlot<D> implements Slot<D> {
 		destroyed = false;
 		#end
 	}
-	public function call(data:D, currentSubject:Subject, initialSubject:Subject):Void {
+	public function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
 	}
 	public function destroy():Void {
 		destroyed = true;

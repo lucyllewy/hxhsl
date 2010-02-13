@@ -39,7 +39,7 @@ class NiladicSlot<D> extends LinkedSlot<D> {
 		super();
 		this.method = method;
 	}
-	public override function call(data:D, currentSubject:Subject, initialSubject:Subject):Void {
+	public override function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
 		method();
 	}
 	#if as3 public #else private #end override function determineEquality(slot:Slot<D>):Bool {
