@@ -40,7 +40,9 @@ class NiladicSlot<D> extends LinkedSlot<D> {
 		this.method = method;
 	}
 	public override function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
-		method();
+		if (halted == false) {
+			method();
+		}
 	}
 	#if as3 public #else private #end override function determineEquality(slot:Slot<D>):Bool {
 		// Since the first check makes sure the type of the passed slot is equal to this one, it is safe to assume that the passed

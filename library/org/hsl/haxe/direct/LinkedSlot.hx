@@ -31,13 +31,18 @@ import org.hsl.haxe.Subject;
  * A doubly linked slot, used by the direct signaler. The slot has a reference to the next and the previous slot in the list.
  */
 class LinkedSlot<D> implements Slot<D> {
-	public var destroyed(default, null):Bool;
+	private var destroyed:Bool;
+	public var halted(default, null):Bool;
 	// It seems that in AS3 it is not allowed to write to private (protected) fields in ways that are allowed in haXe. Therefore,
 	// these fields are public in AS3.
 	#if as3 public #else private #end var next:LinkedSlot<D>;
 	#if as3 public #else private #end var previous:LinkedSlot<D>;
 	public function new():Void {
+		// Set destroyed and halted to false, unless the target is flash9, as in that case the default value is false anyway.
+		#if !flash9
 		destroyed = false;
+		halted = false;
+		#end
 	}
 	public function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
 	}
@@ -55,6 +60,12 @@ class LinkedSlot<D> implements Slot<D> {
 		previous.next = next;
 		next.previous = previous;
 		destroyed = true;
+	}
+	public function halt():Void {
+		halted = true;
+	}
+	public function resume():Void {
+		halted = false;
 	}
 	#if debug
 	private function toString():String {

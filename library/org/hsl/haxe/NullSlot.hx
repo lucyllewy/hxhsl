@@ -30,17 +30,22 @@ import org.hsl.haxe.direct.SlotCallStatus;
  * A null object implementation of the slot interface.
  */
 class NullSlot<D> implements Slot<D> {
-	public var destroyed(default, null):Bool;
+	public var halted(default, null):Bool;
 	public function new():Void {
-		// Set destroyed to false, unless the target is flash9, as in that case the default value is false anyway.
+		// Set halted to false, unless the target is flash9, as in that case the default value is false anyway.
 		#if !flash9
-		destroyed = false;
+		halted = false;
 		#end
 	}
 	public function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
 	}
 	public function destroy():Void {
-		destroyed = true;
+	}
+	public function halt():Void {
+		halted = true;
+	}
+	public function resume():Void {
+		halted = false;
 	}
 	#if debug
 	private function toString():String {

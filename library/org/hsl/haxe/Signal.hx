@@ -77,14 +77,17 @@ class Signal<D> {
 	}
 	/**
 	 * Stops the bubbling of the signal. The subject currently dispatching this signal will not bubble it to its bubbling
-	 * targets.
+	 * targets. Calling this method does not prevent other slots in the same subject from being called: see the stopPropagation
+	 * for that functionality.
 	 */
 	public inline function stopBubbling():Void {
 		bubblingStopped = true;
 	}
 	/**
 	 * Stops the propagation of the signal. The subject currently dispatching this signal will not call any slots after the
-	 * current one.
+	 * current one. Note that this method is slightly different from the stopPropagation method in DOM events: this method
+	 * prevents any slots from being called after this one, while the stopPropagation method in DOM events only prevents
+	 * the signal from bubbling. See the stopBubbling method for that functionality.
 	 */
 	public inline function stopPropagation():Void {
 		propagationStopped = true;

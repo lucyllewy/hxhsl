@@ -31,16 +31,27 @@ import org.hsl.haxe.direct.SlotCallStatus;
  */
 interface Slot<D> {
 	/**
-	 * Indicates whether the slot has been destroyed (true) or not (false).
+	 * Indicates whether the slot has been halted (true) or not (false).
 	 */
-	public var destroyed(default, null):Bool;
+	public var halted(default, null):Bool;
 	/**
 	 * Calls the slot to notify a listener.
 	 */
 	public function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void;
 	/**
-	 * Destroys the slot: removes it from the signaler it is in. Once destroyed, the call method of the slot might malfunction,
-	 * or stop functioning at all.
+	 * Destroys the slot: removes it from the signaler it is in. Slots cannot be undestroyed. To temporary suspend the slot from
+	 * notifying listeners, use the halt method. Once destroyed, the call method of the slot might malfunction, or stop
+	 * functioning at all.
 	 */
 	public function destroy():Void;
+	/**
+	 * Halts the slot. The slot will ignore any calls, and will not notify any listeners, until the resume method is called. If
+	 * the slot was already halted, calling this method has no effect.
+	 */
+	public function halt():Void;
+	/**
+	 * Resumes the slot, after it has been halted by calling the halt method. If the slot was not halted, calling this method has
+	 * no effect.
+	 */
+	public function resume():Void;
 }

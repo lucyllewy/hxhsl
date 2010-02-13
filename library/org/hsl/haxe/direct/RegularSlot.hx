@@ -41,6 +41,9 @@ class RegularSlot<D> extends LinkedSlot<D> {
 		this.method = method;
 	}
 	public override function call(data:D, currentSubject:Subject, initialSubject:Subject, slotCallStatus:SlotCallStatus):Void {
+		if (halted) {
+			return;
+		}
 		var signal:Signal<D> = new Signal<D>(data, this, currentSubject, initialSubject);
 		method(signal);
 		// If the bubbling stopped property of the signal is set, set that property in slot call status.
