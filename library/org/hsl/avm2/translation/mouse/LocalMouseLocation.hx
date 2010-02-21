@@ -36,7 +36,10 @@ class LocalMouseLocation extends MouseLocation {
 	 * The global location of the mouse. The global location is relative to the stage, as opposed to an other scope.
 	 */
 	public var globalLocation(getGlobalLocation, null):MouseLocation;
-	private var scope:DisplayObject;
+	/**
+	 * The scope to which this mouse location is relative.
+	 */
+	public var scope(default, null):DisplayObject;
 	/**
 	 * Creates a new local mouse location.
 	 */
