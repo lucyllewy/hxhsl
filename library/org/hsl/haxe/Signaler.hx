@@ -42,29 +42,29 @@ interface Signaler<D> {
 	 */
 	public var hasSlots(getHasSlots, null):Bool;
 	/**
-	 * Adds a bubbling target. The signaler will bubble to this bubbling target in a bubbling process.
+	 * Adds a bubbling target to the signaler. The signaler will bubble to this bubbling target in a bubbling process.
 	 */
 	public function addBubblingTarget(value:Signaler<D>):Void;
 	/**
-	 * Adds a slot containing a method that accepts nothing, and returns nothing, and returns that slot. The slot can be removed
-	 * by calling the removeNiladicSlot method of the signaler, or the destroy method of the returned slot.
+	 * Adds a slot containing a method that accepts nothing, and returns nothing, to the signaler and returns that slot. The slot
+	 * can be removed by calling either the removeNiladicSlot method of the signaler, or the destroy method of the returned slot.
 	 * 
 	 * Using niladic slots, you cannot access the data sent in the signals. If you need that data, use the addSlot method or the
 	 * addSimpleSlot method. The former is more advanced than the latter.
 	 */
 	public function addNiladicSlot(method:Void -> Void):Slot<D>;
 	/**
-	 * Adds a slot containing a method that accepts a signal, and returns nothing, and returns that slot. The slot can be removed
-	 * by calling the removeSlot method of the signaler, or the destroy method of the returned slot.
+	 * Adds a slot containing a method that accepts a signal, and returns nothing, to the signaler and returns that slot. The
+	 * slot can be removed by calling either the removeSlot method of the signaler, or the destroy method of the returned slot.
 	 * 
 	 * In a lot of cases, there is no need to accept the entire signal. For those cases, you could use the addNiladicSlot
 	 * method or the addSimple method instead.
 	 */
 	public function addSlot(method:Signal<D> -> Void):Slot<D>;
 	/**
-	 * Adds a slot containing a method that accepts data of the type that equals the type parameter of the signaler and returns
-	 * nothing, and returns that slot. The slot can be removed by calling the removeSimpleSlot method of the slot list, or the
-	 * destroy method of the slot.
+	 * Adds a slot containing a method that accepts data of the type that equals the type parameter of the signaler, and returns
+	 * nothing, to the signaler and returns that slot. The slot can be removed by calling either the removeSimpleSlot method of
+	 * the slot list, or the destroy method of the slot.
 	 */
 	public function addSimpleSlot(method:D -> Void):Slot<D>;
 	/**
@@ -75,23 +75,23 @@ interface Signaler<D> {
 	public function dispatch(?data:D, ?initialSubject:Subject, ?positionInformation:PosInfos):Void;
 	private function getHasSlots():Bool;
 	/**
-	 * Removes a bubbling target that was added by the addBubblingTarget method. If the signaler does not have the passed value
-	 * as a bubbling target, calling this method has no effect.
+	 * Removes a bubbling target from the signaler. If the signaler does not have the passed value as a bubbling target, calling
+	 * this method has no effect.
 	 */
 	public function removeBubblingTarget(value:Signaler<D>):Void;
 	/**
-	 * Removes a slot added by the addNiladicSlot method. If this signaler does not have a slot with a method equal the passed
-	 * one, calling this method has no effect.
+	 * Removes a slot from the signaler. If this signaler does not have a slot with a method equal the passed one, calling this
+	 * method has no effect.
 	 */
 	public function removeNiladicSlot(method:Void -> Void):Void;
 	/**
-	 * Removes a slot added by the addSlot method. If this signaler does not have a slot with a method equal the passed one,
-	 * calling this method has no effect.
+	 * Removes a slot from the signaler. If this signaler does not have a slot with a method equal the passed one, calling this
+	 * method has no effect.
 	 */
 	public function removeSlot(method:Signal<D> -> Void):Void;
 	/**
-	 * Removes a slot added by the addSimpleSlot method. If this signaler does not have a slot with a method equal the passed
-	 * one, calling this method has no effect.
+	 * Removes a slot from the signaler. If this signaler does not have a slot with a method equal the passed one, calling this
+	 * method has no effect.
 	 */
 	public function removeSimpleSlot(method:D -> Void):Void;
 }
