@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
  * Owen Durni, Niel Drummond.
  *
@@ -23,34 +23,25 @@
  * 
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
-package org.hsl.avm2.translation.keyboard;
-import flash.events.KeyboardEvent;
-import org.hsl.haxe.translation.NativeEvent;
-import org.hsl.haxe.translation.Translation;
-import org.hsl.haxe.translation.Translator;
+package org.hsl.js.translation.mouse;
 
 /**
- * Translates a keyboard event to a key code.
+ * The condition of the mouse, which consists of the location and the modifier keys state.
  */
-class KeyCodeTranslator implements Translator<Int> {
+class MouseCondition {
 	/**
-	 * Creates a new key code translator.
+	 * The location, the x and the y coordinate, of the mouse, relative to a scope.
 	 */
-	public function new():Void {
+	public var location(default, null):LocalMouseLocation;
+	/**
+	 * The state of the modifier keys (the Control, Alt and Shift keys.)
+	 */
+	public var modifierKeysState(default, null):ModifierKeysState;
+	/**
+	 * Creates a new mouse condition.
+	 */
+	public function new(location:LocalMouseLocation, modifierKeysState:ModifierKeysState):Void {
+		this.location = location;
+		this.modifierKeysState = modifierKeysState;
 	}
-	public function translate(nativeEvent:NativeEvent):Translation<Int> {
-		var keyboardEvent:KeyboardEvent;
-		try {
-			keyboardEvent = cast(nativeEvent, KeyboardEvent);
-		} catch (error:Dynamic) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The nativeEvent argument must be a KeyboardEvent.";
-		}
-		return new Translation<Int>(keyboardEvent.keyCode, keyboardEvent.target);
-	}
-	#if debug
-	private function toString():String {
-		return "[Translator]";
-	}
-	#end
 }

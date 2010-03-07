@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
  * Owen Durni, Niel Drummond.
  *
@@ -23,39 +23,27 @@
  * 
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
-package org.hsl.avm2.translation.mouse;
-import flash.display.DisplayObject;
-import flash.events.MouseEvent;
+package org.hsl.js.translation.mouse;
+
 import org.hsl.haxe.translation.Translation;
 import org.hsl.haxe.translation.Translator;
 import org.hsl.haxe.translation.NativeEvent;
+import org.hsl.js.translation.JSCommonTranslator;
 
 /**
- * A translator that translates mouse events to mouse conditions.
+ * A translator that translates mouse events to modifier keys states. The modifier keys states are the states of the
+ * modifier keys (the Control, Alt and Shift keys) at the moment the mouse events were dispatched.
  */
- class MouseConditionTranslator implements Translator<MouseCondition> {
+ class ModifierKeysStateTranslator extends JSCommonTranslator, implements Translator<ModifierKeysState> {
 	/**
-	 * Creates a new mouse condition translator.
+	 * Creates a new modifier keys state translator.
 	 */
 	public function new():Void {
 	}
-	public function translate(nativeEvent:NativeEvent):Translation<MouseCondition> {
-		var mouseEvent:MouseEvent;
-		try {
-			mouseEvent = cast(nativeEvent, MouseEvent);
-		} catch (error:Dynamic) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The nativeEvent argument must be a MouseEvent.";
-		}
-		// The scope argument of the local mouse location constructor is a display object. The target property of the mouseEvent
-		// variable is dynamic, but since mouse events are dispatched by display objects only in most cases we'll assume that the
-		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
-		// them.
-		#if as3
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#else
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#end
+	public function translate(nativeEvent:NativeEvent):Translation<ModifierKeysState> {
+		var mouseEvent:Event = getEvent(nativeEvent);
+		var target:Subject = targetFromDOMEvent(nativeEvent);
+		return new Translation<ModifierKeysState>(new ModifierKeysState(mouseEvent.altKey, mouseEvent.ctrlKey, mouseEvent.shiftKey), target);
 	}
 	#if debug
 	private function toString():String {

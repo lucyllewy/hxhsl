@@ -1,6 +1,6 @@
 ﻿/**
  * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni.
+ * Owen Durni, Niel Drummond.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -30,6 +30,9 @@ package org.hsl.haxe.translation;
  */
 #if flash9
 typedef NativeEvent = flash.events.Event;
+#elseif js
+import js.Dom;
+typedef NativeEvent = Event;
 #else
 typedef NativeEvent = {};
 #end

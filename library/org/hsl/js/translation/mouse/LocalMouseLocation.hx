@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
  * Owen Durni, Niel Drummond.
  *
@@ -23,43 +23,39 @@
  * 
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
-package org.hsl.avm2.translation.mouse;
-import flash.display.DisplayObject;
-import flash.events.MouseEvent;
-import org.hsl.haxe.translation.Translation;
-import org.hsl.haxe.translation.Translator;
-import org.hsl.haxe.translation.NativeEvent;
+package org.hsl.js.translation.mouse;
+
+import js.Dom;
 
 /**
- * A translator that translates mouse events to mouse conditions.
+ * The location, the x and the y coordinate, of the mouse, relative to a scope.
  */
- class MouseConditionTranslator implements Translator<MouseCondition> {
+class LocalMouseLocation extends MouseLocation {
 	/**
-	 * Creates a new mouse condition translator.
+	 * The global location of the mouse. The global location is relative to the stage, as opposed to an other scope.
 	 */
-	public function new():Void {
-	}
-	public function translate(nativeEvent:NativeEvent):Translation<MouseCondition> {
-		var mouseEvent:MouseEvent;
-		try {
-			mouseEvent = cast(nativeEvent, MouseEvent);
-		} catch (error:Dynamic) {
+	public var globalLocation(default,null):MouseLocation;
+	/**
+	 * The scope to which this mouse location is relative.
+	 */
+	public var scope(default, null):HtmlDom;
+	/**
+	 * Creates a new local mouse location.
+	 */
+	public function new(x:Float, y:Float, scope:HtmlDom, globalLocation:MouseLocation):Void {
+		super(x, y);
+		// If scope is null, throw an exception. Having null for a scope might produce null object reference errors later on: when
+		// the globalLocation property is called.
+		if (scope == null) {
 			// TODO: throw a more exception instead of this lame one.
-			throw "The nativeEvent argument must be a MouseEvent.";
+			throw "The scope argument must be non-null.";
 		}
-		// The scope argument of the local mouse location constructor is a display object. The target property of the mouseEvent
-		// variable is dynamic, but since mouse events are dispatched by display objects only in most cases we'll assume that the
-		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
-		// them.
-		#if as3
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#else
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#end
+		this.scope = scope;
+		this.globalLocation = globalLocation;
 	}
 	#if debug
-	private function toString():String {
-		return "[Translator]";
+	private override function toString():String {
+		return "[LocalMouseLocation x=" + x + " y=" + y + " scope=" + scope + "]";
 	}
 	#end
 }

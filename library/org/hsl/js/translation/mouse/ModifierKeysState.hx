@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
  * Owen Durni, Niel Drummond.
  *
@@ -23,43 +23,35 @@
  * 
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
-package org.hsl.avm2.translation.mouse;
-import flash.display.DisplayObject;
-import flash.events.MouseEvent;
-import org.hsl.haxe.translation.Translation;
-import org.hsl.haxe.translation.Translator;
-import org.hsl.haxe.translation.NativeEvent;
+package org.hsl.js.translation.mouse;
 
 /**
- * A translator that translates mouse events to mouse conditions.
+ * The state of the modifier keys (the Control, Alt and Shift keys.)
  */
- class MouseConditionTranslator implements Translator<MouseCondition> {
+class ModifierKeysState {
 	/**
-	 * Creates a new mouse condition translator.
+	 * Indicates whether the alt key is down (true) or not (false);
 	 */
-	public function new():Void {
-	}
-	public function translate(nativeEvent:NativeEvent):Translation<MouseCondition> {
-		var mouseEvent:MouseEvent;
-		try {
-			mouseEvent = cast(nativeEvent, MouseEvent);
-		} catch (error:Dynamic) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The nativeEvent argument must be a MouseEvent.";
-		}
-		// The scope argument of the local mouse location constructor is a display object. The target property of the mouseEvent
-		// variable is dynamic, but since mouse events are dispatched by display objects only in most cases we'll assume that the
-		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
-		// them.
-		#if as3
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#else
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#end
+	public var altKeyDown(default, null):Bool;
+	/**
+	 * Indicates whether the control key is down (true) or not (false);
+	 */
+	public var controlKeyDown(default, null):Bool;
+	/**
+	 * Indicates whether the shift key is down (true) or not (false);
+	 */
+	public var shiftKeyDown(default, null):Bool;
+	/**
+	 * Creates a new modifier keys state.
+	 */
+	public function new(altKeyDown:Bool, controlKeyDown:Bool, shiftKeyDown:Bool):Void {
+		this.altKeyDown = altKeyDown;
+		this.controlKeyDown = controlKeyDown;
+		this.shiftKeyDown = shiftKeyDown;
 	}
 	#if debug
 	private function toString():String {
-		return "[Translator]";
+		return "[ModifierKeysState altKeyDown=" + altKeyDown + " controlKeyDown=" + controlKeyDown + " shiftKeyDown=" + shiftKeyDown + "]";
 	}
 	#end
 }

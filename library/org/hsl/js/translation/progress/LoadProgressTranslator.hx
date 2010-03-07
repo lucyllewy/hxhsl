@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
  * Owen Durni, Niel Drummond.
  *
@@ -23,39 +23,37 @@
  * 
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
-package org.hsl.avm2.translation.mouse;
-import flash.display.DisplayObject;
-import flash.events.MouseEvent;
+package org.hsl.js.translation.progress;
+
+import js.XMLHttpRequest;
+
 import org.hsl.haxe.translation.Translation;
 import org.hsl.haxe.translation.Translator;
 import org.hsl.haxe.translation.NativeEvent;
 
+import js.Dom;
+
 /**
- * A translator that translates mouse events to mouse conditions.
+ * A translator that translates progress events to load progresses.
  */
- class MouseConditionTranslator implements Translator<MouseCondition> {
+class LoadProgressTranslator implements Translator<LoadProgress> {
 	/**
-	 * Creates a new mouse condition translator.
+	 * Creates a load progress translator.
 	 */
 	public function new():Void {
 	}
-	public function translate(nativeEvent:NativeEvent):Translation<MouseCondition> {
-		var mouseEvent:MouseEvent;
-		try {
-			mouseEvent = cast(nativeEvent, MouseEvent);
-		} catch (error:Dynamic) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The nativeEvent argument must be a MouseEvent.";
-		}
-		// The scope argument of the local mouse location constructor is a display object. The target property of the mouseEvent
-		// variable is dynamic, but since mouse events are dispatched by display objects only in most cases we'll assume that the
-		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
-		// them.
-		#if as3
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
-		#else
-		return new Translation<MouseCondition>(new MouseCondition(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
+	public function translate(nativeEvent:NativeEvent):Translation<LoadProgress> {
+		var progressEvent:Dynamic = nativeEvent;
+		var loaded : Int = 0;
+		var total : Int = 0;
+
+		#if debug
+		if ( Lib.isIE ) throw "Progress events are not supported on IE.";
 		#end
+
+		loaded = progressEvent.loaded == null ? progressEvent.progress : progressEvent.loaded;
+		total = progressEvent.total == null ? progressEvent.totalSize : progressEvent.total;
+		return new Translation<LoadProgress>(new LoadProgress(loaded, total), progressEvent.target);
 	}
 	#if debug
 	private function toString():String {
