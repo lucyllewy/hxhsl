@@ -1,0 +1,319 @@
+size profile Function$/emptyCtor
+  abc 9 mir 1136 md 276
+  1584K mir/s  134K md/s  93% in compile during 654 micros
+  276 bytes from 71 MIR instructions 82 MD. max span 0 cse 9 dead 0
+  100 bytes of stack with 9 spills 10 steals 6 remats using 0 times
+size profile Object$/_dontEnumPrototype
+  abc 44 mir 2240 md 542
+  3872K mir/s  2489K md/s  61% in compile during 94 micros
+  542 bytes from 140 MIR instructions 146 MD. max span 0 cse 10 dead 0
+  152 bytes of stack with 18 spills 21 steals 13 remats using 0 times
+size profile Object$/init
+  abc 76 mir 6016 md 1506
+  4782K mir/s  4859K md/s  52% in compile during 166 micros
+  1506 bytes from 376 MIR instructions 429 MD. max span 0 cse 97 dead 0
+  156 bytes of stack with 32 spills 42 steals 40 remats using 0 times
+size profile flash.display::Stage
+  abc 6 mir 800 md 197
+  2079K mir/s  398K md/s  86% in compile during 177 micros
+  197 bytes from 50 MIR instructions 61 MD. max span 0 cse 4 dead 0
+  80 bytes of stack with 4 spills 6 steals 5 remats using 0 times
+size profile flash::Boot
+  abc 303 mir 14192 md 4119
+  4600K mir/s  4858K md/s  50% in compile during 388 micros
+  4119 bytes from 887 MIR instructions 953 MD. max span 0 cse 249 dead 0
+  304 bytes of stack with 50 spills 56 steals 87 remats using 0 times
+size profile 
+  abc 5 mir 656 md 154
+  2501K mir/s  1228K md/s  70% in compile during 54 micros
+  154 bytes from 41 MIR instructions 47 MD. max span 0 cse 4 dead 0
+  64 bytes of stack with 2 spills 4 steals 3 remats using 0 times
+size profile flash.display::MovieClip
+  abc 6 mir 800 md 182
+  3044K mir/s  1343K md/s  72% in compile during 58 micros
+  182 bytes from 50 MIR instructions 57 MD. max span 0 cse 4 dead 0
+  80 bytes of stack with 4 spills 6 steals 5 remats using 0 times
+size profile flash.display::Sprite
+  abc 12 mir 960 md 210
+  3356K mir/s  1582K md/s  70% in compile during 60 micros
+  210 bytes from 60 MIR instructions 67 MD. max span 0 cse 5 dead 0
+  80 bytes of stack with 4 spills 7 steals 6 remats using 0 times
+size profile <anonymous>
+  abc 10 mir 1008 md 236
+  3090K mir/s  1769K md/s  67% in compile during 62 micros
+  236 bytes from 63 MIR instructions 75 MD. max span 0 cse 2 dead 0
+  120 bytes of stack with 11 spills 15 steals 11 remats using 0 times
+size profile MethodInfo-218
+  abc 120 mir 4976 md 1342
+  3475K mir/s  4610K md/s  47% in compile during 171 micros
+  1342 bytes from 311 MIR instructions 379 MD. max span 0 cse 146 dead 0
+  128 bytes of stack with 22 spills 7 steals 20 remats using 0 times
+size profile Main$/main
+  abc 25 mir 1600 md 396
+  3849K mir/s  2340K md/s  65% in compile during 76 micros
+  396 bytes from 100 MIR instructions 118 MD. max span 0 cse 16 dead 0
+  104 bytes of stack with 9 spills 5 steals 6 remats using 0 times
+size profile Main
+  abc 79 mir 3344 md 805
+  3083K mir/s  3570K md/s  49% in compile during 134 micros
+  805 bytes from 209 MIR instructions 237 MD. max span 0 cse 44 dead 0
+  140 bytes of stack with 16 spills 19 steals 21 remats using 0 times
+size profile org.hsl.haxe.direct::DirectSignaler
+  abc 117 mir 5456 md 1227
+  2206K mir/s  3541K md/s  40% in compile during 259 micros
+  1227 bytes from 341 MIR instructions 372 MD. max span 0 cse 43 dead 0
+  124 bytes of stack with 23 spills 19 steals 27 remats using 0 times
+size profile org.hsl.haxe.verification::AllAcceptingVerifier
+  abc 10 mir 816 md 193
+  2866K mir/s  1293K md/s  71% in compile during 61 micros
+  193 bytes from 51 MIR instructions 57 MD. max span 0 cse 7 dead 0
+  72 bytes of stack with 4 spills 4 steals 4 remats using 0 times
+size profile List
+  abc 27 mir 1232 md 298
+  3338K mir/s  1918K md/s  65% in compile during 67 micros
+  298 bytes from 77 MIR instructions 85 MD. max span 0 cse 9 dead 0
+  80 bytes of stack with 5 spills 5 steals 6 remats using 0 times
+size profile org.hsl.haxe.direct._DirectSignaler::Sentinel
+  abc 43 mir 1808 md 426
+  4028K mir/s  2384K md/s  65% in compile during 80 micros
+  426 bytes from 113 MIR instructions 126 MD. max span 0 cse 13 dead 0
+  96 bytes of stack with 8 spills 11 steals 11 remats using 0 times
+size profile org.hsl.haxe.direct::LinkedSlot
+  abc 9 mir 816 md 193
+  2918K mir/s  1309K md/s  71% in compile during 60 micros
+  193 bytes from 51 MIR instructions 57 MD. max span 0 cse 7 dead 0
+  72 bytes of stack with 4 spills 4 steals 4 remats using 0 times
+size profile flash.text::TextField
+  abc 6 mir 800 md 182
+  2541K mir/s  1184K md/s  70% in compile during 67 micros
+  182 bytes from 50 MIR instructions 57 MD. max span 0 cse 4 dead 0
+  80 bytes of stack with 4 spills 6 steals 5 remats using 0 times
+size profile Main/addedToStageHandler
+  abc 177 mir 5840 md 1372
+  4257K mir/s  4390K md/s  50% in compile during 173 micros
+  1372 bytes from 365 MIR instructions 386 MD. max span 0 cse 76 dead 0
+  156 bytes of stack with 22 spills 27 steals 24 remats using 0 times
+size profile flash.text::TextFormat
+  abc 169 mir 8288 md 2073
+  7876K mir/s  5250K md/s  58% in compile during 159 micros
+  2073 bytes from 518 MIR instructions 493 MD. max span 0 cse 31 dead 0
+  248 bytes of stack with 31 spills 54 steals 83 remats using 0 times
+size profile Object
+  abc 3 mir 544 md 120
+  2251K mir/s  1025K md/s  70% in compile during 51 micros
+  120 bytes from 34 MIR instructions 37 MD. max span 0 cse 2 dead 0
+  72 bytes of stack with 3 spills 4 steals 3 remats using 0 times
+size profile Main/test
+  abc 189 mir 6096 md 1541
+  4335K mir/s  3872K md/s  54% in compile during 191 micros
+  1541 bytes from 381 MIR instructions 400 MD. max span 0 cse 87 dead 0
+  216 bytes of stack with 30 spills 33 steals 32 remats using 0 times
+size profile org.hsl.haxe.direct::DirectSignaler/addSimpleSlot
+  abc 67 mir 2560 md 630
+  4504K mir/s  2890K md/s  63% in compile during 96 micros
+  630 bytes from 160 MIR instructions 177 MD. max span 0 cse 18 dead 0
+  144 bytes of stack with 21 spills 25 steals 16 remats using 0 times
+size profile org.hsl.haxe.direct::SimpleSlot
+  abc 38 mir 1760 md 395
+  4193K mir/s  2295K md/s  66% in compile during 78 micros
+  395 bytes from 110 MIR instructions 120 MD. max span 0 cse 12 dead 0
+  96 bytes of stack with 7 spills 6 steals 12 remats using 0 times
+size profile flash.text::TextField/appendText
+  abc 22 mir 1760 md 400
+  2618K mir/s  1314K md/s  69% in compile during 139 micros
+  400 bytes from 110 MIR instructions 128 MD. max span 0 cse 16 dead 0
+  120 bytes of stack with 14 spills 15 steals 13 remats using 0 times
+size profile org.hsl.haxe.direct::DirectSignaler/dispatch
+  abc 248 mir 7936 md 2066
+  3931K mir/s  4683K md/s  46% in compile during 237 micros
+  2066 bytes from 496 MIR instructions 522 MD. max span 0 cse 72 dead 0
+  212 bytes of stack with 35 spills 36 steals 48 remats using 0 times
+size profile Std$/is
+  abc 31 mir 1376 md 325
+  3852K mir/s  2074K md/s  67% in compile during 69 micros
+  325 bytes from 86 MIR instructions 98 MD. max span 0 cse 11 dead 0
+  112 bytes of stack with 11 spills 11 steals 8 remats using 0 times
+size profile flash::Boot$/__instanceof
+  abc 72 mir 3728 md 1014
+  5146K mir/s  2959K md/s  63% in compile during 124 micros
+  1014 bytes from 233 MIR instructions 234 MD. max span 0 cse 30 dead 0
+  236 bytes of stack with 23 spills 17 steals 12 remats using 0 times
+size profile Type$/getClass
+  abc 149 mir 4864 md 1197
+  2007K mir/s  4032K md/s  36% in compile during 236 micros
+  1197 bytes from 304 MIR instructions 345 MD. max span 0 cse 57 dead 0
+  144 bytes of stack with 26 spills 24 steals 25 remats using 0 times
+size profile <anonymous>
+  abc 6 mir 944 md 204
+  3055K mir/s  1600K md/s  68% in compile during 61 micros
+  204 bytes from 59 MIR instructions 68 MD. max span 0 cse 2 dead 0
+  96 bytes of stack with 7 spills 4 steals 9 remats using 0 times
+size profile Object/http://adobe.com/AS3/2006/builtin::hasOwnProperty
+  abc 10 mir 1168 md 247
+  3645K mir/s  1748K md/s  69% in compile during 66 micros
+  247 bytes from 73 MIR instructions 81 MD. max span 0 cse 4 dead 0
+  108 bytes of stack with 10 spills 4 steals 10 remats using 0 times
+size profile Type$/getClassName
+  abc 137 mir 3936 md 858
+  5264K mir/s  3286K md/s  61% in compile during 122 micros
+  858 bytes from 246 MIR instructions 248 MD. max span 0 cse 36 dead 0
+  120 bytes of stack with 18 spills 14 steals 11 remats using 0 times
+size profile String/http://adobe.com/AS3/2006/builtin::split
+  abc 28 mir 1712 md 399
+  3939K mir/s  2284K md/s  65% in compile during 78 micros
+  399 bytes from 107 MIR instructions 118 MD. max span 0 cse 6 dead 0
+  120 bytes of stack with 10 spills 8 steals 17 remats using 0 times
+size profile Array/http://adobe.com/AS3/2006/builtin::join
+  abc 12 mir 1104 md 245
+  3597K mir/s  1474K md/s  73% in compile during 73 micros
+  245 bytes from 69 MIR instructions 80 MD. max span 0 cse 4 dead 0
+  112 bytes of stack with 11 spills 8 steals 11 remats using 0 times
+size profile Array$/_join
+  abc 123 mir 3824 md 1089
+  4894K mir/s  706K md/s  88% in compile during 410 micros
+  1089 bytes from 239 MIR instructions 256 MD. max span 0 cse 18 dead 3
+  184 bytes of stack with 26 spills 29 steals 25 remats using 0 times
+size profile org.hsl.haxe.direct::DirectSignaler/verifyData
+  abc 64 mir 2608 md 672
+  3340K mir/s  2757K md/s  57% in compile during 115 micros
+  672 bytes from 163 MIR instructions 183 MD. max span 0 cse 28 dead 0
+  140 bytes of stack with 18 spills 19 steals 13 remats using 0 times
+size profile org.hsl.haxe.verification::AllAcceptingVerifier/verify
+  abc 16 mir 848 md 208
+  2769K mir/s  1379K md/s  70% in compile during 64 micros
+  208 bytes from 53 MIR instructions 62 MD. max span 0 cse 7 dead 0
+  84 bytes of stack with 6 spills 4 steals 3 remats using 0 times
+size profile org.hsl.haxe.direct::DirectSignaler/dispatchUnsafe
+  abc 117 mir 3280 md 838
+  4394K mir/s  2761K md/s  62% in compile during 123 micros
+  838 bytes from 205 MIR instructions 211 MD. max span 0 cse 20 dead 0
+  168 bytes of stack with 24 spills 28 steals 21 remats using 0 times
+size profile org.hsl.haxe.direct::SlotCallStatus
+  abc 10 mir 816 md 193
+  3088K mir/s  1289K md/s  72% in compile during 60 micros
+  193 bytes from 51 MIR instructions 57 MD. max span 0 cse 7 dead 0
+  72 bytes of stack with 4 spills 4 steals 4 remats using 0 times
+size profile org.hsl.haxe.direct::SimpleSlot/call
+  abc 51 mir 1936 md 505
+  4096K mir/s  2469K md/s  65% in compile during 85 micros
+  505 bytes from 121 MIR instructions 137 MD. max span 0 cse 16 dead 0
+  160 bytes of stack with 17 spills 20 steals 14 remats using 0 times
+size profile MethodInfo-191
+  abc 12 mir 768 md 192
+  2955K mir/s  1396K md/s  71% in compile during 56 micros
+  192 bytes from 48 MIR instructions 56 MD. max span 0 cse 4 dead 0
+  80 bytes of stack with 5 spills 4 steals 3 remats using 0 times
+size profile org.hsl.haxe.direct::DirectSignaler/bubble
+  abc 89 mir 4064 md 957
+  3365K mir/s  3093K md/s  51% in compile during 154 micros
+  957 bytes from 254 MIR instructions 245 MD. max span 0 cse 45 dead 0
+  200 bytes of stack with 19 spills 18 steals 18 remats using 0 times
+size profile List/iterator
+  abc 38 mir 1888 md 446
+  3234K mir/s  1329K md/s  73% in compile during 135 micros
+  446 bytes from 118 MIR instructions 132 MD. max span 0 cse 28 dead 0
+  136 bytes of stack with 13 spills 8 steals 13 remats using 0 times
+size profile MethodInfo-80
+  abc 20 mir 1360 md 313
+  3412K mir/s  1985K md/s  65% in compile during 71 micros
+  313 bytes from 85 MIR instructions 93 MD. max span 0 cse 14 dead 0
+  96 bytes of stack with 6 spills 5 steals 7 remats using 0 times
+size profile flash.display::LoaderInfo
+  abc 6 mir 800 md 182
+  2809K mir/s  1240K md/s  72% in compile during 63 micros
+  182 bytes from 50 MIR instructions 57 MD. max span 0 cse 4 dead 0
+  80 bytes of stack with 4 spills 6 steals 5 remats using 0 times
+verified instructions 3304
+verified code size 7176
+cpool size 0
+cpool int size 4
+cpool uint size 0
+cpool double size 0
+cpool string size 5142
+cpool namespacesize 39
+cpool namespace set size 6
+cpool multiname size 1029
+methods size 20980
+instances size 715
+classes size 484
+scripts size 175
+bodies size 87405
+3	0 %	3 B	0 %	 throw
+10	0 %	20 B	0 %	 kill
+5	0 %	5 B	0 %	 label
+1	0 %	4 B	0 %	 ifnlt
+17	0 %	68 B	0 %	 jump
+2	0 %	8 B	0 %	 iftrue
+15	0 %	60 B	0 %	 iffalse
+23	0 %	92 B	1 %	 ifeq
+12	0 %	48 B	0 %	 ifne
+2	0 %	8 B	0 %	 iflt
+1	0 %	4 B	0 %	 ifstrictne
+2	0 %	2 B	0 %	 pushwith
+72	2 %	72 B	1 %	 popscope
+1	0 %	1 B	0 %	 nextname
+40	1 %	40 B	0 %	 pushnull
+3	0 %	3 B	0 %	 pushundefined
+38	1 %	76 B	1 %	 pushbyte
+6	0 %	6 B	0 %	 pushtrue
+15	0 %	15 B	0 %	 pushfalse
+30	0 %	30 B	0 %	 pop
+16	0 %	16 B	0 %	 dup
+2	0 %	2 B	0 %	 swap
+154	4 %	435 B	6 %	 pushstring
+23	0 %	46 B	0 %	 pushint
+28	0 %	56 B	0 %	 pushdouble
+177	5 %	177 B	2 %	 pushscope
+1	0 %	2 B	0 %	 pushnamespace
+1	0 %	3 B	0 %	 hasnext2
+154	4 %	413 B	5 %	 newfunction
+3	0 %	12 B	0 %	 callsuper
+44	1 %	150 B	2 %	 callproperty
+113	3 %	113 B	1 %	 returnvoid
+25	0 %	25 B	0 %	 returnvalue
+10	0 %	20 B	0 %	 constructsuper
+13	0 %	42 B	0 %	 constructprop
+16	0 %	58 B	0 %	 callpropvoid
+5	0 %	10 B	0 %	 newobject
+2	0 %	4 B	0 %	 newarray
+4	0 %	4 B	0 %	 newactivation
+47	1 %	105 B	1 %	 newclass
+326	9 %	852 B	11 %	 findpropstrict
+125	3 %	329 B	4 %	 findproperty
+67	2 %	151 B	2 %	 getlex
+152	4 %	416 B	5 %	 setproperty
+48	1 %	96 B	1 %	 getlocal
+22	0 %	44 B	0 %	 setlocal
+15	0 %	15 B	0 %	 getglobalscope
+8	0 %	16 B	0 %	 getscopeobject
+323	9 %	835 B	11 %	 getproperty
+183	5 %	487 B	6 %	 initproperty
+87	2 %	174 B	2 %	 setslot
+4	0 %	4 B	0 %	 convert_i
+3	0 %	3 B	0 %	 convert_u
+3	0 %	3 B	0 %	 convert_d
+12	0 %	12 B	0 %	 convert_b
+52	1 %	106 B	1 %	 coerce
+22	0 %	22 B	0 %	 coerce_a
+8	0 %	8 B	0 %	 coerce_s
+2	0 %	4 B	0 %	 astype
+1	0 %	1 B	0 %	 astypelate
+1	0 %	1 B	0 %	 increment
+2	0 %	2 B	0 %	 not
+7	0 %	7 B	0 %	 add
+5	0 %	5 B	0 %	 divide
+6	0 %	6 B	0 %	 equals
+1	0 %	1 B	0 %	 istypelate
+1	0 %	2 B	0 %	 inclocal_i
+2	0 %	2 B	0 %	 subtract_i
+224	6 %	224 B	3 %	 getlocal0
+41	1 %	41 B	0 %	 getlocal1
+34	1 %	34 B	0 %	 getlocal2
+29	0 %	29 B	0 %	 getlocal3
+12	0 %	12 B	0 %	 setlocal1
+10	0 %	10 B	0 %	 setlocal2
+13	0 %	13 B	0 %	 setlocal3
+17	0 %	106 B	1 %	 abs_jump
+45	1 %	253 B	3 %	 debug
+196	5 %	431 B	6 %	 debugline
+59	1 %	161 B	2 %	 debugfile
