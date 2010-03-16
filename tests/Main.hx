@@ -49,8 +49,7 @@ class Main extends Sprite
 	 * Signaler dispatch 2
 	 * 
 	 * Note: there isn't priority sorting in Signaler.
-	 * Note: Flex profiler cannot profile SWF compiled with HaXe. :-(
-	 * I've got some raw profiling info, but it's difficult to analize that.
+	 * Note: to be able to profile, you have to compile with -D fdb option.
 	 */
 	private function test():Void
 	{
