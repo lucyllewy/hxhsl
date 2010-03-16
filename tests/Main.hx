@@ -32,6 +32,7 @@ class Main extends Sprite
 	
 	private function addedToStageHandler(event:Event):Void
 	{
+		untyped __global__["flash.debugger.enterDebugger"]();
 		super.removeEventListener(Event.ADDED_TO_STAGE, this.addedToStageHandler);
 		this.stage.align = StageAlign.TOP_LEFT;
 		this.stage.scaleMode = StageScaleMode.NO_SCALE;
