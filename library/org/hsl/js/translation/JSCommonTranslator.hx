@@ -80,16 +80,21 @@ class JSCommonTranslator
 		if ( ieEvent.pageX != null || ieEvent.pageY != null ) {
 			posx = ieEvent.pageX;
 			posy = ieEvent.pageY;
-		}
-		else if ( ieEvent.clientX != null || ieEvent.clientY != null ) {
+		} else if ( ieEvent.clientX != null || ieEvent.clientY != null ) {
 			posx = ieEvent.clientX + Lib.document.body.scrollLeft;
 			posy = ieEvent.clientY + Lib.document.body.scrollTop;
 		} 
 
-		//TODO: make offsetX and offsetY consistent across browsers
-		return new LocalMouseLocation(ieEvent.offsetX, ieEvent.offsetY, target, new MouseLocation(posx, posy));
+		var localx = 0;
+		var localy = 0;
+		if ( ieEvent.offsetX != null || ieEvent.offsetY != null ) {
+			localx = ieEvent.offsetX;
+			localy = ieEvent.offsetY;
+		} else if ( Reflect.field( ieEvent, "layerX" ) != null || Reflect.field( ieEvent, "layerY" ) != null )  {
+			localx = Reflect.field( ieEvent, "layerX" );
+			localy = Reflect.field( ieEvent, "layerY" );
+		}
 
+		return new LocalMouseLocation(localx, localy, target, new MouseLocation(posx, posy));
 	}
-
 }
-
