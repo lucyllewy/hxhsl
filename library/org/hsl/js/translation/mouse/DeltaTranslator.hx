@@ -51,6 +51,11 @@ import org.hsl.js.translation.JSCommonTranslator;
 		if (mouseEvent == null) 
 			mouseEvent = untyped window.event;
 
+		/* @TODO: test this improved code - it removes browser checks
+		   if (e.type == "mousewheel" || e.type == "DOMMouseScroll") {
+		   this.wheelDelta = (e.detail) ? (e.detail * -1) : Math.round(e.wheelDelta / 80) || ((e.wheelDelta < 0) ? -1 : 1);
+		   }
+		 */
 		if (mouseEvent.wheelDelta) { /* IE/Opera. */
 			if ( Lib.isOpera )
 				delta = mouseEvent.wheelDelta/40;

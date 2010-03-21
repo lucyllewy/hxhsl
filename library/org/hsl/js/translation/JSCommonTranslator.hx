@@ -83,7 +83,7 @@ class JSCommonTranslator
 		} else if ( ieEvent.clientX != null || ieEvent.clientY != null ) {
 			posx = ieEvent.clientX + Lib.document.body.scrollLeft;
 			posy = ieEvent.clientY + Lib.document.body.scrollTop;
-		} 
+		}
 
 		var localx = 0;
 		var localy = 0;
