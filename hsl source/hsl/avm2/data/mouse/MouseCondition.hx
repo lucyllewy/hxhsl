@@ -44,4 +44,9 @@ class MouseCondition {
 		this.location = location;
 		this.modifierKeysState = modifierKeysState;
 	}
+	#if debug
+	private function toString():String {
+		return "[MouseCondition location=" + location + " modifierKeysState=" + modifierKeysState + "]";
+	}
+	#end
 }

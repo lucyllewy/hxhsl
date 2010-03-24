@@ -52,7 +52,7 @@ class MouseLocation extends Point {
 		this.scope = scope;
 	}
 	private inline function getGlobalLocation():Point {
-		var globalPoint:flash.geom.Point = scope.localToGlobal(new Point(x, y));
+		var globalPoint:flash.geom.Point = scope.localToGlobal(new flash.geom.Point(x, y));
 		return new Point(globalPoint.x, globalPoint.y);
 	}
 	#if debug
@@ -67,7 +67,7 @@ class MouseLocation extends Point {
 			if (targetScope == scope) {
 				this;
 			} else {
-				var point:flash.geom.Point = targetScope.globalToLocal(scope.localToGlobal(new Point(x, y)));
+				var point:flash.geom.Point = targetScope.globalToLocal(scope.localToGlobal(new flash.geom.Point(x, y)));
 				new MouseLocation(point.x, point.y, targetScope);
 			}
 	}

@@ -24,7 +24,7 @@
  */
 package hsl.avm2.translation.mouse;
 import flash.display.DisplayObject;
-import h.events.MouseEvent;
+import flash.events.MouseEvent;
 import hsl.avm2.data.mouse.MouseCondition;
 import hsl.avm2.data.mouse.MouseLocation;
 import hsl.haxe.data.keyboard.ModifierKeysState;
@@ -59,9 +59,9 @@ import hsl.haxe.translation.NativeEvent;
 		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
 		// them.
 		#if as3
-		return new Translation<MouseCondition>(new MouseCondition(new MouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
+		return new Translation<MouseCondition>(new MouseCondition(new MouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), new ModifierKeysState(mouseEvent.altKey, mouseEvent.ctrlKey, mouseEvent.shiftKey)), mouseEvent.target);
 		#else
-		return new Translation<MouseCondition>(new MouseCondition(new MouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), new ModifierKeysState(mouseEvent.altKey, mouseEvent.controlKey, mouseEvent.shiftKey)), mouseEvent.target);
+		return new Translation<MouseCondition>(new MouseCondition(new MouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), new ModifierKeysState(mouseEvent.altKey, mouseEvent.ctrlKey, mouseEvent.shiftKey)), mouseEvent.target);
 		#end
 	}
 }

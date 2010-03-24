@@ -25,6 +25,7 @@
 package hsl.avm2.translation.mouse;
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
+import hsl.avm2.data.mouse.MouseLocation;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
@@ -33,7 +34,7 @@ import hsl.haxe.translation.NativeEvent;
  * A translator that translates mouse events to local mouse locations. The local mouse locations are the locations of the mouse
  * at the moment the mouse events were dispatched, relative to the object that dispatched them.
  */
-class MouseLocationTranslator implements Translator<LocalMouseLocation> {
+class MouseLocationTranslator implements Translator<MouseLocation> {
 	/**
 	 * Creates a new mouse location translator.
 	 */
@@ -44,7 +45,7 @@ class MouseLocationTranslator implements Translator<LocalMouseLocation> {
 		return "[Translator]";
 	}
 	#end
-	public function translate(nativeEvent:NativeEvent):Translation<LocalMouseLocation> {
+	public function translate(nativeEvent:NativeEvent):Translation<MouseLocation> {
 		var mouseEvent:MouseEvent;
 		try {
 			mouseEvent = cast(nativeEvent, MouseEvent);
@@ -57,9 +58,9 @@ class MouseLocationTranslator implements Translator<LocalMouseLocation> {
 		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
 		// them.
 		#if as3
-		return new Translation<LocalMouseLocation>(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), mouseEvent.target);
+		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), mouseEvent.target);
 		#else
-		return new Translation<LocalMouseLocation>(new LocalMouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), mouseEvent.target);
+		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), mouseEvent.target);
 		#end
 	}
 }
