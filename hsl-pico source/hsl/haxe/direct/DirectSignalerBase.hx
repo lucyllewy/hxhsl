@@ -34,9 +34,9 @@ class DirectSignalerBase {
 	private var rejectNullData:Bool;
 	public var subject(default, null):Subject;
 	/**
-	 * The fully qualified class name of the subject.
+	 * The fully qualified class names of the subject.
 	 */
-	private var subjectClassName(getSubjectClassName, #if as3 setSubjectClassName #else null #end):String;
+	private var subjectClassNames(getSubjectClassNames, #if as3 setSubjectClassNames #else null #end):List<String>;
 	/**
 	 * Creates a new direct signaler base. As this is a base class, this constructor will probably not be called outside of the
 	 * library itself.
@@ -63,32 +63,38 @@ class DirectSignalerBase {
 			}
 	}
 	/**
-	 * Gets the fully qualified class name of the subject.
+	 * Gets the fully qualified class names of the subject.
 	 */
-	private inline function getSubjectClassName():String {
-		// As both Type.getClassName and Type.getClass can be quite expensive, we only call them the first time this method is
-		// called and store the result. We'll just use the stored result from that point on.
-		return
-			if (subjectClassName == null) {
-				subjectClassName = Type.getClassName(
-					// If the subject is a class, the result will be the name of that class. Thanks Cauê Waneck for pointing this out.
-					untyped if (Std.is(subject, Class)) {
-						subject;
-					// If the subject is an instance of a class, the result will be the name of the class that it is an instance of.
-					} else {
-						Type.getClass(subject);
-					}
-				);
-			} else {
-				subjectClassName;
+	private inline function getSubjectClassNames():List<String> {
+		// As both the code below can be quite expensive, only execute it the first time the subjectClassNames property is got and
+		// store the result. Use the stored result from that point on.
+		if (subjectClassNames == null) {
+			subjectClassNames = new List<String>();
+			// Retrieve the most derived class of the subject.
+			var subjectClass:Class<Dynamic> =
+				// If the subject is a class, use the class. This makes static signalers possible. Thanks Cauê Waneck for pointing this
+				// out.
+				untyped if (Std.is(subject, Class)) {
+					subject;
+				// If the subject is an instance of a class, use the class the subject is an instance of.
+				} else {
+					Type.getClass(subject);
+				}
+			// Store the names of all the classes of the subject, so including super classes. Thanks to Justin Mills for pointing
+			// this out.
+			while (subjectClass != null) {
+				subjectClassNames.add(Type.getClassName(subjectClass));
+				subjectClass = Type.getSuperClass(subjectClass);
 			}
+		}
+		return subjectClassNames;
 	}
 	// Because of a bug in the haXe compiler version 2.05, this method is needed when compiling to AS3. This has been fixed, but
 	// the latest official build of the compiler still has this bug. This method could be removed if a new official build of the
 	// haXe compiler is released. For more information, see http://code.google.com/p/haxe/issues/detail?id=47
 	#if as3
-	private function setSubjectClassName(value:String):String {
-		return subjectClassName = value;
+	private function setSubjectClassNames(value:List<String>):List<String> {
+		return subjectClassNames = value;
 	}
 	#end
 	/**
@@ -102,11 +108,14 @@ class DirectSignalerBase {
 	 * unhackable; rather it is designed to prevent developers from accidentally misapplying HSL. Nicolas Cannasse once said
 	 * "everything should be made accessible, if you know what you're doing".
 	 */
-	private inline function verifyCaller(positionInformation:PosInfos):Void {
-		if (subjectClassName != positionInformation.className) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "This method may only be called by the subject of the signaler.";
+	private function verifyCaller(positionInformation:PosInfos):Void {
+		for (subjectClassName in subjectClassNames) {
+			if (subjectClassName == positionInformation.className) {
+				return;
+			}
 		}
+		// TODO: throw a more exception instead of this lame one.
+		throw "This method may only be called by the subject of the signaler.";
 	}
 	/**
 	 * Verifies the passed data using the data verifier of the signaler, and throws an expection if the passed data does not pass

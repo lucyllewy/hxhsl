@@ -35,7 +35,7 @@ import hsl.haxe.Subject;
  */
 class DirectSignaler<Datatype> implements Signaler<Datatype>, extends DirectSignalerBase {
 	private var bubblingTargets:List<Signaler<Datatype>>;
-	public var isListenedTo(getIsListenedTo, null):Bool;
+	public var isListenedTo(getIsListenedTo, never):Bool;
 	private var sentinel:SentinelBond<Datatype, Void, Void>;
 	/**
 	 * Creates a new direct signaler.
