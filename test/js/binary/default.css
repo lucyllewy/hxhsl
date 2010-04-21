@@ -1,0 +1,6 @@
+body { background: #AB9780; font-size:9pt; }
+#info { text-align:center; padding-top:1em; padding-bottom:1em; background: #8094AB; width:360px; border: solid 2px #000; margin-bottom: 1em; }
+#info .expected { background: #fff; border-top: solid 1px #AB8280; border-bottom: solid 1px #AB8280; margin-top:1em; margin-bottom:1em; color: #AB8280; font-variant:small-caps}
+#footer { position:absolute; bottom:0px; border-top:1px #000 solid }
+#sniff { background: #AAAB80; margin-bottom: 1em; }
+#result { background: #AB8280; font-family: monospace; text-align:center }
