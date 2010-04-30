@@ -29,17 +29,16 @@ import hsl.haxe.Subject;
 /**
  * A doubly linked bond, used by the direct signalers. The bond has a reference to the next and the previous bond in the list.
  */
-class DirectSignalerBond<Datatype1, Datatype2, Datatype3> implements Bond {
+class DirectSignalerBond<Datatype1, Datatype2, Datatype3> extends Bond {
 	private var destroyed:Bool;
-	public var halted(default, null):Bool;
 	// It seems that in AS3 it is not allowed to write to private (protected) fields in ways that are allowed in haXe. Therefore,
 	// these fields are public in AS3.
 	#if as3 public #else private #end var next:DirectSignalerBond<Datatype1, Datatype2, Datatype3>;
 	#if as3 public #else private #end var previous:DirectSignalerBond<Datatype1, Datatype2, Datatype3>;
 	public function new():Void {
-		// Set destroyed and halted to false, unless the target is flash9, as in that case the default value is false anyway.
+		super();
+		// Set destroyed to false, unless the target is flash9, as in that case the default value is false anyway.
 		#if !flash9
-		destroyed = false;
 		halted = false;
 		#end
 	}
@@ -55,7 +54,7 @@ class DirectSignalerBond<Datatype1, Datatype2, Datatype3> implements Bond {
 	#if as3 public #else private #end function determineEquals(value:DirectSignalerBond<Datatype1, Datatype2, Datatype3>):Bool {
 		return false;
 	}
-	public inline function destroy():Void {
+	public override function destroy():Void {
 		// If this bond has already been destroyed, don't destroy it again.
 		if (destroyed == false) {
 			previous.next = next;
@@ -63,15 +62,4 @@ class DirectSignalerBond<Datatype1, Datatype2, Datatype3> implements Bond {
 			destroyed = true;
 		}
 	}
-	public function halt():Void {
-		halted = true;
-	}
-	public function resume():Void {
-		halted = false;
-	}
-	#if debug
-	private function toString():String {
-		return "[Bond]";
-	}
-	#end
 }

@@ -31,24 +31,43 @@ package hsl.haxe;
  * Bonds are used internally, and can be ignored in common cases. However, sometimes it is useful for listeners to store the
  * bond in a variable. Doing so allows you to halt and resume the bond.
  */
-interface Bond {
+class Bond {
 	/**
 	 * Indicates whether the bond has been halted (true) or not (false). See the halt method for more information.
 	 */
 	public var halted(default, null):Bool;
 	/**
+	 * Creates a new bond.
+	 */
+	public function new():Void {
+		// Set halted to false, unless the target is flash9, as in that case the default value is false anyway.
+		#if !flash9
+		halted = false;
+		#end
+	}
+	/**
 	 * Destroys the bond. The signaler that created this bond will no longer notify listeners through it. Bond cannot be
 	 * "undestroyed". To temporary suspend the bond from notifying the associated listener, use the halt method.
 	 */
-	public function destroy():Void;
+	public function destroy():Void {
+	}
 	/**
 	 * Halts the bond. The bond will ignore any calls, and will not notify any listeners, until the resume method is called. If
 	 * the bond was already halted, calling this method has no effect.
 	 */
-	public function halt():Void;
+	public inline function halt():Void {
+		halted = true;
+	}
 	/**
 	 * Resumes the bond, after it has been halted by calling the halt method. If the bond was not halted, calling this method has
 	 * no effect. See the halt method for more information.
 	 */
-	public function resume():Void;
+	public inline function resume():Void {
+		halted = false;
+	}
+	#if debug
+	private function toString():String {
+		return "[Bond]";
+	}
+	#end
 }

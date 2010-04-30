@@ -45,13 +45,13 @@ class BigNullSignaler<Datatype1, Datatype2> implements BigSignaler<Datatype1, Da
 	public function addBubblingTarget(value:BigSignaler<Datatype1, Datatype2>):Void {
 	}
 	public function bind(listener:Datatype1 -> Datatype2 -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function bindAdvanced(listener:BigSignal<Datatype1, Datatype2> -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function bindVoid(listener:Void -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function dispatch(?data1:Datatype1, ?data2:Datatype2, ?origin:Subject, ?positionInformation:PosInfos):Void {
 	}

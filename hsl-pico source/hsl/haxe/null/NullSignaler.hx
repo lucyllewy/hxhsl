@@ -45,13 +45,13 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 	public function addBubblingTarget(value:Signaler<Datatype>):Void {
 	}
 	public function bind(listener:Datatype -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function bindAdvanced(listener:Signal<Datatype> -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function bindVoid(listener:Void -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:PosInfos):Void {
 	}

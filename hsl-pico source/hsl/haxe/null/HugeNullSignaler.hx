@@ -45,13 +45,13 @@ class HugeNullSignaler<Datatype1, Datatype2, Datatype3> implements HugeSignaler<
 	public function addBubblingTarget(value:HugeSignaler<Datatype1, Datatype2, Datatype3>):Void {
 	}
 	public function bind(listener:Datatype1 -> Datatype2 -> Datatype3 -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function bindAdvanced(listener:HugeSignal<Datatype1, Datatype2, Datatype3> -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function bindVoid(listener:Void -> Void):Bond {
-		return new NullBond();
+		return new Bond();
 	}
 	public function dispatch(?data1:Datatype1, ?data2:Datatype2, ?data3:Datatype3, ?origin:Subject, ?positionInformation:PosInfos):Void {
 	}
