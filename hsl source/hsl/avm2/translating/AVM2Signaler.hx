@@ -23,7 +23,7 @@
  * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
  */
 package hsl.avm2.translating;
-import flash.events.EventDispatcher;
+import flash.events.IEventDispatcher;
 import haxe.PosInfos;
 import hsl.avm2.translation.DatalessTranslator;
 import hsl.haxe.translating.TranslatingSignalerBase;
@@ -34,7 +34,7 @@ import hsl.haxe.Subject;
  * A AVM2 signaler serves as a bridge between the ActionScript 3.0 event system, and this library.
  */
 class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
-	private var nativeDispatcher:EventDispatcher;
+	private var nativeDispatcher:IEventDispatcher;
 	private var nativeEventType:String;
 	/**
 	 * Creates a new AVM2 signaler. This signaler serves as a bridge between the ActionScript 3.0 event system, and this library.
@@ -74,7 +74,7 @@ class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 	 * }
 	 * </pre>
 	 */
-	public function new(subject:Subject, nativeDispatcher:EventDispatcher, nativeEventType:String, ?translator:Translator<Datatype>, ?rejectNullData:Bool):Void {
+	public function new(subject:Subject, nativeDispatcher:IEventDispatcher, nativeEventType:String, ?translator:Translator<Datatype>, ?rejectNullData:Bool):Void {
 		// If the passed translator is null, use a dataless translator.
 		if (translator == null) {
 			translator = new DatalessTranslator<Datatype>();
