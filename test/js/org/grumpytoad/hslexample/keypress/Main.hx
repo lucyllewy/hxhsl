@@ -10,7 +10,7 @@ import hsl.js.translation.keyboard.KeyCodeTranslator;
 class Main {
 	function new()
 	{
-		var locationSignaler = new JSTranslatingSignaler<Int>(Lib.document, Lib.document, KEYUP, new KeyCodeTranslator());
+		var locationSignaler = new JSTranslatingSignaler<Int>(Lib.document, Lib.document, KEYPRESS, new KeyCodeTranslator());
 		locationSignaler.bindAdvanced(onKey);
 	}
 	function onKey(signal:Signal<Int>)

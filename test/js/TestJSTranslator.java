@@ -69,19 +69,23 @@ public class TestJSTranslator extends SeleneseTestCase {
 		selenium.waitForCondition( "selenium.page().findElement( 'bar' ).innerHTML.length > 0", "30000" );
 		assertTrue( selenium.isElementPresent( "xpath=//div[ @id='bar' ]/div" ) );
 	}
-	
+
+	// non-automatic test
 	public void testKeypress() throws Exception {
 		selenium.open(path + "/keypress.html");
 		selenium.waitForPageToLoad("3000");
-		selenium.keyUp( "result", "\101" );
 		String prefix = "key pressed is: ";
+		selenium.waitForCondition( "selenium.getText('result') != '';", "30000" );
 		assertEquals( prefix + "A", selenium.getText( "result" ) );
-		selenium.keyUp( "result", "\156" );
+		selenium.getEval( "selenium.page().findElement('result').innerHTML = '';" );
+		selenium.waitForCondition( "selenium.getText('result') != '';", "30000" );
 		assertEquals( prefix + "n", selenium.getText( "result" ) );
-		selenium.keyUp( "result", "\044" );
+		selenium.getEval( "selenium.page().findElement('result').innerHTML = '';" );
+		selenium.waitForCondition( "selenium.getText('result') != '';", "30000" );
 		assertEquals( prefix + "$", selenium.getText( "result" ) );
 	}
-
+	
+	// non-automatic test
 	public void testMouseClick() throws Exception {
 		selenium.open(path + "/mouseclick.html");
 		selenium.waitForPageToLoad("3000");
@@ -100,7 +104,7 @@ public class TestJSTranslator extends SeleneseTestCase {
 
 	}
 
-
+	// non-automatic test
 	public void testLocation() throws Exception {
 		selenium.open(path + "/location.html");
 		selenium.waitForPageToLoad("3000");
@@ -108,7 +112,7 @@ public class TestJSTranslator extends SeleneseTestCase {
 		assertTrue( selenium.getText( "result" ).matches( "x: [1-9][0-9]*, y: [1-9][0-9]*, globalX: [1-9][0-9]*, globalY: [1-9][0-9]*" ) );
 	}
 
-
+	// non-automatic test
 	public void testScroll() throws Exception {
 		selenium.open(path + "/scroll.html");
 		selenium.waitForPageToLoad("30000");

@@ -59,6 +59,7 @@ enum JSEventType {
 	MOUSEWHEEL;
 	KEYUP;
 	KEYDOWN;
+	KEYPRESS;
 }
 
 /**
