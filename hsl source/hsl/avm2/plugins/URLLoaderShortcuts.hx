@@ -80,7 +80,7 @@ class URLLoaderShortcuts {
 	 * uses an existing one, depending on whether this method has been called before. If you call this method twice on the same
 	 * object, the same signaler instance will be returned.
 	 */
-	public static inline function getSecurityErrorSignaler(nativeDispatcher:URLLoader):Signaler<String> {
+	public static inline function getSecurityErrorOccurredSignaler(nativeDispatcher:URLLoader):Signaler<String> {
 		if (signalerVault == null) {
 			signalerVault = new AVM2SignalerVault();
 		}
