@@ -25,7 +25,7 @@
 package hsl.avm2.translation.web;
 import flash.events.HTTPStatusEvent;
 import hsl.haxe.data.web.HTTPStatus;
-import hsl.haxe.translation.Translatzion;
+import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
 
