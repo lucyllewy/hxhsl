@@ -76,16 +76,10 @@ class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 	 */
 	public function new(subject:Subject, nativeDispatcher:IEventDispatcher, nativeEventType:String, ?translator:Translator<Datatype>, ?rejectNullData:Bool):Void {
 		// If the passed translator is null, use a dataless translator.
-		if (translator == null) {
+		if (null == translator) {
 			translator = new DatalessTranslator<Datatype>();
 		}
-		super(subject,
-			if (translator == null) {
-				new DatalessTranslator<Datatype>();
-			} else {
-				translator;
-			},
-			rejectNullData);
+		super(subject, translator, rejectNullData);
 		this.nativeDispatcher = nativeDispatcher;
 		this.nativeEventType = nativeEventType;
 		// Add a listener to the passed native dispatcher.
