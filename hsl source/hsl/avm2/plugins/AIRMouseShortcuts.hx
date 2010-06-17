@@ -22,7 +22,7 @@ class AIRMouseShortcuts {
 	 * been called before. If you call this method twice on the same object, the same signaler instance will be returned.
 	 */
 	public static inline function getMiddleClickedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		if (signalerVault == null) {
+		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MIDDLE_CLICK, createMouseConditionTranslator);
@@ -34,7 +34,7 @@ class AIRMouseShortcuts {
 	 * will be returned.
 	 */
 	public static inline function getMiddlePressedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		if (signalerVault == null) {
+		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MIDDLE_MOUSE_DOWN, createMouseConditionTranslator);
@@ -47,7 +47,7 @@ class AIRMouseShortcuts {
 	 * will be returned.
 	 */
 	public static inline function getMiddleReleasedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		if (signalerVault == null) {
+		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MIDDLE_MOUSE_UP, createMouseConditionTranslator);
@@ -60,7 +60,7 @@ class AIRMouseShortcuts {
 	 * been called before. If you call this method twice on the same object, the same signaler instance will be returned.
 	 */
 	public static inline function getRightClickedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		if (signalerVault == null) {
+		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.RIGHT_CLICK, createMouseConditionTranslator);
@@ -72,7 +72,7 @@ class AIRMouseShortcuts {
 	 * will be returned.
 	 */
 	public static inline function getRightPressedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		if (signalerVault == null) {
+		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.RIGHT_MOUSE_DOWN, createMouseConditionTranslator);
@@ -85,7 +85,7 @@ class AIRMouseShortcuts {
 	 * will be returned.
 	 */
 	public static inline function getRightReleasedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		if (signalerVault == null) {
+		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.RIGHT_MOUSE_UP, createMouseConditionTranslator);
