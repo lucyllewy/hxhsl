@@ -31,7 +31,7 @@ import hsl.haxe.translation.Translator;
 import hsl.haxe.Subject;
 
 /**
- * A AVM2 signaler serves as a bridge between the ActionScript 3.0 event system, and this library.
+ * An AVM2 signaler serves as a bridge between the ActionScript 3.0 event system, and this library.
  */
 class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 	private var nativeDispatcher:IEventDispatcher;
@@ -83,10 +83,16 @@ class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 		this.nativeDispatcher = nativeDispatcher;
 		this.nativeEventType = nativeEventType;
 		// Add a listener to the passed native dispatcher.
+		addInternalListener();
+	}
+	private function addInternalListener():Void {
 		nativeDispatcher.addEventListener(nativeEventType, dispatchNative);
+	}
+	private function removeInternalListener():Void {
+		nativeDispatcher.removeEventListener(nativeEventType, dispatchNative);
 	}
 	public override function stop(?positionInformation:PosInfos):Void {
 		super.stop(positionInformation);
-		nativeDispatcher.removeEventListener(nativeEventType, dispatchNative);
+		removeInternalListener();
 	}
 }
