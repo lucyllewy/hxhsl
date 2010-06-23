@@ -15,7 +15,7 @@ class KeyboardShortcuts {
 	 * the key combination. This method either creates a new signaler, or uses an existing one, depending on whether this method
 	 * has been called before. If you call this method twice on the same object, the same signaler instance will be returned.
 	 */
-	public static inline function getKeyDownSignaler(nativeDispatcher:InteractiveObject):Signaler<KeyCombination> {
+	public static inline function getKeyPressedDownSignaler(nativeDispatcher:InteractiveObject):Signaler<KeyCombination> {
 		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
@@ -26,7 +26,7 @@ class KeyboardShortcuts {
 	 * key combination. This method either creates a new signaler, or uses an existing one, depending on whether this method has
 	 * been called before. If you call this method twice on the same object, the same signaler instance will be returned.
 	 */
-	public static inline function getKeyUpSignaler(nativeDispatcher:InteractiveObject):Signaler<KeyCombination> {
+	public static inline function getKeyLetUpSignaler(nativeDispatcher:InteractiveObject):Signaler<KeyCombination> {
 		if (null == signalerVault) {
 			signalerVault = new AVM2SignalerVault();
 		}
