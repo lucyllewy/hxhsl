@@ -9,6 +9,9 @@ import hsl.avm2.translation.mouse.MouseConditionTranslator;
 import hsl.avm2.translation.mouse.MouseLocationTranslator;
 import hsl.haxe.Signaler;
 
+/**
+ * Shortcuts for mouse actions that are AIR-specific.
+ */
 class AIRMouseShortcuts {
 	private static var signalerVault:AVM2SignalerVault;
 	private static function createMouseConditionTranslator():MouseConditionTranslator {

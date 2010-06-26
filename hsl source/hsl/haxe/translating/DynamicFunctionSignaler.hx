@@ -67,14 +67,14 @@ class DynamicFunctionSignaler<Datatype> extends DirectSignaler<Datatype> {
 		super(subject, rejectNullData);
 		this.dispatcher = dispatcher;
 		#if debug
-		if (Reflect.hasField(dispatcher, functionName) == false) {
+		if (false == Reflect.hasField(dispatcher, functionName)) {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The passed dispatcher does not have a " + functionName + " field.";
 		}
 		#end
 		Reflect.setField(dispatcher, functionName, dispatchNative);
 	}
-	private function dispatchNative(data:Datatype):Void {
+	private function dispatchNative(?data:Datatype):Void {
 		dispatch(data, dispatcher);
 	}
 }

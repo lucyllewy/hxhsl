@@ -9,6 +9,10 @@ import hsl.avm2.translation.mouse.MouseConditionTranslator;
 import hsl.avm2.translation.mouse.MouseLocationTranslator;
 import hsl.haxe.Signaler;
 
+/**
+ * Shortcuts for mouse actions. This class contains only mouse button related shortcuts for the left mouse button, the
+ * shortcuts related to the other mouse buttons are in the AIR mouse shortcuts.
+ */
 class MouseShortcuts {
 	private static var signalerVault:AVM2SignalerVault;
 	private static function createDatalessTranslator<Datatype>():DatalessTranslator<Datatype> {

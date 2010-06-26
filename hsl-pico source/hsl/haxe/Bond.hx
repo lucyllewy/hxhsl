@@ -29,7 +29,7 @@ package hsl.haxe;
  * signaler.
  * 
  * Bonds are used internally, and can be ignored in common cases. However, sometimes it is useful for listeners to store the
- * bond in a variable. Doing so allows you to halt and resume the bond.
+ * bond in a variable. Doing so allows you to halt and resume the bond, and destroy it easily.
  */
 class Bond {
 	/**

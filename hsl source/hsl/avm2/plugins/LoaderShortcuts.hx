@@ -14,6 +14,9 @@ import hsl.haxe.data.progress.LoadProgress;
 import hsl.haxe.data.web.HTTPStatus;
 import hsl.haxe.Signaler;
 
+/**
+ * Shortcuts for loaders.
+ */
 class LoaderShortcuts {
 	private static var signalerVault:AVM2SignalerVault;
 	private static function createDatalessTranslator<Datatype>():DatalessTranslator<Datatype> {

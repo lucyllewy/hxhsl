@@ -44,7 +44,7 @@ class TranslatingSignalerBase<Datatype> extends DirectSignaler<Datatype> {
 		super(subject, rejectNullData);
 		// If the passed translator is null, throw an exception. Having null for a translator might produce null object reference
 		// errors later on: when the signaler tries to translate native events.
-		if (translator == null) {
+		if (null == translator) {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The translator argument must be non-null.";
 		}
@@ -54,7 +54,7 @@ class TranslatingSignalerBase<Datatype> extends DirectSignaler<Datatype> {
 		// Translate the native event.
 		var translation:Translation<Datatype> = translator.translate(nativeEvent);
 		#if debug
-		if (translation == null) {
+		if (null == translation) {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The translate method of the translator returned null, which is not allowed. It should return a translation with null values inside, instead.";
 		}

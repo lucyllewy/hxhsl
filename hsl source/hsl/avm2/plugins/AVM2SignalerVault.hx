@@ -5,8 +5,14 @@ import hsl.haxe.translation.Translator;
 import flash.events.IEventDispatcher;
 import flash.utils.TypedDictionary;
 
+/**
+ * A vault that stores signalers, for the AVM2 target.
+ */
 class AVM2SignalerVault {
 	private var signalers:TypedDictionary<IEventDispatcher, Hash<Signaler<Dynamic>>>;
+	/**
+	 * Creates a new AVM2 signaler vault.
+	 */
 	public function new():Void {
 		signalers = new TypedDictionary<IEventDispatcher, Hash<Signaler<Dynamic>>>();
 	}

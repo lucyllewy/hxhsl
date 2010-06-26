@@ -5,6 +5,9 @@ import hsl.haxe.data.keyboard.KeyCombination;
 import hsl.haxe.Signaler;
 import flash.display.InteractiveObject;
 
+/**
+ * Shortcuts for keyboard actions.
+ */
 class KeyboardShortcuts {
 	private static var signalerVault:AVM2SignalerVault;
 	private static function createKeyCombinationTranslator():KeyCombinationTranslator {
