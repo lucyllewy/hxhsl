@@ -1,17 +1,17 @@
 <haxe>
-	<enum path="Void" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes"><haxe_doc>
+	<enum path="Void" params="" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes"><haxe_doc>
 	The standard Void type. Only [null] values can be of the type [Void].
 </haxe_doc></enum>
-	<class path="Float" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes" extern="1"><haxe_doc>
+	<class path="Float" params="" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes" extern="1"><haxe_doc>
 	The standard Float type, this is a double-precision IEEE 64bit float.
 </haxe_doc></class>
-	<class path="Int" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes" extern="1">
+	<class path="Int" params="" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes" extern="1">
 		<extends path="Float"/>
 		<haxe_doc>
 	The standard Int type. Its precision depends on the platform.
 </haxe_doc>
 	</class>
-	<typedef path="Null" params="T" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes">
+	<typedef path="Null" params="T" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes">
 		<c path="Null.T"/>
 		<haxe_doc>
 	[Null] can be useful in two cases. In order to document some methods
@@ -20,18 +20,18 @@
 	can't.
 </haxe_doc>
 	</typedef>
-	<enum path="Bool" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes">
+	<enum path="Bool" params="" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes">
 		<true/>
 		<false/>
 		<haxe_doc>
 	The standard Boolean type is represented as an enum with two choices.
 </haxe_doc>
 	</enum>
-	<class path="Dynamic" params="T" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes" extern="1"><haxe_doc>
+	<class path="Dynamic" params="T" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes" extern="1"><haxe_doc>
 	Dynamic is an internal compiler type which has special behavior.
 	See the haXe language reference for more informations.
 </haxe_doc></class>
-	<typedef path="Iterator" params="T" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes">
+	<typedef path="Iterator" params="T" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes">
 		<a>
 			<next set="method"><f a=""><c path="Iterator.T"/></f></next>
 			<hasNext set="method"><f a=""><e path="Bool"/></f></hasNext>
@@ -42,14 +42,14 @@
 	documentation for more informations.
 </haxe_doc>
 	</typedef>
-	<typedef path="Iterable" params="T" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes">
+	<typedef path="Iterable" params="T" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes">
 		<a><iterator set="method"><f a=""><t path="Iterator"><c path="Iterable.T"/></t></f></iterator></a>
 		<haxe_doc>
 	An Iterable is a data structure which has an iterator() method.
 	See [Lambda] for generic functions on iterable structures.
 </haxe_doc>
 	</typedef>
-	<class path="ArrayAccess" params="T" file="/home/pimm/Bureaublad/haxe/haxe/std/StdTypes.hx" module="StdTypes" extern="1" interface="1"><haxe_doc>
+	<class path="ArrayAccess" params="T" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes" extern="1" interface="1"><haxe_doc>
 	ArrayAccess is used to indicate a class that can be accessed using brackets.
 	The type parameter represent the type of the elements stored.
 </haxe_doc></class>
@@ -255,7 +255,7 @@
  * A signaler that dispatches signals with two data objects inside.
  </haxe_doc>
 	</class>
-	<class path="String" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/String.hx" extern="1">
+	<class path="String" params="" file="/usr/lib/haxe/std/String.hx" extern="1">
 		<fromCharCode public="1" set="method" static="1"><f a="code">
 	<c path="Int"/>
 	<c path="String"/>
@@ -364,8 +364,8 @@
 	The basic String class.
 </haxe_doc>
 	</class>
-	<class path="Importer" params="" file="./Importer.hx"/>
-	<class path="Std" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/Std.hx">
+	<class path="Importer" params="" file="Importer.hx"/>
+	<class path="Std" params="" file="/usr/lib/haxe/std/Std.hx">
 		<is public="1" set="method" line="34" static="1">
 			<f a="v:t">
 				<d/>
@@ -425,43 +425,49 @@
 	The Std class provides standard methods for manipulating basic types.
 </haxe_doc>
 	</class>
-	<class path="hsl.haxe.Bond" params="" file="../hsl-pico source/hsl/haxe/Bond.hx" interface="1">
+	<class path="hsl.haxe.Bond" params="" file="../hsl-pico source/hsl/haxe/Bond.hx">
 		<halted public="1" set="null">
 			<e path="Bool"/>
 			<haxe_doc>
 	 * Indicates whether the bond has been halted (true) or not (false). See the halt method for more information.
 	 </haxe_doc>
 		</halted>
-		<destroy public="1" set="method">
+		<destroy public="1" set="method" line="52">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Destroys the bond. The signaler that created this bond will no longer notify listeners through it. Bond cannot be
 	 * "undestroyed". To temporary suspend the bond from notifying the associated listener, use the halt method.
 	 </haxe_doc>
 		</destroy>
-		<halt public="1" set="method">
+		<halt public="1" get="inline" set="null" line="58">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Halts the bond. The bond will ignore any calls, and will not notify any listeners, until the resume method is called. If
 	 * the bond was already halted, calling this method has no effect.
 	 </haxe_doc>
 		</halt>
-		<resume public="1" set="method">
+		<resume public="1" get="inline" set="null" line="65">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Resumes the bond, after it has been halted by calling the halt method. If the bond was not halted, calling this method has
 	 * no effect. See the halt method for more information.
 	 </haxe_doc>
 		</resume>
+		<new public="1" set="method" line="42">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>
+	 * Creates a new bond.
+	 </haxe_doc>
+		</new>
 		<haxe_doc>
  * A bond represents the connection between a signaler and a listener. Bonds are created when listeners add themselves to a
  * signaler.
  * 
  * Bonds are used internally, and can be ignored in common cases. However, sometimes it is useful for listeners to store the
- * bond in a variable. Doing so allows you to halt and resume the bond.
+ * bond in a variable. Doing so allows you to halt and resume the bond, and destroy it easily.
  </haxe_doc>
 	</class>
-	<class path="Math" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/Math.hx" extern="1">
+	<class path="Math" params="" file="/usr/lib/haxe/std/Math.hx" extern="1">
 		<PI public="1" set="null" static="1"><c path="Float"/></PI>
 		<NaN public="1" set="null" static="1"><c path="Float"/></NaN>
 		<NEGATIVE_INFINITY public="1" set="null" static="1"><c path="Float"/></NEGATIVE_INFINITY>
@@ -864,7 +870,7 @@
  * A signaler that dispatches signals with only one data object inside. See GenericSignaler for more information on signalers.
  </haxe_doc>
 	</class>
-	<typedef path="haxe.PosInfos" params="" file="/home/pimm/Bureaublad/haxe/haxe/std/haxe/PosInfos.hx"><a>
+	<typedef path="haxe.PosInfos" params="" file="/usr/lib/haxe/std/haxe/PosInfos.hx"><a>
 	<methodName><c path="String"/></methodName>
 	<lineNumber><c path="Int"/></lineNumber>
 	<fileName><c path="String"/></fileName>
@@ -909,7 +915,7 @@
  * A signaler that dispatches signals with three data objects inside. See GenericSignaler for more information on signalers.
  </haxe_doc>
 	</class>
-	<class path="Array" params="T" file="/home/pimm/Bureaublad/haxe/haxe/std/Array.hx" extern="1">
+	<class path="Array" params="T" file="/usr/lib/haxe/std/Array.hx" extern="1">
 		<length public="1" set="null">
 			<c path="Int"/>
 			<haxe_doc>
