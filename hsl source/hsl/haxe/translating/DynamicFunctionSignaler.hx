@@ -41,6 +41,8 @@ class DynamicFunctionSignaler<Datatype> extends DirectSignaler<Datatype> {
 	 * The passed dispatcher is the object that uses the dynamic function system. The signaler will look for a function with the
 	 * name of the passed function name inside that dispatcher.
 	 * 
+	 * If the skip presence check flag is set, no "The passed dispatcher does not have a X field." exceptions are thrown.
+	 * 
 	 * If the reject null data flag is set, the signaler will throw an error if the subject attempts to dispatch a signal with
 	 * null as data, or the the signaler is about to bubble a signal that contains null as data.
 	 * 
@@ -63,11 +65,11 @@ class DynamicFunctionSignaler<Datatype> extends DirectSignaler<Datatype> {
 	 * }
 	 * </pre>
 	 */
-	public function new(subject:Subject, dispatcher:Dynamic, functionName:String, ?rejectNullData:Bool):Void {
+	public function new(subject:Subject, dispatcher:Dynamic, functionName:String, ?skipPresenceCheck:Bool, ?rejectNullData:Bool):Void {
 		super(subject, rejectNullData);
 		this.dispatcher = dispatcher;
 		#if debug
-		if (false == Reflect.hasField(dispatcher, functionName)) {
+		if ((null == skipPresenceCheck || false == skipPresenceCheck) && false == Reflect.hasField(dispatcher, functionName)) {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The passed dispatcher does not have a " + functionName + " field.";
 		}

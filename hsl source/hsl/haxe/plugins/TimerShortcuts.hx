@@ -5,7 +5,7 @@ import hsl.haxe.Signaler;
 
 class TimerShortcuts {
 	private static inline var TICKED:String = "ticked";
-	private static var signalerVault:SignalerVault;
+	private static var signalerVault:SignalerVault<Timer>;
 	private static function createTickedSignaler(nativeDispatcher:Dynamic):Signaler<Void> {
 		return new DynamicFunctionSignaler<Void>(nativeDispatcher, nativeDispatcher, "run");
 	}
@@ -16,7 +16,7 @@ class TimerShortcuts {
 	 */
 	public static inline function getTickedSignaler(nativeDispatcher:Timer):Signaler<Void> {
 		if (null == signalerVault) {
-			signalerVault = new SignalerVault();
+			signalerVault = new SignalerVault<Timer>();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, TICKED, createTickedSignaler);
 	}
