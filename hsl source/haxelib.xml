@@ -5,5 +5,5 @@
 	<tag v="event" />
 	<description>HSL, pronounced "hustle", stands for haXe Signaling Library. It makes writing event-driven code in haXe hassle-free.</description>
 	<depends name="hsl-pico-1" version="1.2" />
-	<version name="1.2">Added JavaScript translation package. Added shortcuts.</version>
+	<version name="1.3">Added HTTP shortcuts.</version>
 </project>
