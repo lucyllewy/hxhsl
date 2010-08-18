@@ -39,7 +39,7 @@ class DirectSignalerBond<Datatype1, Datatype2, Datatype3> extends Bond {
 		super();
 		// Set destroyed to false, unless the target is flash9, as in that case the default value is false anyway.
 		#if !flash9
-		halted = false;
+		destroyed = false;
 		#end
 	}
 	/**
@@ -56,7 +56,7 @@ class DirectSignalerBond<Datatype1, Datatype2, Datatype3> extends Bond {
 	}
 	public override function destroy():Void {
 		// If this bond has already been destroyed, don't destroy it again.
-		if (destroyed == false) {
+		if (false == destroyed) {
 			previous.next = next;
 			next.previous = previous;
 			destroyed = true;
