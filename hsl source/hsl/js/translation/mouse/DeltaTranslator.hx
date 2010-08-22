@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,16 +20,17 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation.mouse;
-
-import js.Dom;
-import js.Lib;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
-import hsl.js.translation.JSCommonTranslator;
+import hsl.js.translation.JSTranslatorBase;
+import js.Dom;
+import js.Lib;
 
 /**
  * A translator that translates mouse events to deltas. Deltas indicate how many lines should be scrolled for each unit the
@@ -38,35 +38,30 @@ import hsl.js.translation.JSCommonTranslator;
  * scroll. Typical values are 3, -3, 1 and -1. However, the value depends on the device and operating system that the user is
  * using. Therefore, whether the value is positive or negative is more interesting than the actual value.
  */
- class DeltaTranslator extends JSCommonTranslator, implements Translator<Int> {
+ class DeltaTranslator extends JSTranslatorBase, implements Translator<Int> {
 	/**
 	 * Creates a new delta translator.
 	 */
 	public function new():Void {
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<Int> {
-		var mouseEvent:Dynamic = nativeEvent;
-
-		var delta :Float= 0;
-		if (mouseEvent == null) 
-			mouseEvent = untyped window.event;
-
+		var event:Dynamic = getEvent(nativeEvent);
+		var delta:Float= 0;
 		/* @TODO: test this improved code - it removes browser checks
 		   if (e.type == "mousewheel" || e.type == "DOMMouseScroll") {
 		   this.wheelDelta = (e.detail) ? (e.detail * -1) : Math.round(e.wheelDelta / 80) || ((e.wheelDelta < 0) ? -1 : 1);
 		   }
 		 */
-		if (mouseEvent.wheelDelta) { /* IE/Opera. */
-			if ( Lib.isOpera )
-				delta = mouseEvent.wheelDelta/40;
-			else
-				delta = mouseEvent.wheelDelta/120;
-		} else if (mouseEvent.detail) { /** Mozilla case. */
-			delta = -mouseEvent.detail;
+		if (event.wheelDelta) { /* IE/Opera. */
+			if (Lib.isOpera) {
+				delta = event.wheelDelta / 40;
+			} else {
+				delta = event.wheelDelta / 120;
+			}
+		} else if (event.detail) { /** Mozilla case. */
+			delta = -event.detail;
 		}
-
-		var target = targetFromDOMEvent( mouseEvent );
-		return new Translation<Int>((delta>0)?Math.ceil(delta):Math.floor(delta), target);
+		return new Translation<Int>((0 < delta) ? Math.floor(delta) : Math.ceil(delta), targetFromDOMEvent(event));
 	}
 	#if debug
 	private function toString():String {

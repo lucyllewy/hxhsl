@@ -3,9 +3,7 @@ package org.grumpytoad.hslexample.scroll;
 import js.Dom;
 import js.Lib;
 import hsl.haxe.Signal;
-import hsl.js.translation.DatalessTranslator;
-import hsl.js.translation.JSTranslatingSignaler;
-import hsl.js.translation.mouse.DeltaTranslator;
+using hsl.js.plugins.MouseShortcuts;
 
 class Main {
 	function new()
@@ -24,10 +22,10 @@ class Main {
 		var window : Dynamic = Lib.window;
 		for ( id in 0...3 )
 		{
-			var button = Lib.document.getElementById("button" + (id + 1));
-			var signaler = new JSTranslatingSignaler<Int>(button, button, MOUSEWHEEL, new DeltaTranslator());
-			signaler.bindAdvanced(modifyColor);
+			Lib.document.getElementById("button" + (id + 1)).getScrolledOnSignaler().bindAdvanced(modifyColor);
 		}
+		var combine:HtmlDom = Lib.document.getElementById('combine');
+		combine.innerHTML = combine.style.backgroundColor;
 
 	}
 	
@@ -45,7 +43,7 @@ class Main {
 			return v;
 		}
 		button.style.backgroundColor = loopColors( color, yield );
-		combine.style.backgroundColor = combineColors();
+		combine.innerHTML = combine.style.backgroundColor = combineColors();
 	}
 	function combineColors()
 	{

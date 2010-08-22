@@ -1,25 +1,22 @@
 package org.grumpytoad.hslexample.location;
 
+import hsl.js.data.mouse.MouseLocation;
 import js.Dom;
 import js.Lib;
 import hsl.haxe.Signal;
-import hsl.js.translation.DatalessTranslator;
-import hsl.js.translation.JSTranslatingSignaler;
-import hsl.js.translation.mouse.LocalMouseLocation;
-import hsl.js.translation.mouse.MouseLocationTranslator;
+using hsl.js.plugins.MouseShortcuts;
 
 class Main {
 	function new()
 	{
 		var sniff :HtmlDom = Lib.document.getElementById("sniff");
-		var locationSignaler = new JSTranslatingSignaler<LocalMouseLocation>(sniff, sniff, MOUSEMOVE, new MouseLocationTranslator());
-		locationSignaler.bindAdvanced(onMove);
+		sniff.getMouseMovedSignaler().bindAdvanced(onMove);
 	}
-	function onMove(signal:Signal<LocalMouseLocation>)
+	function onMove(signal:Signal<MouseLocation>)
 	{
 		var result = Lib.document.getElementById("result");
-		result.innerHTML = "x: " + signal.data1.x + ", y: " + signal.data1.y
-			+ ", globalX: " + signal.data1.globalLocation.x + ", globalY: " + signal.data1.globalLocation.y;
+		result.innerHTML = "x: " + signal.data.x + ", y: " + signal.data.y
+			+ ", globalX: " + signal.data.globalLocation.x + ", globalY: " + signal.data.globalLocation.y;
 	}
 	static function main () {
 		new Main();

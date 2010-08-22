@@ -1,25 +1,22 @@
 package org.grumpytoad.hslexample.mousecondition;
 
-import js.Dom;
+import hsl.js.translation.mouse.MouseConditionTranslator;
 import js.Lib;
 import hsl.haxe.Signal;
-import hsl.js.translation.DatalessTranslator;
-import hsl.js.translation.JSTranslatingSignaler;
-import hsl.js.translation.mouse.MouseCondition;
-import hsl.js.translation.mouse.MouseConditionTranslator;
+import hsl.js.data.mouse.MouseCondition;
+import hsl.js.translating.JSSignaler;
 
 class Main {
 	function new()
 	{
-		var locationSignaler = new JSTranslatingSignaler<MouseCondition>(Lib.document, Lib.document, MOUSEMOVE, new MouseConditionTranslator());
-		locationSignaler.bindAdvanced(onMouseMove);
+		new JSSignaler(Lib.document, Lib.document, MOUSEMOVE, new MouseConditionTranslator()).bindAdvanced(onMouseMove);
 	}
 	function onMouseMove(signal:Signal<MouseCondition>)
 	{
 		var result = Lib.document.getElementById("result");
-		result.innerHTML = "mouse location is: " + signal.data1.location.x + ", " + signal.data1.location.y + "<br />" +
-			"alt: " + signal.data1.modifierKeysState.altKeyDown + ", ctrl: " + signal.data1.modifierKeysState.controlKeyDown +
-			", shift: " + signal.data1.modifierKeysState.shiftKeyDown;
+		result.innerHTML = "mouse location is: " + signal.data.location.globalLocation.x + ", " + signal.data.location.globalLocation.y + "<br />" +
+			"alt: " + signal.data.modifierKeysState.altKeyDown + ", ctrl: " + signal.data.modifierKeysState.controlKeyDown +
+			", shift: " + signal.data.modifierKeysState.shiftKeyDown;
 	}
 	static function main () {
 		new Main();

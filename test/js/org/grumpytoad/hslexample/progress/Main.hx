@@ -1,12 +1,12 @@
 package org.grumpytoad.hslexample.progress;
 
+import hsl.haxe.data.progress.LoadProgress;
 import js.Dom;
 import js.Lib;
 import js.XMLHttpRequest;
 import hsl.haxe.Signal;
+import hsl.js.translating.JSSignaler;
 import hsl.js.translation.DatalessTranslator;
-import hsl.js.translation.JSTranslatingSignaler;
-import hsl.js.translation.progress.LoadProgress;
 import hsl.js.translation.progress.LoadProgressTranslator;
 import hsl.js.translation.error.ErrorMessage;
 import hsl.js.translation.error.ErrorMessageTranslator;
@@ -28,11 +28,11 @@ class Main {
 
 		xmlHttpRequest = new js.XMLHttpRequest(); 
 
-		var progressSignaler = new JSTranslatingSignaler<LoadProgress>(xmlHttpRequest, xmlHttpRequest, PROGRESS, new LoadProgressTranslator());
+		var progressSignaler = new JSSignaler<LoadProgress>(xmlHttpRequest, xmlHttpRequest, PROGRESS, new LoadProgressTranslator());
 		progressSignaler.bindAdvanced(modifyProgress);
-		var completeSignaler = new JSTranslatingSignaler<Void>(xmlHttpRequest, xmlHttpRequest, LOAD, new DatalessTranslator<Void>());
+		var completeSignaler = new JSSignaler<Void>(xmlHttpRequest, xmlHttpRequest, LOAD, new DatalessTranslator<Void>());
 		completeSignaler.bindAdvanced(complete);
-		var errorSignaler = new JSTranslatingSignaler<String>(xmlHttpRequest, xmlHttpRequest, ERROR, new ErrorMessageTranslator());
+		var errorSignaler = new JSSignaler<String>(xmlHttpRequest, xmlHttpRequest, ERROR, new ErrorMessageTranslator());
 		errorSignaler.bindAdvanced(error);
 
 		xmlHttpRequest.open("GET",url,true);

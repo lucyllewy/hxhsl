@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,32 +20,41 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation.keyboard;
-
 import hsl.haxe.Subject;
 import hsl.haxe.translation.NativeEvent;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
-import hsl.js.translation.JSCommonTranslator;
+import hsl.js.translation.JSTranslatorBase;
 
 /**
  * Translates a keyboard event to a key code.
  */
-class KeyCodeTranslator extends JSCommonTranslator, implements Translator<Int> {
+class KeyCodeTranslator extends JSTranslatorBase, implements Translator<Int> {
 	/**
 	 * Creates a new key code translator.
 	 */
 	public function new():Void {
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<Int> {
-		var keyboardEvent:Dynamic = getEvent(nativeEvent);
-		var target:Subject = targetFromDOMEvent(nativeEvent);
-		var code : Int = null;
-		if ( keyboardEvent.keyCode != null ) code = keyboardEvent.keyCode;
-		else if ( keyboardEvent.which != null ) code = keyboardEvent.which;
-		return new Translation<Int>(code, target);
+		var event:Dynamic = getEvent(nativeEvent);
+		// Different browsers and different event types 
+		var code:Int = 
+			if (!event.which && 
+				if (event.charCode || 0 == event.charCode) {
+					event.charCode;
+				} else {
+					event.keyCode;
+				}) {
+				event.charCode || event.keyCode;
+			} else {
+				event.which;
+			}
+		return new Translation<Int>(code, targetFromDOMEvent(nativeEvent));
 	}
 	#if debug
 	private function toString():String {
@@ -54,4 +62,3 @@ class KeyCodeTranslator extends JSCommonTranslator, implements Translator<Int> {
 	}
 	#end
 }
-

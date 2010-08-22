@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,18 +20,18 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation.progress;
-
-import js.XMLHttpRequest;
-
+import haxe.exception.Exception;
+import hsl.haxe.data.progress.LoadProgress;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
-
-import js.Dom;
 import js.Lib;
+import js.XMLHttpRequest;
 
 /**
  * A translator that translates progress events to load progresses.
@@ -44,17 +43,28 @@ class LoadProgressTranslator implements Translator<LoadProgress> {
 	public function new():Void {
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<LoadProgress> {
-		var progressEvent:Dynamic = nativeEvent;
-		var loaded : Int = 0;
-		var total : Int = 0;
-
+		var event:Dynamic = nativeEvent;
+		var loaded:Int = 0;
+		var total:Int = 0;
 		#if debug
-		if ( Lib.isIE ) throw "Progress events are not supported on IE.";
+		if (Lib.isIE) {
+			throw new Exception("Progress events are not supported by Internet Explorer.");
+		}
 		#end
-
-		loaded = progressEvent.loaded == null ? progressEvent.progress : progressEvent.loaded;
-		total = progressEvent.total == null ? progressEvent.totalSize : progressEvent.total;
-		return new Translation<LoadProgress>(new LoadProgress(loaded, total), progressEvent.target);
+		loaded =
+			if (null == event.loaded) {
+				event.progress;
+			} else {
+				event.loaded;
+			}
+		total =
+			if (null == event.total) {
+				event.totalSize;
+			} else {
+				event.total;
+			}
+		// TODO: Find out whether nativeEvent.target works here, or targetFromDOMEvent is needed.
+		return new Translation<LoadProgress>(new LoadProgress(loaded, total), event.target);
 	}
 	#if debug
 	private function toString():String {

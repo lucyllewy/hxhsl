@@ -20,94 +20,13 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.haxe.direct;
-import haxe.PosInfos;
-import hsl.haxe.Bond;
-import hsl.haxe.Signaler;
-import hsl.haxe.Signal;
-import hsl.haxe.Subject;
 
 /**
- * A direct signaler that dispatches signals with only one data object inside. See GenericSignaler for more information on
- * signalers.
+ * Deprecated. This class has been moved to hsl.haxe.
  */
-class DirectSignaler<Datatype> implements Signaler<Datatype>, extends DirectSignalerBase {
-	private var bubblingTargets:List<Signaler<Datatype>>;
-	public var isListenedTo(getIsListenedTo, never):Bool;
-	private var sentinel:SentinelBond<Datatype, Void, Void>;
-	/**
-	 * Creates a new direct signaler.
-	 * 
-	 * The passed subject will be used as the subject of this signaler. Only the subject is allowed to call the dispatch method.
-	 * Signals dispatched by this signaler will have the subject as current target, and in some cases as origin.
-	 * 
-	 * If the reject null data flag is set, the signaler will throw an error if the subject attempts to dispatch a signal with
-	 * null as data, or the the signaler is about to bubble a signal that contains null as data.
-	 */
-	public function new(subject:Subject, ?rejectNullData:Bool):Void {
-		super(subject, rejectNullData);
-		sentinel = new SentinelBond<Datatype, Void, Void>();
-	}
-	public function addBubblingTarget(value:Signaler<Datatype>):Void {
-		if (bubblingTargets == null) {
-			bubblingTargets = new List<Signaler<Datatype>>();
-		}
-		bubblingTargets.add(value);
-	}
-	public function bind(listener:Datatype -> Void):Bond {
-		return sentinel.add(new RegularBond(listener));
-	}
-	public function bindAdvanced(listener:Signal<Datatype> -> Void):Bond {
-		return sentinel.add(new AdvancedBond<Datatype, Void, Void>(listener));
-	}
-	public function bindVoid(listener:Void -> Void):Bond {
-		return sentinel.add(new NiladicBond<Datatype, Void, Void>(listener));
-	}
-	private inline function bubble(data:Datatype, origin:Subject):Void {
-		for (bubblingTarget in bubblingTargets) {
-			bubblingTarget.dispatch(data, origin);
-		}
-	}
-	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:PosInfos):Void {
-		// Verify the caller of this method, which should be the subject of this signaler. As you can see, there's nasty hack here
-		// which makes bubbling and dispatching from the translating signalers possible.
-		if ((positionInformation.methodName == "dispatchNative" || positionInformation.methodName == "bubble") == false) {
-			verifyCaller(positionInformation);
-		}
-		// Verify the data.
-		verifyData(data);
-		// Grab the origin.
-		origin = getOrigin(origin);
-		// Call all the listeners.
-		var propagationStatus:PropagationStatus = new PropagationStatus();
-		sentinel.callListener(data, null, null, subject, origin, propagationStatus);
-		// Bubble the signal, if propagation was not stopped.
-		if (bubblingTargets != null && (propagationStatus.propagationStopped || propagationStatus.immediatePropagationStopped) == false) {
-			bubble(data, origin);
-		}
-	}
-	private function getIsListenedTo():Bool {
-		return sentinel.isConnected;
-	}
-	public function removeBubblingTarget(value:Signaler<Datatype>):Void {
-		if (bubblingTargets != null) {
-			bubblingTargets.remove(value);
-		}
-	}
-	#if debug
-	private function toString():String {
-		return "[Signaler isListenedTo=" + isListenedTo + "]";
-	}
-	#end
-	public function unbind(listener:Datatype -> Void):Void {
-		sentinel.remove(new RegularBond(listener));
-	}
-	public function unbindAdvanced(listener:Signal<Datatype> -> Void):Void {
-		sentinel.remove(new AdvancedBond<Datatype, Void, Void>(listener));
-	}
-	public function unbindVoid(listener:Void -> Void):Void {
-		sentinel.remove(new NiladicBond<Datatype, Void, Void>(listener));
-	}
-}
+typedef DirectSignaler<Datatype> = hsl.haxe.DirectSignaler<Datatype>;

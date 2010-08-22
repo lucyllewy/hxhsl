@@ -20,13 +20,15 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.haxe.translation;
 import hsl.haxe.Subject;
 
 /**
- * A translation is the output of a translator. A translation consists of the data in and the origin of the native event.
+ * A translation is the output of a translator. A translation consists of the data inside and the origin of the native event.
  */
 class Translation<Datatype> {
 	/**

@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,34 +20,32 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation.mouse;
-
-import js.Dom;
-import js.Lib;
-
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
-import hsl.js.translation.JSCommonTranslator;
+import hsl.js.data.mouse.MouseLocation;
+import hsl.js.translation.JSTranslatorBase;
+import js.Dom;
 
 /**
  * A translator that translates mouse events to local mouse locations. The local mouse locations are the locations of the mouse
  * at the moment the mouse events were dispatched, relative to the object that dispatched them.
  */
-class MouseLocationTranslator extends JSCommonTranslator, implements Translator<LocalMouseLocation> {
+class MouseLocationTranslator extends JSTranslatorBase, implements Translator<MouseLocation> {
 	/**
 	 * Creates a new mouse location translator.
 	 */
 	public function new():Void {
 	}
-	public function translate(nativeEvent:NativeEvent):Translation<LocalMouseLocation> {
-		var mouseEvent:Event = getEvent(nativeEvent);
-		var target:HtmlDom = targetFromDOMEvent(mouseEvent);
-
-		var localMouseLocation = localMouseLocationFromDOMEvent( mouseEvent, target );
-		return new Translation<LocalMouseLocation>(localMouseLocation, target);
+	public function translate(nativeEvent:NativeEvent):Translation<MouseLocation> {
+		var event:Dynamic = getEvent(nativeEvent);
+		var target:HtmlDom = targetFromDOMEvent(event);
+		return new Translation<MouseLocation>(localMouseLocationFromDOMEvent(event, target), target);
 	}
 	#if debug
 	private function toString():String {

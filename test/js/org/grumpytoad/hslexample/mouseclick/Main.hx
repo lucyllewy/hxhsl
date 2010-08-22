@@ -1,23 +1,21 @@
 package org.grumpytoad.hslexample.mouseclick;
 
+import hsl.js.data.mouse.MouseCondition;
 import js.Dom;
 import js.Lib;
 import hsl.haxe.Signal;
-import hsl.js.translation.DatalessTranslator;
-import hsl.js.translation.JSTranslatingSignaler;
-import hsl.js.translation.mouse.MouseClickTranslator;
+using hsl.js.plugins.MouseShortcuts;
 
 class Main {
 	function new()
 	{
 		var result = Lib.document.getElementById("result");
-		var locationSignaler = new JSTranslatingSignaler<ButtonState>(result, result, MOUSEDOWN, new MouseClickTranslator());
-		locationSignaler.bindAdvanced(onClick);
+		result.getPressedSignaler().bindAdvanced(onClick);
 	}
-	function onClick(signal:Signal<ButtonState>)
+	function onClick(signal:Signal<MouseCondition>)
 	{
 		var result = Lib.document.getElementById("result");
-		result.innerHTML = "mouse button pressed: " + signal.data1;
+		result.innerHTML = "mouse button pressed: " + signal.data.button;
 	}
 	static function main () {
 		new Main();

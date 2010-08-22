@@ -17,6 +17,9 @@ class Main {
 		#if !production
 		testRunner.add(new IllegalDispatchTestCase());
 		#end
+		testRunner.add(new StaticDispatchTestCase());
+		testRunner.add(new TrackableTestCase());
+		testRunner.add(new ReadOnlyTrackableTestCase());
 		testRunner.run();
 	}
 }

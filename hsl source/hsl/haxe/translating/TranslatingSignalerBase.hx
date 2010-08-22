@@ -20,9 +20,13 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.haxe.translating;
+import haxe.exception.ArgumentNullException;
+import haxe.exception.Exception;
 import haxe.PosInfos;
 import hsl.haxe.direct.DirectSignaler;
 import hsl.haxe.translation.NativeEvent;
@@ -42,12 +46,6 @@ class TranslatingSignalerBase<Datatype> extends DirectSignaler<Datatype> {
 	 */
 	public function new(subject:Subject, translator:Translator<Datatype>, ?rejectNullData:Bool):Void {
 		super(subject, rejectNullData);
-		// If the passed translator is null, throw an exception. Having null for a translator might produce null object reference
-		// errors later on: when the signaler tries to translate native events.
-		if (null == translator) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The translator argument must be non-null.";
-		}
 		this.translator = translator;
 	}
 	private function dispatchNative(nativeEvent:NativeEvent):Void {
@@ -55,8 +53,7 @@ class TranslatingSignalerBase<Datatype> extends DirectSignaler<Datatype> {
 		var translation:Translation<Datatype> = translator.translate(nativeEvent);
 		#if debug
 		if (null == translation) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The translate method of the translator returned null, which is not allowed. It should return a translation with null values inside, instead.";
+			throw new Exception("The translate method of the translator returned null, which is not allowed. It should return a translation with null values inside, instead.");
 		}
 		#end
 		dispatch(translation.data, translation.origin);

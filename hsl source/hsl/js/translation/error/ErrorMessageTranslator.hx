@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,15 +20,16 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation.error;
-
-import js.Dom;
-import js.XMLHttpRequest;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
+import js.Dom;
+import js.XMLHttpRequest;
 
 /**
  * A translator that translates error events to strings containing the error message.
@@ -42,12 +42,11 @@ class ErrorMessageTranslator implements Translator<String> {
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<String> {
 		var errorEvent:Event = cast nativeEvent;
-		if (Std.is(errorEvent.target, XMLHttpRequest))
-		{
+		if (Std.is(errorEvent.target, XMLHttpRequest)) {
 			var xmlHttpRequest:XMLHttpRequest = cast(errorEvent.target, XMLHttpRequest);
 			return new Translation<String>(xmlHttpRequest.status + " " + xmlHttpRequest.statusText, errorEvent.target);
 		} else {
-			return new Translation<String>("Error: the resource '" + untyped errorEvent.target.src + "' could not be found.", errorEvent.target);
+			return new Translation<String>("Error: the resource \"" + untyped errorEvent.target.src + "\" could not be found.", errorEvent.target);
 		}
 	}
 	#if debug

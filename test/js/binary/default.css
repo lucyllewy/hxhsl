@@ -4,3 +4,4 @@ body { background: #AB9780; font-size:9pt; }
 #footer { position:absolute; bottom:0px; border-top:1px #000 solid }
 #sniff { background: #AAAB80; margin-bottom: 1em; }
 #result { background: #AB8280; font-family: monospace; text-align:center }
+#combine { text-align:center }

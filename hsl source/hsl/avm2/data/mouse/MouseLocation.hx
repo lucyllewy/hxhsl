@@ -20,10 +20,13 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.avm2.data.mouse;
 import flash.display.DisplayObject;
+import haxe.exception.ArgumentNullException;
 import hsl.haxe.data.mathematics.Point;
 
 /**
@@ -45,9 +48,8 @@ class MouseLocation extends Point {
 		super(x, y);
 		// If scope is null, throw an exception. Having null for a scope might produce null object reference errors later on: when
 		// the globalLocation property is called.
-		if (scope == null) {
-			// TODO: throw a more exception instead of this lame one.
-			throw "The scope argument must be non-null.";
+		if (null == scope) {
+			throw new ArgumentNullException("scope", 1);
 		}
 		this.scope = scope;
 	}

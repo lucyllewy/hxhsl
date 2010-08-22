@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,31 +20,50 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation.mouse;
-
-import js.Dom;
+import hsl.haxe.data.keyboard.ModifierKeysState;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
-import hsl.js.translation.JSCommonTranslator;
+import hsl.js.data.mouse.MouseButton;
+import hsl.js.data.mouse.MouseCondition;
+import hsl.js.data.mouse.MouseLocation;
+import hsl.js.translation.JSTranslatorBase;
+import js.Dom;
 
 /**
  * A translator that translates mouse events to mouse conditions.
  */
- class MouseConditionTranslator extends JSCommonTranslator, implements Translator<MouseCondition> {
+ class MouseConditionTranslator extends JSTranslatorBase, implements Translator<MouseCondition> {
 	/**
 	 * Creates a new mouse condition translator.
 	 */
 	public function new():Void {
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<MouseCondition> {
-		var mouseEvent:Event = getEvent(nativeEvent);
-		var target:HtmlDom = targetFromDOMEvent(mouseEvent);
-
-		var localMouseLocation = localMouseLocationFromDOMEvent( mouseEvent, target );
-		return new Translation<MouseCondition>(new MouseCondition(localMouseLocation, new ModifierKeysState(mouseEvent.altKey, mouseEvent.ctrlKey, mouseEvent.shiftKey)), target);
+		var event:Dynamic = getEvent(nativeEvent);
+		// Note: W3C standard is not used here
+		var button:MouseButton =
+			if (null == event.which) {
+				switch (event.button) {
+					case 0: NONE;
+					case 1: LEFT; 
+					case 2: RIGHT;
+					case 4: MIDDLE;
+				}
+			} else {
+				switch (event.which) {
+					case 1: LEFT;
+					case 2: MIDDLE;
+					case 3: RIGHT;
+				}
+			}
+		var target:HtmlDom = targetFromDOMEvent(event);
+		return new Translation<MouseCondition>(new MouseCondition(localMouseLocationFromDOMEvent(event, target), button, new ModifierKeysState(event.altKey, event.ctrlKey, event.shiftKey)), target);
 	}
 	#if debug
 	private function toString():String {

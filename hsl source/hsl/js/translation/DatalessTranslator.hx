@@ -1,6 +1,5 @@
 /**
- * Copyright (c) 2009-2010, The HSL Contributors. Most notable contributors, in order of appearance: Pimm Hogeling, Edo Rivai,
- * Owen Durni, Niel Drummond.
+ * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
@@ -21,10 +20,11 @@
  * 
  * End of conditions.
  * 
- * The license of HSL might change in the near future, most likely to match the license of the haXe core libraries.
+ * The license of this software might change in the future, most likely to match the license of the haXe core libraries. In
+ * such event, you may use this version of this software under either the terms above or under the terms of the new license of
+ * this software.
  */
 package hsl.js.translation;
-
 import hsl.haxe.translation.NativeEvent;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
@@ -32,14 +32,15 @@ import hsl.haxe.translation.Translator;
 /**
  * A translator that translates any event, ignoring the data that is in it.
  */
-class DatalessTranslator<D> implements Translator<D> {
+class DatalessTranslator<D> extends JSTranslatorBase, implements Translator<D> {
 	/**
 	 * Creates a new dataless translator.
 	 */
 	public function new():Void {
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<D> {
-		return new Translation<D>(null, nativeEvent.target);
+		// TODO: Find out whether nativeEvent.target will do here, or the following is needed.
+		return new Translation<D>(null, targetFromDOMEvent(nativeEvent));
 	}
 }
 
