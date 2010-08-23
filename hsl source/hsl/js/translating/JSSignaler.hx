@@ -117,7 +117,7 @@ class JSSignaler<DataType> extends TranslatingSignalerBase<DataType> {
 	 */
 	private function disableContextMenu():Bool {
 		#if HSL_DISABLE_CONTEXT_MENU
-		nativeDispatcher.oncontextmenu = function () {
+		untyped(nativeDispatcher).oncontextmenu = function () {
 			return false;
 		}
 		return true;

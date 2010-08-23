@@ -8,7 +8,6 @@ import hsl.haxe.Signal;
 import hsl.js.translating.JSSignaler;
 import hsl.js.translation.DatalessTranslator;
 import hsl.js.translation.progress.LoadProgressTranslator;
-import hsl.js.translation.error.ErrorMessage;
 import hsl.js.translation.error.ErrorMessageTranslator;
 
 class Main {
