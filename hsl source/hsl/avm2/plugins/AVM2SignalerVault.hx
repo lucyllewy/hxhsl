@@ -50,7 +50,7 @@ class AVM2SignalerVault {
 	public function getSignaler<Datatype>(nativeDispatcher:IEventDispatcher, nativeEventType:String, createTranslator:Void -> Translator<Datatype>):Signaler<Datatype> {
 		var hash:Hash<Signaler<Dynamic>> =
 			// If a hash for this native dispatcher already exists, return it.
-			if (signalers.exists(nativeDispatcher)) {
+			if (null != signalers.get(nativeDispatcher)) {
 				signalers.get(nativeDispatcher);
 			// If there is no hash for this native dispatcher, create it, add it and return it.
 			} else {

@@ -42,13 +42,13 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 	}
 	public function addBubblingTarget(value:Signaler<Datatype>):Void {
 	}
-	public function bind(listener:Datatype -> Void):Bond {
+	public function bind(listener:Datatype -> Dynamic):Bond {
 		return new Bond();
 	}
-	public function bindAdvanced(listener:Signal<Datatype> -> Void):Bond {
+	public function bindAdvanced(listener:Signal<Datatype> -> Dynamic):Bond {
 		return new Bond();
 	}
-	public function bindVoid(listener:Void -> Void):Bond {
+	public function bindVoid(listener:Void -> Dynamic):Bond {
 		return new Bond();
 	}
 	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:PosInfos):Void {
@@ -63,10 +63,10 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 		return "[Signaler isListenedTo=false]";
 	}
 	#end
-	public function unbind(listener:Datatype -> Void):Void {
+	public function unbind(listener:Datatype -> Dynamic):Void {
 	}
-	public function unbindAdvanced(listener:Signal<Datatype> -> Void):Void {
+	public function unbindAdvanced(listener:Signal<Datatype> -> Dynamic):Void {
 	}
-	public function unbindVoid(listener:Void -> Void):Void {
+	public function unbindVoid(listener:Void -> Dynamic):Void {
 	}
 }
