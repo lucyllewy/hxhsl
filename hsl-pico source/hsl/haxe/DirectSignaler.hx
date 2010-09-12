@@ -27,9 +27,6 @@
 package hsl.haxe;
 import haxe.exception.ArgumentNullException;
 import haxe.exception.Exception;
-import haxe.PosInfos;
-import haxe.Stack;
-import haxe.TypeTools;
 
 /**
  * A signaler that dispatches signals directly.
@@ -83,12 +80,17 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 			bubblingTarget.dispatch(data, origin);
 		}
 	}
-	public function dispatch(?data:Datatype, ?origin:Subject #if !as3 , ?positionInformation:PosInfos #end ):Void {
+	#if (as3 || production)
+	public function dispatch(?data:Datatype, ?origin:Subject):Void {
+	#else
+	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:haxe.PosInfos):Void {
+	#end
+		#if !production
+		#if as3
 		// As the automagic position information cannot be used in AS3, use the stacktrace to grab the position information. The
 		// following code could be faster, as Stack.callStack() is more expensive than it could be.
-		#if as3
-		var positionInformation:PosInfos = null;
-		for (stackItem in Stack.callStack().slice(1)) {
+		var positionInformation:haxe.PosInfos = null;
+		for (stackItem in haxe.Stack.callStack().slice(1)) {
 			switch (stackItem) {
 				case FilePos(innerStackItem, fileName, line):
 				switch (innerStackItem) {
@@ -100,12 +102,17 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 				default:
 			}
 		}
-		#end
-		// Verify the caller of this method, which should be the subject of this signaler. As you can see, there's nasty hack here
-		// which makes bubbling and dispatching from the translating signalers possible.
-		if (#if as3 null != positionInformation && #end "dispatchNative" != positionInformation.methodName && "bubble" != positionInformation.methodName) {
+		if (null != positionInformation && "dispatchNative" != positionInformation.methodName && "bubble" != positionInformation.methodName) {
 			verifyCaller(positionInformation);
 		}
+		#else
+		// Verify the caller of this method, which should be the subject of this signaler. As you can see, there's nasty hack here
+		// which makes bubbling and dispatching from the translating signalers possible.
+		if ("dispatchNative" != positionInformation.methodName && "bubble" != positionInformation.methodName) {
+			verifyCaller(positionInformation);
+		}
+		#end
+		#end
 		// Verify the data.
 		if (rejectNullData && null == data) {
 			throw new Exception("Some data that was passed is null, but this signaler has been set to reject null data.", null, 1);
@@ -131,6 +138,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 				origin;
 			}
 	}
+	#if !production
 	/**
 	 * Checks whether the class name inside the passed position information equals the class name of the subject of this
 	 * signaler. Used in the dispatch method, as that method may only be called by the subject.
@@ -142,9 +150,9 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 	 * unhackable; rather it is designed to prevent developers from accidentally misapplying HSL. Nicolas Cannasse once said
 	 * "everything should be made accessible, if you know what you're doing".
 	 */
-	private function verifyCaller(positionInformation:PosInfos):Void {
+	private function verifyCaller(positionInformation:haxe.PosInfos):Void {
 		if (null == subjectClassNames) {
-			subjectClassNames = TypeTools.getClassNames(subject);
+			subjectClassNames = haxe.TypeTools.getClassNames(subject);
 		}
 		for (subjectClassName in subjectClassNames) {
 			if (subjectClassName == positionInformation.className) {
@@ -153,6 +161,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		}
 		throw new Exception("This method may only be called by the subject of the signaler.", null, 2);
 	}
+	#end
 	public function removeBubblingTarget(value:Signaler<Datatype>):Void {
 		if (null != bubblingTargets) {
 			bubblingTargets.remove(value);
@@ -258,7 +267,7 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
 	private inline function getIsConnected():Bool {
 		// TODO: This type of equality check could be slower than nescessary in PHP as such checks might involve comparison of
 		// properties, rather than references. Some conditional compiling code here might speed things up for that target.
-		return this != next;
+		return this != this.next;
 	}
 	/**
 	 * Removes a bond connected to the sentinel.

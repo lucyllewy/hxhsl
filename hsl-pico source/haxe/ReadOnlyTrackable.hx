@@ -65,6 +65,7 @@ class ReadOnlyTrackable<Datatype> {
 		this.owner = owner;
 		value = initialValue;
 	}
+	#if !production
 	/**
 	 * Checks whether the class name inside the passed position information equals the class name of the owner of this trackable.
 	 */
@@ -79,12 +80,18 @@ class ReadOnlyTrackable<Datatype> {
 		}
 		throw new Exception("This method may only be called by the owner of the trackable.", null, 2);
 	}
+	#end
 	/**
 	 * Overwrites the current value.
 	 */
-	public function set(newValue:Datatype #if !as3 , ?positionInformation:PosInfos #end):Void {
+	#if (as3 || production)
+	public function set(newValue:Datatype):Void {
+	#else
+	public function set(newValue:Datatype, ?positionInformation:PosInfos):Void {
+	#end
 		// As the automagic position information cannot be used in AS3, use the stacktrace to grab the position information. The
 		// following code could be faster, as Stack.callStack() is more expensive than it could be.
+		#if !production
 		#if as3
 		var positionInformation:PosInfos = null;
 		for (stackItem in Stack.callStack().slice(1)) {
@@ -100,8 +107,12 @@ class ReadOnlyTrackable<Datatype> {
 				default:
 			}
 		}
+		if (null != positionInformation) {
+			verifyCaller(positionInformation);
+		}
 		#else
 		verifyCaller(positionInformation);
+		#end
 		#end
 		changeRequestedSignaler.dispatch(value);
 		changedSignaler.dispatch(value = newValue);

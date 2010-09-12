@@ -25,7 +25,6 @@
  * this software.
  */
 package hsl.haxe;
-import haxe.PosInfos;
 
 /**
  * This class is a null object implementation of the signaler interface. See
@@ -51,8 +50,13 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 	public function bindVoid(listener:Void -> Dynamic):Bond {
 		return new Bond();
 	}
-	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:PosInfos):Void {
+	#if (as3 || production)
+	public function dispatch(?data:Datatype, ?origin:Subject):Void {
 	}
+	#else
+	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:haxe.PosInfos):Void {
+	}
+	#end
 	private function getIsListenedTo():Bool {
 		return false;
 	}

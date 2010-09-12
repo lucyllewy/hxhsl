@@ -1,5 +1,4 @@
 ﻿package hsl.haxe.unittest;
-import haxe.Stack;
 
 class IllegalDispatchTestCase extends UnitTestCaseBase {
 	private var dog:Dog;

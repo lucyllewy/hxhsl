@@ -25,7 +25,6 @@
  * this software.
  */
 package hsl.haxe;
-import haxe.PosInfos;
 
 /**
  * A signalers is a tool, used by a subject to notify its environment (listeners). Subjects create their signalers, usually in
@@ -131,7 +130,11 @@ interface Signaler<Datatype> {
 	 * The signal will bubble to all of the bubbling targets that were added to this signaler. This method may only be called
 	 * by the subject of the signaler.
 	 */
-	public function dispatch(?data:Datatype, ?origin:Subject #if !as3 , ?positionInformation:PosInfos #end ):Void;
+	#if (as3 || production)
+	public function dispatch(?data:Datatype, ?origin:Subject):Void;
+	#else
+	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:haxe.PosInfos):Void;
+	#end
 	private function getIsListenedTo():Bool;
 	/**
 	 * Removes a bubbling target from the signaler. The signaler will stop bubbling to this bubbling target. If the signaler

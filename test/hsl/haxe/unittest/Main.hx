@@ -19,7 +19,9 @@ class Main {
 		#end
 		testRunner.add(new StaticDispatchTestCase());
 		testRunner.add(new TrackableTestCase());
+		#if !production
 		testRunner.add(new ReadOnlyTrackableTestCase());
+		#end
 		testRunner.run();
 	}
 }
