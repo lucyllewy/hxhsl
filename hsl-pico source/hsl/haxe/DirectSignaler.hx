@@ -255,7 +255,7 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
 	}
 	public override function callListener(data:Datatype, currentTarget:Subject, origin:Subject, propagationStatus:Int):Int {
 		var node:LinkedBond<Datatype> = next;
-		while (this != node && PropagationStatus.IMMEDIATELY_STOPPED != propagationStatus) {
+		while (node != this && PropagationStatus.IMMEDIATELY_STOPPED != propagationStatus) {
 			propagationStatus = node.callListener(data, currentTarget, origin, propagationStatus);
 			node = node.next;
 		}
@@ -267,7 +267,7 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
 	private inline function getIsConnected():Bool {
 		// TODO: This type of equality check could be slower than nescessary in PHP as such checks might involve comparison of
 		// properties, rather than references. Some conditional compiling code here might speed things up for that target.
-		return this != this.next;
+		return next != this;
 	}
 	/**
 	 * Removes a bond connected to the sentinel.
@@ -276,7 +276,7 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
 	 */
 	public inline function remove(value:LinkedBond<Datatype>):Void {
 		var node:LinkedBond<Datatype> = next;
-		while (this != node) {
+		while (node != this) {
 			if (node.determineEquals(value)) {
 				node.unlink();
 				break;
