@@ -80,6 +80,17 @@ class DisplayObjectShortcuts {
 		}
 		return signalerVault.getSignaler(nativeDispatcher, Event.REMOVED_FROM_STAGE, createDatalessTranslator);
 	}
+	/**
+	 * Gets a signaler that dispatches signals when the display object is about to be rendered to the stage after the stage has
+	 * been invalidated. This method either creates a new signaler, or uses an existing one, depending on whether this method has
+	 * been called before. If you call this method twice on the same object, the same signaler instance will be returned.
+	 */
+	public static inline function getRenderRequestedSignaler(nativeDispatcher:DisplayObject):Signaler<Void> {
+		if (null == signalerVault) {
+			signalerVault = new AVM2SignalerVault();
+		}
+		return signalerVault.getSignaler(nativeDispatcher, Event.RENDER, createDatalessTranslator);
+	}
 }
 /**
  * A translator used by the added to stage signaler to inject the stage into the signal.

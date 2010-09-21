@@ -50,6 +50,9 @@ class AVM2SignalerVault {
 	public function getSignaler<Datatype>(nativeDispatcher:IEventDispatcher, nativeEventType:String, createTranslator:Void -> Translator<Datatype>):Signaler<Datatype> {
 		var hash:Hash<Signaler<Dynamic>> =
 			// If a hash for this native dispatcher already exists, return it.
+			// This line should use the "exists" method, rather then the "get" method. However, "exists" in haXe 2.06 - which is the
+			// latest stable haXe release - is buggy. It will be fixed in the next version, and the line below will be changed back
+			// as soon as that version is released.
 			if (null != signalers.get(nativeDispatcher)) {
 				signalers.get(nativeDispatcher);
 			// If there is no hash for this native dispatcher, create it, add it and return it.
