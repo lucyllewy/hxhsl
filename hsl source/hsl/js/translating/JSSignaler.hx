@@ -160,7 +160,7 @@ class JSSignaler<DataType> extends TranslatingSignalerBase<DataType> {
 	#end
 }
 /** 
- * Javascript Event types supported by HSL
+ * JavaScript Event types supported by HSL
  */
 enum JSEventType {
 	ERROR;
