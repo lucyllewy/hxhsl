@@ -27,8 +27,8 @@
 package hsl.js.plugins;
 import hsl.haxe.plugins.SignalerVault;
 import hsl.haxe.Signaler;
-import hsl.js.data.mouse.MouseCondition;
-import hsl.js.data.mouse.MouseLocation;
+import hsl.haxe.data.mouse.MouseCondition;
+import hsl.haxe.data.mouse.MouseLocation;
 import hsl.js.translating.JSSignaler;
 import hsl.js.translation.mouse.DeltaTranslator;
 import hsl.js.translation.mouse.MouseConditionTranslator;

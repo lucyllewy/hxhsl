@@ -1,6 +1,6 @@
 package org.grumpytoad.hslexample.location;
 
-import hsl.js.data.mouse.MouseLocation;
+import hsl.haxe.data.mouse.MouseLocation;
 import js.Dom;
 import js.Lib;
 import hsl.haxe.Signal;

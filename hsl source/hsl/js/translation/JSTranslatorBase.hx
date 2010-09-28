@@ -29,7 +29,7 @@ import hsl.haxe.data.mathematics.Point;
 import js.Dom;
 import js.Lib;
 import hsl.haxe.translation.NativeEvent;
-import hsl.js.data.mouse.MouseLocation;
+import hsl.haxe.data.mouse.MouseLocation;
 
 /** 
  * Provides common cross-browser functionality for retrieving properties of a native event.
@@ -65,23 +65,19 @@ class JSTranslatorBase {
 	 */
 	private function localMouseLocationFromDOMEvent(event:js.Event, target:HtmlDom):MouseLocation {
 		var ieEvent:Event = cast event;
-		var globalX:Float = 0;
-		var globalY:Float = 0;
-		if (null != ieEvent.pageX) {
-			globalX = ieEvent.pageX;
-			globalY = ieEvent.pageY;
-		} else if (null != ieEvent.clientX) {
-			var documentElement:HtmlDom = untyped(Lib.document).documentElement;
-			if (untyped documentElement) {
-				globalX = ieEvent.clientX + documentElement.scrollLeft - untyped(documentElement).clientLeft;
-				globalY = ieEvent.clientY + documentElement.scrollTop  - untyped(documentElement).clientTop;
+		var global:Point =
+			if (null != ieEvent.pageX) {
+				new Point(ieEvent.pageX, ieEvent.pageY);
+			} else if (null != ieEvent.clientX) {
+				var documentElement:HtmlDom = untyped(Lib.document).documentElement;
+				if ( ! untyped documentElement )
+					documentElement = Lib.document.body;
+				new Point(ieEvent.clientX + documentElement.scrollLeft, ieEvent.clientY + documentElement.scrollTop);
 			} else {
-				var body:Body = Lib.document.body;
-				globalX = ieEvent.clientX + body.scrollLeft - untyped(body).clientLeft;
-				globalY = ieEvent.clientY + body.scrollTop - untyped(body).clientTop;
+				new Point(0, 0);
 			}
-		}
-		return new MouseLocation(globalX - target.offsetLeft, globalY - target.offsetTop, target, new Point(globalX, globalY));
+		var local:Point = global.getLocalLocation(target);
+		return new MouseLocation(local.x, local.y, global);
 	}
 }
 typedef Event = { > js.Event, srcElement:HtmlDom, pageX:Int, pageY:Int }

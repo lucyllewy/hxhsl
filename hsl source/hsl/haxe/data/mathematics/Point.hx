@@ -51,6 +51,58 @@ class Point {
 	public inline function determineEquals(value:PointValue):Bool {
 		return x == value.x && y == value.y;
 	}
+	/**
+	 * Given a scope for this point, translate it such that is relative to the stage.
+	 */
+	public inline function getGlobalLocation(currentScope:NativeScope):Point {
+		#if flash9
+		var point:flash.geom.Point = currentScope.localToGlobal(new flash.geom.Point(x, y));
+		return new Point(point.x, point.y);
+		#elseif js
+		var globalX:Float = x + currentScope.offsetLeft;
+		var globalY:Float = y + currentScope.offsetTop;
+		while (currentScope.offsetParent != null) {
+			currentScope = currentScope.offsetParent;
+			globalX += currentScope.offsetLeft + untyped(currentScope).clientLeft - currentScope.scrollLeft;
+			globalY += currentScope.offsetTop  + untyped(currentScope).clientTop  - currentScope.scrollTop;
+		}
+		return new Point(globalX, globalY);
+		#else
+		return this;
+		#end
+	}
+	/**
+	 * Translate this absolute point such that it is relative to a given scope.
+	 */
+	public inline function getLocalLocation(targetScope:NativeScope):Point {
+		#if flash9
+		var point:flash.geom.Point = targetScope.globalToLocal(new flash.geom.Point(x, y));
+		return new Point(point.x, point.y);
+		#elseif js
+		var localX:Float = x - targetScope.offsetLeft;
+		var localY:Float = y - targetScope.offsetTop;
+		while (targetScope.offsetParent != null) {
+			targetScope = targetScope.offsetParent;
+			localX -= targetScope.offsetLeft + untyped(targetScope).clientLeft - targetScope.scrollLeft;
+			localY -= targetScope.offsetTop  + untyped(targetScope).clientTop  - targetScope.scrollTop;
+		}
+		return new Point(localX, localY);
+		#else
+		return this;
+		#end
+		
+	}
+	/**
+	 * Given a scope for this point, translate it such that it is relative to a different scope.
+	 */
+	public function translateToScope(currentScope:NativeScope, targetScope:NativeScope):Point {
+		return
+			if (targetScope == currentScope) {
+				this;
+			} else {
+				getGlobalLocation(currentScope).getLocalLocation(targetScope);
+			}
+	}
 	#if debug
 	private function toString():String {
 		return "[Point x=" + x + " y=" + y + "]";

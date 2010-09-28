@@ -28,7 +28,7 @@ package hsl.js.translation.mouse;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
-import hsl.js.data.mouse.MouseLocation;
+import hsl.haxe.data.mouse.MouseLocation;
 import hsl.js.translation.JSTranslatorBase;
 import js.Dom;
 

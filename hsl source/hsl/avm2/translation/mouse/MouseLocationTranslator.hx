@@ -27,7 +27,8 @@
 package hsl.avm2.translation.mouse;
 import flash.display.DisplayObject;
 import flash.events.MouseEvent;
-import hsl.avm2.data.mouse.MouseLocation;
+import hsl.haxe.data.mathematics.Point;
+import hsl.haxe.data.mouse.MouseLocation;
 import hsl.haxe.translation.Translation;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.translation.NativeEvent;
@@ -59,10 +60,12 @@ class MouseLocationTranslator implements Translator<MouseLocation> {
 		// variable is dynamic, but since mouse events are dispatched by display objects only in most cases we'll assume that the
 		// target property is a display object, too. However, AS3 compilers don't like this. We have to cast it explicitly for
 		// them.
-		#if as3
-		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, cast(mouseEvent.target, DisplayObject)), mouseEvent.target);
-		#else
-		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, mouseEvent.target), mouseEvent.target);
-		#end
+		var target:DisplayObject =
+			#if as3
+			cast(mouseEvent.target, DisplayObject);
+			#else
+			mouseEvent.target;
+			#end
+		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, new Point(target.stage.mouseX, target.stage.mouseY)), target);
 	}
 }

@@ -27,8 +27,8 @@
 package hsl.avm2.plugins;
 import flash.display.InteractiveObject;
 import flash.events.MouseEvent;
-import hsl.avm2.data.mouse.MouseCondition;
-import hsl.avm2.data.mouse.MouseLocation;
+import hsl.haxe.data.mouse.MouseCondition;
+import hsl.haxe.data.mouse.MouseLocation;
 import hsl.avm2.translation.DatalessTranslator;
 import hsl.avm2.translation.mouse.DeltaTranslator;
 import hsl.avm2.translation.mouse.MouseConditionTranslator;

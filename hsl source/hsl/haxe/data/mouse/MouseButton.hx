@@ -24,7 +24,7 @@
  * such event, you may use this version of this software under either the terms above or under the terms of the new license of
  * this software.
  */
-package hsl.js.data.mouse;
+package hsl.haxe.data.mouse;
 
 /**
  * The button on the mouse.

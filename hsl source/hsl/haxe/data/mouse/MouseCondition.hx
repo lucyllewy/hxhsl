@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -24,41 +24,36 @@
  * such event, you may use this version of this software under either the terms above or under the terms of the new license of
  * this software.
  */
-package hsl.js.data.mouse;
-import haxe.exception.ArgumentNullException;
-import hsl.haxe.data.mathematics.Point;
-import js.Dom;
+package hsl.haxe.data.mouse;
+import hsl.haxe.data.keyboard.ModifierKeysState;
 
 /**
- * The location, the x and the y coordinate, of the mouse, relative to a scope.
+ * The condition of the mouse, which consists of the location, the modifier keys state and the mouse buttons state.
  */
-class MouseLocation extends Point {
+class MouseCondition {
 	/**
-	 * The global location of the mouse. The global location is relative to the stage, as opposed to an other scope.
+	 * The button associated with this mouse condition.
 	 */
-	public var globalLocation(default, null):Point;
+	public var button(default, null):MouseButton;
 	/**
-	 * The scope to which this mouse location is relative.
+	 * The location, the x and the y coordinate, of the mouse
 	 */
-	public var scope(default, null):HtmlDom;
+	public var location(default, null):MouseLocation;
 	/**
-	 * Creates a new local mouse location.
+	 * The state of the modifier keys (the Control, Alt and Shift keys.)
 	 */
-	public function new(x:Float, y:Float, scope:HtmlDom, globalLocation:Point):Void {
-		super(x, y);
-		// If either scope or globalLocation is null, throw an exception.
-		if (null == scope) {
-			throw new ArgumentNullException("scope", 1);
-		}
-		if (null == globalLocation) {
-			throw new ArgumentNullException("globalLocation", 1);
-		}
-		this.scope = scope;
-		this.globalLocation = globalLocation;
+	public var modifierKeysState(default, null):ModifierKeysState;
+	/**
+	 * Creates a new mouse condition.
+	 */
+	public function new(location:MouseLocation, button:MouseButton, modifierKeysState:ModifierKeysState):Void {
+		this.location = location;
+		this.button = button;
+		this.modifierKeysState = modifierKeysState;
 	}
 	#if debug
-	private override function toString():String {
-		return "[MouseLocation x=" + x + " y=" + y + " scope=" + scope + "]";
+	private function toString():String {
+		return "[MouseCondition location=" + location + " button=" + button + " modifierKeysState=" + modifierKeysState + "]";
 	}
 	#end
 }

@@ -1,6 +1,6 @@
 package org.grumpytoad.hslexample.mouseclick;
 
-import hsl.js.data.mouse.MouseCondition;
+import hsl.haxe.data.mouse.MouseCondition;
 import js.Dom;
 import js.Lib;
 import hsl.haxe.Signal;

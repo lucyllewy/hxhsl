@@ -3,7 +3,7 @@ package org.grumpytoad.hslexample.mousecondition;
 import hsl.js.translation.mouse.MouseConditionTranslator;
 import js.Lib;
 import hsl.haxe.Signal;
-import hsl.js.data.mouse.MouseCondition;
+import hsl.haxe.data.mouse.MouseCondition;
 import hsl.js.translating.JSSignaler;
 
 class Main {

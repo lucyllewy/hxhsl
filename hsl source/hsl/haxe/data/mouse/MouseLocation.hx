@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2010, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -24,31 +24,32 @@
  * such event, you may use this version of this software under either the terms above or under the terms of the new license of
  * this software.
  */
-package hsl.avm2.data.mouse;
-import hsl.haxe.data.keyboard.ModifierKeysState;
+package hsl.haxe.data.mouse;
+import haxe.exception.ArgumentNullException;
+import hsl.haxe.data.mathematics.Point;
 
 /**
- * The condition of the mouse, which consists of the location and the modifier keys state.
+ * The location, the x and the y coordinate, of the mouse.
  */
-class MouseCondition {
+class MouseLocation extends Point {
 	/**
-	 * The location, the x and the y coordinate, of the mouse, relative to a scope.
+	 * The global location of the mouse. The global location is relative to the stage, as opposed to an other scope.
 	 */
-	public var location(default, null):MouseLocation;
+	public var globalLocation(default, null):Point;
 	/**
-	 * The state of the modifier keys (the Control, Alt and Shift keys.)
+	 * Creates a new local mouse location.
 	 */
-	public var modifierKeysState(default, null):ModifierKeysState;
-	/**
-	 * Creates a new mouse condition.
-	 */
-	public function new(location:MouseLocation, modifierKeysState:ModifierKeysState):Void {
-		this.location = location;
-		this.modifierKeysState = modifierKeysState;
+	public function new(x:Float, y:Float, globalLocation:Point):Void {
+		super(x, y);
+		// If either globalLocation is null, throw an exception.
+		if (null == globalLocation) {
+			throw new ArgumentNullException("globalLocation", 1);
+		}
+		this.globalLocation = globalLocation;
 	}
 	#if debug
-	private function toString():String {
-		return "[MouseCondition location=" + location + " modifierKeysState=" + modifierKeysState + "]";
+	private override function toString():String {
+		return "[MouseLocation x=" + x + " y=" + y + " globalLocation=" + globalLocation + "]";
 	}
 	#end
 }
