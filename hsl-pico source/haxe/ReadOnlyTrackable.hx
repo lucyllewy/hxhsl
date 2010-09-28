@@ -114,4 +114,7 @@ class ReadOnlyTrackable<Datatype> {
 		previousValue = value;
 		changedSignaler.dispatch(value = newValue);
 	}
+	private function toString():String {
+		return Std.string(value);
+	}
 }
