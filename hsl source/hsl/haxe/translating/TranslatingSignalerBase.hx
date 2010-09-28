@@ -63,7 +63,11 @@ class TranslatingSignalerBase<Datatype> extends DirectSignaler<Datatype> {
 	 * to native dispatchers. Calling this method will remove those references, allowing the translating signaler to be garbage
 	 * collected even if the native dispatchers are not.
 	 */
+	#if production
+	public function stop():Void {
+	#else
 	public function stop(?positionInformation:PosInfos):Void {
 		verifyCaller(positionInformation);
+	#end
 	}
 }
