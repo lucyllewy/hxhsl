@@ -41,6 +41,8 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 	}
 	public function addBubblingTarget(value:Signaler<Datatype>):Void {
 	}
+	public function addNotificationTarget(value:Signaler<Void>):Void {
+	}
 	public function bind(listener:Datatype -> Dynamic):Bond {
 		return new Bond();
 	}
@@ -61,6 +63,8 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 		return false;
 	}
 	public function removeBubblingTarget(value:Signaler<Datatype>):Void {
+	}
+	public function removeNotificationTarget(value:Signaler<Void>):Void {
 	}
 	#if debug
 	private function toString():String {

@@ -11,6 +11,7 @@ class Main {
 		testRunner.add(new BubbleTestCase());
 		testRunner.add(new BubbleAdvancedTestCase());
 		testRunner.add(new BondHaltTestCase());
+		testRunner.add(new NotificationTestCase());
 		testRunner.add(new BondDestroyTestCase());
 		testRunner.add(new IsListenedToTestCase());
 		testRunner.add(new StopPropagationTestCase());

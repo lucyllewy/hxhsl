@@ -34,6 +34,7 @@ import haxe.exception.Exception;
 class DirectSignaler<Datatype> implements Signaler<Datatype> {
 	private var bubblingTargets:List<Signaler<Datatype>>;
 	public var isListenedTo(getIsListenedTo, never):Bool;
+	private var notificationTargets:List<Signaler<Void>>;
 	private var rejectNullData:Bool;
 	private var sentinel:SentinelBond<Datatype>;
 	public var subject(default, null):Subject;
@@ -66,6 +67,12 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		}
 		bubblingTargets.add(value);
 	}
+	public function addNotificationTarget(value:Signaler<Void>):Void {
+		if (null == notificationTargets) {
+			notificationTargets = new List<Signaler<Void>>();
+		}
+		notificationTargets.add(value);
+	}
 	public function bind(listener:Datatype -> Dynamic):Bond {
 		return sentinel.add(new RegularBond(listener));
 	}
@@ -76,8 +83,15 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		return sentinel.add(new NiladicBond<Datatype>(listener));
 	}
 	private inline function bubble(data:Datatype, origin:Subject):Void {
-		for (bubblingTarget in bubblingTargets) {
-			bubblingTarget.dispatch(data, origin);
+		if (null != bubblingTargets) {
+			for (bubblingTarget in bubblingTargets) {
+				bubblingTarget.dispatch(data, origin);
+			}
+		}
+		if (null != notificationTargets) {
+			for (notificationTarget in notificationTargets) {
+				notificationTarget.dispatch(null, origin);
+			}
 		}
 	}
 	#if (as3 || production)
@@ -120,7 +134,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		// Grab the origin.
 		origin = getOrigin(origin);
 		// Call all the listeners and bubble the signal, if propagation was not stopped.
-		if (PropagationStatus.UNDISTURBED == sentinel.callListener(data, subject, origin, PropagationStatus.UNDISTURBED) && null != bubblingTargets) {
+		if (PropagationStatus.UNDISTURBED == sentinel.callListener(data, subject, origin, PropagationStatus.UNDISTURBED)) {
 			bubble(data, origin);
 		}
 	}
@@ -165,6 +179,11 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 	public function removeBubblingTarget(value:Signaler<Datatype>):Void {
 		if (null != bubblingTargets) {
 			bubblingTargets.remove(value);
+		}
+	}
+	public function removeNotificationTarget(value:Signaler<Void>):Void {
+		if (null != notificationTargets) {
+			notificationTargets.remove(value);
 		}
 	}
 	#if debug

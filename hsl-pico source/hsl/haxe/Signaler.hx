@@ -79,6 +79,16 @@ interface Signaler<Datatype> {
 	 */
 	public function addBubblingTarget(value:Signaler<Datatype>):Void;
 	/**
+	 * Adds a notification target to the signaler. The signaler will notify to this notification target in bubbling processes,
+	 * however, the data inside the signal will not be passed to this notification target.
+	 * 
+	 * <ul><li>
+	 * If you are familiar with events in ActionScript 3.0, or as3-signals by Robert Penner: those systems do not have an
+	 * equivalent to this method, as they don't allow you to manually define where events/signals bubble to.
+	 * </li></ul>
+	 */
+	public function addNotificationTarget(value:Signaler<Void>):Void;
+	/**
 	 * Binds this signaler to a listener function that accepts an argument of the datatype of this signaler, and returns nothing.
 	 * Returns the bond between the signaler. The bond can be removed by calling either the unbind method of the signaler, or the
 	 * destroy method of the returned bond.
@@ -141,6 +151,11 @@ interface Signaler<Datatype> {
 	 * does not have the passed value as a bubbling target, calling this method has no effect.
 	 */
 	public function removeBubblingTarget(value:Signaler<Datatype>):Void;
+	/**
+	 * Removes a notification target from the signaler. The signaler will stop notifying this notification target. If the
+	 * signaler does not have the passed value as a notification target, calling this method has no effect.
+	 */
+	public function removeNotificationTarget(value:Signaler<Void>):Void;
 	/**
 	 * Removed the bond between this signaler and a listener. If such bond does not exist, calling this method has no effect.
 	 */

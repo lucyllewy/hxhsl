@@ -6,9 +6,6 @@ class ReadOnlyTrackableTestCase extends UnitTestCaseBase {
 	public function new():Void {
 		super();
 	}
-	private function assertJoker(enemy:String):Void {
-		assertEquals("Joker", enemy);
-	}
 	private function assertPoisonIvy(enemy:String):Void {
 		assertEquals("Poison Ivy", enemy);
 	}
@@ -20,10 +17,8 @@ class ReadOnlyTrackableTestCase extends UnitTestCaseBase {
 	}
 	public function testReadOnlyTrackable():Void {
 		assertEquals("Joker", batman.currentEnemy.value);
-		batman.currentEnemy.changeRequestedSignaler.bind(assertJoker);
 		batman.currentEnemy.changedSignaler.bind(assertPoisonIvy);
 		batman.focusOn("Poison Ivy");
-		batman.currentEnemy.changeRequestedSignaler.unbind(assertJoker);
 		batman.currentEnemy.changedSignaler.unbind(assertPoisonIvy);
 		assertEquals("Poison Ivy", batman.currentEnemy.value);
 		// In AS3 the illegal setting test will fail in release mode.

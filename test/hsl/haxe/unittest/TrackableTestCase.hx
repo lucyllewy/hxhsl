@@ -20,16 +20,12 @@ class TrackableTestCase extends UnitTestCaseBase {
 	}
 	public function testTrackable():Void {
 		assertEquals(0, cookieMonster.numberOfCookiesEaten.value);
-		cookieMonster.numberOfCookiesEaten.changeRequestedSignaler.bind(assertZero);
 		cookieMonster.numberOfCookiesEaten.changedSignaler.bind(assertOne);
 		cookieMonster.eatCookie();
-		cookieMonster.numberOfCookiesEaten.changeRequestedSignaler.unbind(assertZero);
 		cookieMonster.numberOfCookiesEaten.changedSignaler.unbind(assertOne);
 		assertEquals(1, cookieMonster.numberOfCookiesEaten.value);
-		cookieMonster.numberOfCookiesEaten.changeRequestedSignaler.bind(assertOne);
 		cookieMonster.numberOfCookiesEaten.changedSignaler.bind(assertTwo);
 		cookieMonster.eatCookie();
-		cookieMonster.numberOfCookiesEaten.changeRequestedSignaler.unbind(assertOne);
 		cookieMonster.numberOfCookiesEaten.changedSignaler.unbind(assertTwo);
 		assertEquals(2, cookieMonster.numberOfCookiesEaten.value);
 	}
