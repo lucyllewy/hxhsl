@@ -41,7 +41,7 @@ class MouseLocation extends Point {
 	 */
 	public function new(x:Float, y:Float, globalLocation:Point):Void {
 		super(x, y);
-		// If either globalLocation is null, throw an exception.
+		// If globalLocation is null, throw an exception.
 		if (null == globalLocation) {
 			throw new ArgumentNullException("globalLocation", 1);
 		}
