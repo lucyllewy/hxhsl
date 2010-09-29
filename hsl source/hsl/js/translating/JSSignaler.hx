@@ -126,7 +126,6 @@ class JSSignaler<DataType> extends TranslatingSignalerBase<DataType> {
 	}
 	#if production
 	public override function stop():Void {
-		super.stop();
 	#else
 	public override function stop(?positionInformation:PosInfos):Void {
 		super.stop(positionInformation);

@@ -95,7 +95,6 @@ class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 	}
 	#if production
 	public override function stop():Void {
-		super.stop();
 	#else
 	public override function stop(?positionInformation:PosInfos):Void {
 		super.stop(positionInformation);
