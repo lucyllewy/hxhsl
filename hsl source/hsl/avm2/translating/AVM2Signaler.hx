@@ -93,8 +93,13 @@ class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 	private function removeInternalListener():Void {
 		nativeDispatcher.removeEventListener(nativeEventType, dispatchNative);
 	}
+	#if production
+	public override function stop():Void {
+		super.stop();
+	#else
 	public override function stop(?positionInformation:PosInfos):Void {
 		super.stop(positionInformation);
+	#end
 		removeInternalListener();
 	}
 }

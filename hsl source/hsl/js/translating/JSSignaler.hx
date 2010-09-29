@@ -124,8 +124,13 @@ class JSSignaler<DataType> extends TranslatingSignalerBase<DataType> {
 		#end
 		return false;
 	}
+	#if production
+	public override function stop():Void {
+		super.stop();
+	#else
 	public override function stop(?positionInformation:PosInfos):Void {
 		super.stop(positionInformation);
+	#end
 		if (null != untyped(nativeDispatcher).removeEventListener) {
 			untyped(nativeDispatcher).removeEventListener(nativeEventType, dispatchNative);
 		} else {
