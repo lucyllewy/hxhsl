@@ -49,9 +49,10 @@ class NetStreamShortcuts {
 		return clientVault.getClient(nativeDispatcher).durationReceivedSignaler;
 	}
 	/**
-	 * Gets a signaler that dispatches signals when duration of a video stream is determined. The dispatched signals contain the
-	 * duration in seconds. This method either creates a new signaler, or uses an existing one, depending on whether this method
-	 * has been called before. If you call this method twice on the same object, the same signaler instance will be returned.
+	 * Gets a signaler that dispatches signals when a status has been reported by net stream is determined. The dispatched
+	 * signals contain the associated status. This method either creates a new signaler, or uses an existing one, depending on
+	 * whether this method has been called before. If you call this method twice on the same object, the same signaler instance
+	 * will be returned.
 	 */
 	public static inline function getStatusReportedSignaler(nativeDispatch:NetStream):Signaler<NetStreamStatus> {
 		if (null == clientVault) {
