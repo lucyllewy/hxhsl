@@ -40,7 +40,7 @@ class AVM2SignalerVault {
 	 * Creates a new AVM2 signaler vault.
 	 */
 	public function new():Void {
-		signalers = new TypedDictionary<IEventDispatcher, Hash<Signaler<Dynamic>>>();
+		signalers = new TypedDictionary(false);
 	}
 	/**
 	 * Gets a translating signaler for the passed native dispatcher and the passed native event type. This method creates a new
@@ -57,7 +57,7 @@ class AVM2SignalerVault {
 				signalers.get(nativeDispatcher);
 			// If there is no hash for this native dispatcher, create it, add it and return it.
 			} else {
-				var result:Hash<Signaler<Dynamic>> = new Hash<Signaler<Dynamic>>();
+				var result:Hash<Signaler<Dynamic>> = new Hash();
 				signalers.set(nativeDispatcher, result);
 				result;
 			}
@@ -67,7 +67,7 @@ class AVM2SignalerVault {
 				hash.get(nativeEventType);
 			} else {
 			// If there is no signaler for this native event type, create it, add it and return it.
-				var result:Signaler<Datatype> = new AVM2Signaler<Datatype>(nativeDispatcher, nativeDispatcher, nativeEventType, createTranslator());
+				var result:Signaler<Datatype> = new AVM2Signaler(nativeDispatcher, nativeDispatcher, nativeEventType, createTranslator());
 				hash.set(nativeEventType, result);
 				return result;
 			}
