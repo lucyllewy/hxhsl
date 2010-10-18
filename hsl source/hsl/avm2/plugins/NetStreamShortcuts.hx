@@ -29,6 +29,7 @@ import flash.events.NetStatusEvent;
 import flash.net.NetStream;
 import flash.utils.TypedDictionary;
 import hsl.avm2.data.NetStreamStatus;
+import hsl.haxe.data.mathematics.Point;
 import hsl.haxe.DirectSignaler;
 import hsl.haxe.Signaler;
 
@@ -37,6 +38,18 @@ import hsl.haxe.Signaler;
  */
 class NetStreamShortcuts {
 	private static var clientVault:NetStreamClientVault;
+	/**
+	 * Gets a signaler that dispatches a signal when the dimensions of a video stream is determined. The dispatched signals
+	 * contain the dimensions of the video stream. This method either creates a new signaler, or uses an existing one,
+	 * depending on whether this method has been called before. If you call this method twice on the same object, the same
+	 * signaler instance will be returned.
+	 */
+	public static inline function getDimensionsReceivedSignaler(nativeDispatcher:NetStream):Signaler<Point> {
+		if (null == clientVault) {
+			clientVault = new NetStreamClientVault();
+		}
+		return clientVault.getClient(nativeDispatcher).dimensionsReceivedSignaler;
+	}
 	/**
 	 * Gets a signaler that dispatches signals when duration of a video stream is determined. The dispatched signals contain the
 	 * duration in seconds. This method either creates a new signaler, or uses an existing one, depending on whether this method
@@ -97,11 +110,13 @@ class NetStreamClientVault {
 	}
 }
 class NetStreamClient {
+	public var dimensionsReceivedSignaler(default, null):Signaler<Point>;
 	public var durationReceivedSignaler(default, null):Signaler<Float>;
 	//public var errorOccurredSignaler(default, null):Signaler<String>;
 	private var netStream:NetStream;
 	public var statusReportedSignaler(default, null):Signaler<NetStreamStatus>;
 	public function new(netStream:NetStream):Void {
+		dimensionsReceivedSignaler = new DirectSignaler(this);
 		durationReceivedSignaler = new DirectSignaler(this);
 		//errorOccurredSignaler = new DirectSignaler(this);
 		statusReportedSignaler = new DirectSignaler(this);
@@ -111,7 +126,12 @@ class NetStreamClient {
 	public inline function onCuePoint(informationObject:Dynamic):Void {
 	}
 	public inline function onMetaData(informationObject:Dynamic):Void {
-		durationReceivedSignaler.dispatch(informationObject.duration, netStream);
+		if (null != informationObject.duration) {
+			durationReceivedSignaler.dispatch(informationObject.duration, netStream);
+		}
+		if (null != informationObject.width && null != informationObject.height) {
+			dimensionsReceivedSignaler.dispatch(new Point(informationObject.width, informationObject.height));
+		}
 	}
 	private function translateNetStatusEvent(event:NetStatusEvent):Void {
 		switch (event.info.level) {
