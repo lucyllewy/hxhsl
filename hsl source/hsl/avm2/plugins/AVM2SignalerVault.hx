@@ -40,7 +40,7 @@ class AVM2SignalerVault {
 	 * Creates a new AVM2 signaler vault.
 	 */
 	public function new():Void {
-		signalers = new TypedDictionary(false);
+		signalers = new TypedDictionary(true);
 	}
 	/**
 	 * Gets a translating signaler for the passed native dispatcher and the passed native event type. This method creates a new
