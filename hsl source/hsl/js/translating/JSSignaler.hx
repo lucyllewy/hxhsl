@@ -98,22 +98,22 @@ class JSSignaler<DataType> extends TranslatingSignalerBase<DataType> {
 			case MOUSEDOWN:
 				disableContextMenu();
 				return { html4:"onmousedown", dom2:"mousedown" };
-           case TOUCHSTART:
+			case TOUCHSTART:
 				disableContextMenu();
 				return { html4:"touchstart", dom2:"touchstart" };
-           case TOUCHMOVE:
+			case TOUCHMOVE:
 				disableContextMenu();
 				return { html4:"touchmove", dom2:"touchmove" };
-           case TOUCHEND:
+			case TOUCHEND:
 				disableContextMenu();
 				return { html4:"touchend", dom2:"touchend" };
-           case GESTURESTART:
+			case GESTURESTART:
 				disableContextMenu();
 				return { html4:"gesturestart", dom2:"gesturestart" };
-           case GESTURECHANGE:
+			case GESTURECHANGE:
 				disableContextMenu();
 				return { html4:"gesturechange", dom2:"gesturechange" };
-           case GESTUREEND:
+			case GESTUREEND:
 				disableContextMenu();
 				return { html4:"gestureend", dom2:"gestureend" };
 			case ERROR:
