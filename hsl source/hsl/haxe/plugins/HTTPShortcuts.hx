@@ -41,10 +41,10 @@ class HTTPShortcuts {
 	private static inline var HTTP_STATUS_RECEIVED:String = "httpStatusReceived";
 	private static var signalerVault:SignalerVault<Http>;
 	private static function createCompletedSignaler(nativeDispatcher:Http):Signaler<String> {
-		return new DynamicFunctionSignaler<String>(nativeDispatcher, nativeDispatcher, "onData", true);
+		return new DynamicFunctionSignaler(nativeDispatcher, nativeDispatcher, "onData", true);
 	}
 	private static function createErrorOccurredSignaler(nativeDispatcher:Http):Signaler<String> {
-		return new DynamicFunctionSignaler<String>(nativeDispatcher, nativeDispatcher, "onError", true);
+		return new DynamicFunctionSignaler(nativeDispatcher, nativeDispatcher, "onError", true);
 	}
 	private static function createHTTPStatusReceivedSignaler(nativeDispatcher:Http):Signaler<HTTPStatus> {
 		return new HTTPStatusReceivedSignaler(nativeDispatcher);
@@ -56,7 +56,7 @@ class HTTPShortcuts {
 	 */
 	public static inline function getCompletedSignaler(nativeDispatcher:Http):Signaler<String> {
 		if (null == signalerVault) {
-			signalerVault = new SignalerVault<Http>();
+			signalerVault = new SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, COMPLETED, createCompletedSignaler);
 	}
@@ -67,7 +67,7 @@ class HTTPShortcuts {
 	 */
 	public static inline function getHTTPStatusReceivedSignaler(nativeDispatcher:Http):Signaler<HTTPStatus> {
 		if (null == signalerVault) {
-			signalerVault = new SignalerVault<Http>();
+			signalerVault = new SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, HTTP_STATUS_RECEIVED, createHTTPStatusReceivedSignaler);
 	}
@@ -79,7 +79,7 @@ class HTTPShortcuts {
 	 */
 	public static inline function getErrorOccurredSignaler(nativeDispatcher:Http):Signaler<String> {
 		if (null == signalerVault) {
-			signalerVault = new SignalerVault<Http>();
+			signalerVault = new SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, ERROR_OCCURRED, createErrorOccurredSignaler);
 	}

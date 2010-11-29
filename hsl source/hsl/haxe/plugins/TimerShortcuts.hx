@@ -36,7 +36,7 @@ class TimerShortcuts {
 	private static inline var TICKED:String = "ticked";
 	private static var signalerVault:SignalerVault<Timer>;
 	private static function createTickedSignaler(nativeDispatcher:Dynamic):Signaler<Void> {
-		return new DynamicFunctionSignaler<Void>(nativeDispatcher, nativeDispatcher, "run");
+		return new DynamicFunctionSignaler(nativeDispatcher, nativeDispatcher, "run");
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the timer reaches an interval specified in the constructor of the timer. This
@@ -45,7 +45,7 @@ class TimerShortcuts {
 	 */
 	public static inline function getTickedSignaler(nativeDispatcher:Timer):Signaler<Void> {
 		if (null == signalerVault) {
-			signalerVault = new SignalerVault<Timer>();
+			signalerVault = new SignalerVault();
 		}
 		return signalerVault.getSignaler(nativeDispatcher, TICKED, createTickedSignaler);
 	}
