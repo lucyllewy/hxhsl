@@ -74,12 +74,33 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		notificationTargets.add(value);
 	}
 	public function bind(listener:Datatype -> Dynamic):Bond {
+		#if !production
+		// If the passed listener is null, throw an exception. Having null for a listener will produce errors when the listener
+		// is called.
+		if (null == listener) {
+			throw new ArgumentNullException("listener", 1);
+		}
+		#end
 		return sentinel.add(new RegularBond(listener));
 	}
 	public function bindAdvanced(listener:Signal<Datatype> -> Dynamic):Bond {
+		#if !production
+		// If the passed listener is null, throw an exception. Having null for a listener will produce errors when the listener
+		// is called.
+		if (null == listener) {
+			throw new ArgumentNullException("listener", 1);
+		}
+		#end
 		return sentinel.add(new AdvancedBond<Datatype>(listener));
 	}
 	public function bindVoid(listener:Void -> Dynamic):Bond {
+		#if !production
+		// If the passed listener is null, throw an exception. Having null for a listener will produce errors when the listener
+		// is called.
+		if (null == listener) {
+			throw new ArgumentNullException("listener", 1);
+		}
+		#end
 		return sentinel.add(new NiladicBond<Datatype>(listener));
 	}
 	private inline function bubble(data:Datatype, origin:Subject):Void {
@@ -311,7 +332,6 @@ private class RegularBond<Datatype> extends LinkedBond<Datatype> {
 	private var listener:Datatype -> Void;
 	public function new(listener:Datatype -> Void):Void {
 		super();
-		this.listener = listener;
 	}
 	public override function callListener(data:Datatype, currentTarget:Subject, origin:Subject, propagationStatus:Int):Int {
 		if (false == halted) {
