@@ -332,6 +332,7 @@ private class RegularBond<Datatype> extends LinkedBond<Datatype> {
 	private var listener:Datatype -> Void;
 	public function new(listener:Datatype -> Void):Void {
 		super();
+		this.listener = listener;
 	}
 	public override function callListener(data:Datatype, currentTarget:Subject, origin:Subject, propagationStatus:Int):Int {
 		if (false == halted) {
