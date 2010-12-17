@@ -25,10 +25,13 @@
  * this software.
  */
 package hsl.avm2.plugins;
+import flash.events.IOErrorEvent;
 import flash.events.NetStatusEvent;
 import flash.net.NetStream;
 import flash.utils.TypedDictionary;
+import hsl.avm2.data.NetStreamError;
 import hsl.avm2.data.NetStreamStatus;
+import hsl.avm2.translation.error.ErrorMessageTranslator;
 import hsl.haxe.data.mathematics.Point;
 import hsl.haxe.DirectSignaler;
 import hsl.haxe.Signaler;
@@ -61,17 +64,32 @@ class NetStreamShortcuts {
 		}
 		return clientVault.getClient(nativeDispatcher).durationReceivedSignaler;
 	}
+	public static inline function getErrorOccurredSignaler(nativeDispatcher:NetStream):Signaler<NetStreamError> {
+		if (null == clientVault) {
+			clientVault = new NetStreamClientVault();
+		}
+		return clientVault.getClient(nativeDispatcher).errorOccurredSignaler;
+	}
+	/**
+	 * 
+	 */
+	public static inline function getIOErrorOccurredSignaler(nativeDispatcher:NetStream):Signaler<String> {
+		if (null == clientVault) {
+			clientVault = new NetStreamClientVault();
+		}
+		return clientVault.getClient(nativeDispatcher).ioErrorOccurredSignaler;
+	}
 	/**
 	 * Gets a signaler that dispatches signals when a status has been reported by net stream is determined. The dispatched
 	 * signals contain the associated status. This method either creates a new signaler, or uses an existing one, depending on
 	 * whether this method has been called before. If you call this method twice on the same object, the same signaler instance
 	 * will be returned.
 	 */
-	public static inline function getStatusReportedSignaler(nativeDispatch:NetStream):Signaler<NetStreamStatus> {
+	public static inline function getStatusReportedSignaler(nativeDispatcher:NetStream):Signaler<NetStreamStatus> {
 		if (null == clientVault) {
 			clientVault = new NetStreamClientVault();
 		}
-		return clientVault.getClient(nativeDispatch).statusReportedSignaler;
+		return clientVault.getClient(nativeDispatcher).statusReportedSignaler;
 	}
 }
 class NetStreamClientVault {
@@ -112,16 +130,19 @@ class NetStreamClientVault {
 class NetStreamClient {
 	public var dimensionsReceivedSignaler(default, null):Signaler<Point>;
 	public var durationReceivedSignaler(default, null):Signaler<Float>;
-	//public var errorOccurredSignaler(default, null):Signaler<String>;
+	public var errorOccurredSignaler(default, null):Signaler<NetStreamError>;
+	public var ioErrorOccurredSignaler(default, null):Signaler<String>;
 	private var netStream:NetStream;
 	public var statusReportedSignaler(default, null):Signaler<NetStreamStatus>;
 	public function new(netStream:NetStream):Void {
 		dimensionsReceivedSignaler = new DirectSignaler(this);
 		durationReceivedSignaler = new DirectSignaler(this);
-		//errorOccurredSignaler = new DirectSignaler(this);
+		ioErrorOccurredSignaler = new DirectSignaler(this);
+		errorOccurredSignaler = new DirectSignaler(this);
 		statusReportedSignaler = new DirectSignaler(this);
 		this.netStream = netStream;
 		netStream.addEventListener(NetStatusEvent.NET_STATUS, translateNetStatusEvent);
+		netStream.addEventListener(IOErrorEvent.IO_ERROR, translateIOErrorEvent);
 	}
 	public inline function onCuePoint(informationObject:Dynamic):Void {
 	}
@@ -132,6 +153,12 @@ class NetStreamClient {
 		if (null != informationObject.width && null != informationObject.height) {
 			dimensionsReceivedSignaler.dispatch(new Point(informationObject.width, informationObject.height));
 		}
+	}
+	// XMP data is ignored for now. However, this method must exist, or else Flash Player will complain.
+	public function onXMPData(informationObject:Dynamic):Void {
+	}
+	private function translateIOErrorEvent(event:IOErrorEvent):Void {
+		ioErrorOccurredSignaler.dispatch(new ErrorMessageTranslator().translate(event).data);
 	}
 	private function translateNetStatusEvent(event:NetStatusEvent):Void {
 		switch (event.info.level) {
@@ -178,30 +205,49 @@ class NetStreamClient {
 					sharedObjectFlushSuccess;
 				}
 			statusReportedSignaler.dispatch(status, netStream);
-			//case "error":
-			//var error:NetStreamError =
-				//switch (event.info.code) {
-					//case "NetStream.Publish.BadName":
-					//case "NetStream.Play.Failed":
-					//case "NetStream.Play.StreamNotFound":
-					//case "NetStream.Play.FileStructureInvalid":
-					//case "NetStream.Play.NoSupportedTrackFound":
-					//case "NetStream.Record.NoAccess":
-					//case "NetStream.Record.Failed":
-					//case "NetStream.Seek.Failed":
-					//case "NetStream.Seek.InvalidTime":
-					//case "NetConnection.Call.BadVersion":
-					//case "NetConnection.Call.Failed":
-					//case "NetConnection.Call.Prohibited":
-					//case "NetConnection.Connect.Failed":
-					//case "NetConnection.Connect.Rejected":
-					//case "NetConnection.Connect.AppShutdown":
-					//case "NetConnection.Connect.InvalidApp":
-					//case "SharedObject.Flush.Failed":
-					//case "SharedObject.BadPersistence":
-					//case "SharedObject.UriMismatch":
-				//}
-			//statusReportedSignaler.dispatch(error, netStream);
+			case "error":
+			var error:NetStreamError =
+				switch (event.info.code) {
+					case "NetStream.Publish.BadName":
+					streamPublishBadName;
+					case "NetStream.Play.Failed":
+					streamPlayFailed;
+					case "NetStream.Play.StreamNotFound":
+					streamPlayStreamNotFound;
+					case "NetStream.Play.FileStructureInvalid":
+					streamPlayFileStructureInvalid;
+					case "NetStream.Play.NoSupportedTrackFound":
+					streamPlayNoSupportedTrackFound;
+					case "NetStream.Record.NoAccess":
+					streamRecordNoAccess;
+					case "NetStream.Record.Failed":
+					streamRecordFailed;
+					case "NetStream.Seek.Failed":
+					streamSeekFailed;
+					case "NetStream.Seek.InvalidTime":
+					streamSeekInvalidTime;
+					case "NetConnection.Call.BadVersion":
+					connectionCallBadVersion;
+					case "NetConnection.Call.Failed":
+					connectionCallFailed;
+					case "NetConnection.Call.Prohibited":
+					connectionCallProhibited;
+					case "NetConnection.Connect.Failed":
+					connectionConnectFailed;
+					case "NetConnection.Connect.Rejected":
+					connectionConnectRejected;
+					case "NetConnection.Connect.AppShutdown":
+					connectionConnectAppShutdown;
+					case "NetConnection.Connect.InvalidApp":
+					connectionConnectInvalidApp;
+					case "SharedObject.Flush.Failed":
+					sharedObjectFlushFailed;
+					case "SharedObject.BadPersistence":
+					sharedObjectBadPersistence;
+					case "SharedObject.UriMismatch":
+					sharedObjectUriMismatch;
+				}
+			errorOccurredSignaler.dispatch(error, netStream);
 		}
 	}
 }
@@ -209,7 +255,13 @@ class NetStreamClient {
  * A special client used when another client is already defined, to make sure these shortcuts aren't breaking something.
  */
 class DoubleNetStreamClient {
+	/**
+	 * The client used by HSL.
+	 */
 	private var firstClient:NetStreamClient;
+	/**
+	 * The client already defined before the HSL shortcuts were used.
+	 */
 	private var secondClient:Dynamic;
 	public function new(firstClient:NetStreamClient, secondClient:Dynamic):Void {
 		this.firstClient = firstClient;
@@ -222,5 +274,8 @@ class DoubleNetStreamClient {
 	public function onMetaData(informationObject:Dynamic):Void {
 		firstClient.onMetaData(informationObject);
 		secondClient.onMetaData(informationObject);
+	}
+	public function onXMPData(informationObject:Dynamic):Void {
+		secondClient.onXMPData(informationObject);
 	}
 }
