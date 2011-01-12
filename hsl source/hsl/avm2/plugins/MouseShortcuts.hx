@@ -30,9 +30,6 @@ import flash.events.MouseEvent;
 import hsl.avm2.translating.AVM2Signaler;
 import hsl.haxe.data.mouse.MouseCondition;
 import hsl.haxe.data.mouse.MouseLocation;
-#if HSL_AVOID_DICTIONARY
-import hsl.haxe.plugins.SignalerVault;
-#end
 import hsl.avm2.translation.DatalessTranslator;
 import hsl.avm2.translation.mouse.DeltaTranslator;
 import hsl.avm2.translation.mouse.MouseConditionTranslator;
@@ -44,13 +41,10 @@ import hsl.haxe.Signaler;
  * shortcuts related to the other mouse buttons are in the AIR mouse shortcuts.
  */
 class MouseShortcuts {
-	// If the "avoid dictionary" flag has been set, use the regular signaler vault instead of the AVM2 one (which uses the
-	// dictionary class)
-	private static var signalerVault:#if HSL_AVOID_DICTIONARY SignalerVault<InteractiveObject> #else AVM2SignalerVault #end;
+	private static var signalerVault:AVM2SignalerVault;
 	private static function createClickedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
 		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.CLICK, new MouseConditionTranslator());
 	}
-	#if !HSL_AVOID_DICTIONARY
 	private static function createDatalessTranslator<Datatype>():DatalessTranslator<Datatype> {
 		return new DatalessTranslator();
 	}
@@ -60,34 +54,9 @@ class MouseShortcuts {
 	private static function createMouseConditionTranslator():MouseConditionTranslator {
 		return new MouseConditionTranslator();
 	}
-	#end
-	#if HSL_AVOID_DICTIONARY
-	private static function createMouseEnteredSignaler(nativeDispatcher:InteractiveObject):Signaler<Void> {
-		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.ROLL_OVER, new DatalessTranslator());
-	}
-	private static function createMouseExitedSignaler(nativeDispatcher:InteractiveObject):Signaler<Void> {
-		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.ROLL_OUT, new DatalessTranslator());
-	}
-	#end
-	#if !HSL_AVOID_DICTIONARY
 	private static function createMouseLocationTranslator():MouseLocationTranslator {
 		return new MouseLocationTranslator();
 	}
-	#end
-	#if HSL_AVOID_DICTIONARY
-	private static function createMouseMovedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseLocation> {
-		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.MOUSE_MOVE, new MouseLocationTranslator());
-	}
-	private static function createPressedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.MOUSE_DOWN, new MouseConditionTranslator());
-	}
-	private static function createReleasedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
-		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.MOUSE_UP, new MouseConditionTranslator());
-	}
-	private static function createScrolledOnSignaler(nativeDispatcher:InteractiveObject):Signaler<Int> {
-		return new AVM2Signaler(nativeDispatcher, nativeDispatcher, MouseEvent.MOUSE_WHEEL, new DeltaTranslator());
-	}
-	#end
 	/**
 	 * Gets a signaler that dispatches signals when the user clicks on the object using the left mouse button. User interaction
 	 * is considered a click when the user pushes the left mouse button down on the object, and then lets the mouse button up
@@ -97,9 +66,9 @@ class MouseShortcuts {
 	 */
 	public static inline function getClickedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.CLICK, #if HSL_AVOID_DICTIONARY createClickedSignaler #else createMouseConditionTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.CLICK, createMouseConditionTranslator);
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the mouse cursor enters (moves onto) the object. This method either creates a
@@ -108,9 +77,9 @@ class MouseShortcuts {
 	 */
 	public static inline function getMouseEnteredSignaler(nativeDispatcher:InteractiveObject):Signaler<Void> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.ROLL_OVER, #if HSL_AVOID_DICTIONARY createMouseEnteredSignaler #else createDatalessTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.ROLL_OVER, createDatalessTranslator);
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the mouse cursor exits the object. This method either creates a new signaler,
@@ -119,9 +88,9 @@ class MouseShortcuts {
 	 */
 	public static inline function getMouseExitedSignaler(nativeDispatcher:InteractiveObject):Signaler<Void> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.ROLL_OUT, #if HSL_AVOID_DICTIONARY createMouseExitedSignaler #else createDatalessTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.ROLL_OUT, createDatalessTranslator);
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the mouse cursor moves to a place on the object. The dispatched signals
@@ -131,9 +100,9 @@ class MouseShortcuts {
 	 */
 	public static inline function getMouseMovedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseLocation> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_MOVE, #if HSL_AVOID_DICTIONARY createMouseMovedSignaler #else createMouseLocationTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_MOVE, createMouseLocationTranslator);
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the user pushes the left mouse button down on the object. The dispatched
@@ -143,9 +112,9 @@ class MouseShortcuts {
 	 */
 	public static inline function getPressedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_DOWN, #if HSL_AVOID_DICTIONARY createPressedSignaler #else createMouseConditionTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_DOWN, createMouseConditionTranslator);
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the user lets the left mouse button up on the object. The user can push the
@@ -156,9 +125,9 @@ class MouseShortcuts {
 	 */
 	public static inline function getReleasedSignaler(nativeDispatcher:InteractiveObject):Signaler<MouseCondition> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_UP, #if HSL_AVOID_DICTIONARY createReleasedSignaler #else createMouseConditionTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_UP, createMouseConditionTranslator);
 	}
 	/**
 	 * Gets a signaler that dispatches signals when the user uses the scroll wheel when the mouse cursor is on the object. The
@@ -168,8 +137,8 @@ class MouseShortcuts {
 	 */
 	public static inline function getScrolledOnSignaler(nativeDispatcher:InteractiveObject):Signaler<Int> {
 		if (null == signalerVault) {
-			signalerVault = #if HSL_AVOID_DICTIONARY new SignalerVault() #else new AVM2SignalerVault() #end;
+			signalerVault = new AVM2SignalerVault();
 		}
-		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_WHEEL, #if HSL_AVOID_DICTIONARY createScrolledOnSignaler #else createDeltaTranslator #end);
+		return signalerVault.getSignaler(nativeDispatcher, MouseEvent.MOUSE_WHEEL, createDeltaTranslator);
 	}
 }

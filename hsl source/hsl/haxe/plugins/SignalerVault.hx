@@ -36,7 +36,7 @@ class SignalerVault<NativeDispatcherType> {
 	 * Creates a new signaler vault.
 	 */
 	public function new():Void {
-		signalerCells = new Hash<List<SignalerCell<NativeDispatcherType>>>();
+		signalerCells = new Hash();
 	}
 	/**
 	 * Gets a signaler for the passed native dispatcher and the passed signal identifier. This method creates a new signaler if
@@ -47,7 +47,7 @@ class SignalerVault<NativeDispatcherType> {
 			if (signalerCells.exists(signalIdentifier)) {
 				signalerCells.get(signalIdentifier);
 			} else {
-				var result:List<SignalerCell<NativeDispatcherType>> = new List<SignalerCell<NativeDispatcherType>>();
+				var result:List<SignalerCell<NativeDispatcherType>> = new List();
 				signalerCells.set(signalIdentifier, result);
 				result;
 			}
@@ -57,7 +57,7 @@ class SignalerVault<NativeDispatcherType> {
 			}
 		}
 		var result:Signaler<Datatype> = createSignaler(nativeDispatcher);
-		signalerCellList.add(new SignalerCell<NativeDispatcherType>(nativeDispatcher, result));
+		signalerCellList.add(new SignalerCell(nativeDispatcher, result));
 		return result;
 	}
 }

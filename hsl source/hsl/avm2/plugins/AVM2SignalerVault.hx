@@ -31,6 +31,49 @@ import hsl.haxe.translation.Translator;
 import flash.events.IEventDispatcher;
 import flash.utils.TypedDictionary;
 
+#if (nme || jeash)
+/**
+ * A vault that stores signalers for the AVM2 target, that doesn't use the dictionary class (as, in some cases that class is
+ * not available).
+ */
+class AVM2SignalerVault {
+	private var signalerCells:Hash<List<SignalerCell>>;
+	public function new():Void {
+		signalerCells = new Hash();
+	}
+	/**
+	 * Gets a translating signaler for the passed native dispatcher and the passed native event type. This method creates a new
+	 * translating signaler if it cannot find one that has been created earlier. If a new translating signaler is created, the
+	 * passed createTranslator function is called to create a translator.
+	 */
+	public function getSignaler<Datatype>(nativeDispatcher:IEventDispatcher, nativeEventType:String, createTranslator:Void -> Translator<Datatype>):Signaler<Datatype> {
+		var signalerCellList:List<SignalerCell> =
+			if (signalerCells.exists(nativeEventType)) {
+				signalerCells.get(nativeEventType);
+			} else {
+				var result:List<SignalerCell> = new List();
+				signalerCells.set(nativeEventType, result);
+				result;
+			}
+		for (signalerCell in signalerCellList) {
+			if (signalerCell.nativeDispatcher == nativeDispatcher) {
+				return untyped signalerCell.signaler;
+			}
+		}
+		var result:Signaler<Datatype> = new AVM2Signaler(nativeDispatcher, nativeDispatcher, nativeEventType, createTranslator());
+		signalerCellList.add(new SignalerCell(nativeDispatcher, result));
+		return result;
+	}
+}
+class SignalerCell {
+	public var nativeDispatcher(default, null):Dynamic;
+	public var signaler(default, null):Signaler<Dynamic>;
+	public function new(nativeDispatcher:Dynamic, signaler:Signaler<Dynamic>):Void {
+		this.nativeDispatcher = nativeDispatcher;
+		this.signaler = signaler;
+	}
+}
+#else
 /**
  * A vault that stores signalers, for the AVM2 target.
  */
@@ -73,3 +116,4 @@ class AVM2SignalerVault {
 			}
 	}
 }
+#end

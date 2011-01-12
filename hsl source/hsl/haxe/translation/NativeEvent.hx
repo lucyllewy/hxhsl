@@ -30,7 +30,7 @@ package hsl.haxe.translation;
  * The term "native event" in HSL refers to any events or signals dispatched by a the native event system of a target,
  * platform or library. This class allows us to have at least some type safety inside translating signalers and translators.
  */
-#if flash9
+#if (flash9 || nme || jeash)
 // For AVM2, native events are of the flash.events.Event type.
 typedef NativeEvent = flash.events.Event;
 #elseif js
