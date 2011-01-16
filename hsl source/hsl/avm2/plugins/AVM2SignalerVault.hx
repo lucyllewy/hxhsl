@@ -29,7 +29,9 @@ import hsl.avm2.translating.AVM2Signaler;
 import hsl.haxe.Signaler;
 import hsl.haxe.translation.Translator;
 import flash.events.IEventDispatcher;
+#if !(nme || jeash)
 import flash.utils.TypedDictionary;
+#end
 
 #if (nme || jeash)
 /**
