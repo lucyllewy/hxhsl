@@ -4,5 +4,5 @@
 	<tag v="cross" />
 	<tag v="event" />
 	<description>HSL, pronounced "hustle", stands for haXe Signaling Library. It makes writing event-driven code in haXe hassle-free. This package consists only of the core functionalities of the library. It is recommended that you grab the full library by installing the "hsl-1" package.</description>
-	<version name="1.4">Simplified packages. Removed the big and huge signalers - not many developers use them. Added trackable values. Simplified the JS API. Added shortcuts.</version>
+	<version name="1.5">Fixed issues with C++ target. Added NME/Jeash support. Added JavaScript touch event support for mobile devices. Added a bunch of other JavaScript and AVM2 shortcuts.</version>
 </project>

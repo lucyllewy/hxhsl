@@ -1,4 +1,22 @@
 <haxe>
+	<class path="haxe.TypeTools" params="" file="../hsl-pico source/haxe/TypeTools.hx">
+		<getClassNames public="1" set="method" line="40" static="1">
+			<f a="value">
+				<d/>
+				<c path="List"><c path="String"/></c>
+			</f>
+			<haxe_doc>
+	 * Returns a list of all the complete names of all the classes the passed value is an instance of. If the passed value itself
+	 * is a class, this method will return a list containing its complete name and all its super classes. If you pass an instance
+	 * of Sprite, for instance, this method will return a list containing "flash.display.Sprite",
+	 * "flash.display.DisplayObjectContainer", "flash.display.InteractiveObject", "flash.display.DisplayObject" and
+	 * "flash.events.EventDispatcher".
+	 </haxe_doc>
+		</getClassNames>
+		<haxe_doc>
+ * More advanced operations for reflection.
+ </haxe_doc>
+	</class>
 	<enum path="Void" params="" file="/usr/lib/haxe/std/StdTypes.hx" module="StdTypes"><haxe_doc>
 	The standard Void type. Only [null] values can be of the type [Void].
 </haxe_doc></enum>
@@ -53,24 +71,6 @@
 	ArrayAccess is used to indicate a class that can be accessed using brackets.
 	The type parameter represent the type of the elements stored.
 </haxe_doc></class>
-	<class path="haxe.TypeTools" params="" file="../hsl-pico source/haxe/TypeTools.hx">
-		<getClassNames public="1" set="method" line="40" static="1">
-			<f a="value">
-				<d/>
-				<c path="List"><c path="String"/></c>
-			</f>
-			<haxe_doc>
-	 * Returns a list of all the complete names of all the classes the passed value is an instance of. If the passed value itself
-	 * is a class, this method will return a list containing its complete name and all its super classes. If you pass an instance
-	 * of Sprite, for instance, this method will return a list containing "flash.display.Sprite",
-	 * "flash.display.DisplayObjectContainer", "flash.display.InteractiveObject", "flash.display.DisplayObject" and
-	 * "flash.events.EventDispatcher".
-	 </haxe_doc>
-		</getClassNames>
-		<haxe_doc>
- * More advanced operations for reflection.
- </haxe_doc>
-	</class>
 	<class path="haxe.Trackable" params="Datatype" file="../hsl-pico source/haxe/Trackable.hx">
 		<changedSignaler public="1" set="null">
 			<c path="hsl.haxe.Signaler"><c path="haxe.Trackable.Datatype"/></c>
@@ -78,20 +78,19 @@
 	 * A signaler that dispatches signals after this value has been overwritten. The signals contain the new value.
 	 </haxe_doc>
 		</changedSignaler>
-		<changeRequestedSignaler public="1" set="null">
-			<c path="hsl.haxe.Signaler"><c path="haxe.Trackable.Datatype"/></c>
+		<previousValue public="1" set="null">
+			<c path="haxe.Trackable.Datatype"/>
 			<haxe_doc>
-	 * A signaler that dispatches signals right before this value is overwritten. The signals contain the old value, the value
-	 * before the overwrite.
+	 * The previous value.
 	 </haxe_doc>
-		</changeRequestedSignaler>
+		</previousValue>
 		<value public="1" set="null">
 			<c path="haxe.Trackable.Datatype"/>
 			<haxe_doc>
 	 * The actual value.
 	 </haxe_doc>
 		</value>
-		<set public="1" get="inline" set="null" line="60">
+		<set public="1" get="inline" set="null" line="57">
 			<f a="newValue">
 				<c path="haxe.Trackable.Datatype"/>
 				<e path="Void"/>
@@ -100,7 +99,8 @@
 	 * Overwrites the current value.
 	 </haxe_doc>
 		</set>
-		<new public="1" set="method" line="52">
+		<toString set="method" line="61"><f a=""><c path="String"/></f></toString>
+		<new public="1" set="method" line="50">
 			<f a="initialValue">
 				<c path="haxe.Trackable.Datatype"/>
 				<e path="Void"/>
@@ -110,8 +110,7 @@
 	 </haxe_doc>
 		</new>
 		<haxe_doc>
- * A trackable value. If a line of code overwrites this value a signal is dispatched before the overwrite, and another signal
- * is dispatched after the overwrite. This allows you to track this value for changes.
+ * A trackable value. If this value is overwritten, a signal is dispatched. This allows you to track this value for changes.
  </haxe_doc>
 	</class>
 	<enum path="ValueType" params="" file="/usr/lib/haxe/std/Type.hx" module="Type">
@@ -407,10 +406,6 @@
 		Returns the String itself.
 	</haxe_doc>
 		</toString>
-		<cca set="method"><f a="pos">
-	<c path="Int"/>
-	<c path="Int"/>
-</f></cca>
 		<new public="1" set="method">
 			<f a="string">
 				<c path="String"/>
@@ -431,22 +426,21 @@
 	 * A signaler that dispatches signals after this value has been overwritten. The signals contain the new value.
 	 </haxe_doc>
 		</changedSignaler>
-		<changeRequestedSignaler public="1" set="null">
-			<c path="hsl.haxe.Signaler"><c path="haxe.ReadOnlyTrackable.Datatype"/></c>
-			<haxe_doc>
-	 * A signaler that dispatches signals right before this value is overwritten. The signals contain the old value, the value
-	 * before the overwrite.
-	 </haxe_doc>
-		</changeRequestedSignaler>
 		<owner><d/></owner>
 		<ownerClassNames><c path="List"><c path="String"/></c></ownerClassNames>
+		<previousValue public="1" set="null">
+			<c path="haxe.ReadOnlyTrackable.Datatype"/>
+			<haxe_doc>
+	 * The previous value.
+	 </haxe_doc>
+		</previousValue>
 		<value public="1" set="null">
 			<c path="haxe.ReadOnlyTrackable.Datatype"/>
 			<haxe_doc>
 	 * The actual value.
 	 </haxe_doc>
 		</value>
-		<verifyCaller set="method" line="71">
+		<verifyCaller set="method" line="69">
 			<f a="positionInformation">
 				<t path="haxe.PosInfos"/>
 				<e path="Void"/>
@@ -455,7 +449,7 @@
 	 * Checks whether the class name inside the passed position information equals the class name of the owner of this trackable.
 	 </haxe_doc>
 		</verifyCaller>
-		<set public="1" set="method" line="85">
+		<set public="1" set="method" line="87">
 			<f a="newValue:?positionInformation">
 				<c path="haxe.ReadOnlyTrackable.Datatype"/>
 				<t path="haxe.PosInfos"/>
@@ -465,7 +459,8 @@
 	 * Overwrites the current value.
 	 </haxe_doc>
 		</set>
-		<new public="1" set="method" line="57">
+		<toString set="method" line="117"><f a=""><c path="String"/></f></toString>
+		<new public="1" set="method" line="55">
 			<f a="initialValue:owner">
 				<c path="haxe.ReadOnlyTrackable.Datatype"/>
 				<d/>
@@ -476,9 +471,8 @@
 	 </haxe_doc>
 		</new>
 		<haxe_doc>
- * A read-only trackable value. If a line of code overwrites this value a signal is dispatched before the overwrite, and
- * another signal is dispatched after the overwrite. As the value is read-only, it can only be written by the owner. This
- * allows you to track this value for changes.
+ * A read-only trackable value. If this value is overwritten, a signal is dispatched. This allows you to track this value for
+ * changes. As the value is read-only, it can only be written by the owner.
  </haxe_doc>
 	</class>
 	<class path="Importer" params="" file="Importer.hx"/>
@@ -584,45 +578,6 @@
  * bond in a variable. Doing so allows you to halt and resume the bond, and destroy it easily.
  </haxe_doc>
 	</class>
-	<typedef path="hsl.haxe.Subject" params="" file="../hsl-pico source/hsl/haxe/Subject.hx">
-		<a/>
-		<haxe_doc><![CDATA[
- * A subject is an object that might have internal state changes, which could be of interest to their environment. It notifies
- * its environment of such state changes by dispatching signals, rather than directly calling one of the methods of the
- * listeners. Subjects dispatch signals through signalers. Listeners can add themselves to those signalers.
- * 
- * Use of this technique results in low coupling between the subjects and their listeners. See
- * <a href="http://en.wikipedia.org/wiki/Coupling_(computer_science)">Coupling</a> on Wikipedia for more information.
- * 
- * Any class can act as a subject. Subjects can have any number of signalers.
- * 
- * In this example, the "buddy" variable (an instance of the "Dog" class) is a subject. The main class is a listener.
- * <pre>
- * package;
- * import hsl.haxe.direct.DirectSignaler;
- * import hsl.haxe.Signaler;
- * class Main {
- * 	public static function traceSound(sound:String):Void {
- * 		trace(sound);
- * 	}
- * 	public static function main():Void {
- * 		var buddy:Dog = new Dog();
- * 		buddy.barkedSignaler.bind(traceSound);
- * 		buddy.bark();
- * 	}
- * }
- * class Dog {
- * 	public var barkedSignaler(default, null):Signaler&lt;String&gt;;
- * 	public function new():Void {
- * 		barkedSignaler = new DirectSignaler(this);
- * 	}
- * 	public inline function bark():Void {
- * 		barkedSignaler.dispatch("Woof");
- * 	}
- * }
- * </pre>
- ]]></haxe_doc>
-	</typedef>
 	<enum path="haxe.StackItem" params="" file="/usr/lib/haxe/std/haxe/Stack.hx" module="haxe.Stack">
 		<Module a="m"><c path="String"/></Module>
 		<Method a="classname:method">
@@ -677,6 +632,45 @@
 	Get informations about the call stack.
 </haxe_doc>
 	</class>
+	<typedef path="hsl.haxe.Subject" params="" file="../hsl-pico source/hsl/haxe/Subject.hx">
+		<a/>
+		<haxe_doc><![CDATA[
+ * A subject is an object that might have internal state changes, which could be of interest to their environment. It notifies
+ * its environment of such state changes by dispatching signals, rather than directly calling one of the methods of the
+ * listeners. Subjects dispatch signals through signalers. Listeners can add themselves to those signalers.
+ * 
+ * Use of this technique results in low coupling between the subjects and their listeners. See
+ * <a href="http://en.wikipedia.org/wiki/Coupling_(computer_science)">Coupling</a> on Wikipedia for more information.
+ * 
+ * Any class can act as a subject. Subjects can have any number of signalers.
+ * 
+ * In this example, the "buddy" variable (an instance of the "Dog" class) is a subject. The main class is a listener.
+ * <pre>
+ * package;
+ * import hsl.haxe.direct.DirectSignaler;
+ * import hsl.haxe.Signaler;
+ * class Main {
+ * 	public static function traceSound(sound:String):Void {
+ * 		trace(sound);
+ * 	}
+ * 	public static function main():Void {
+ * 		var buddy:Dog = new Dog();
+ * 		buddy.barkedSignaler.bind(traceSound);
+ * 		buddy.bark();
+ * 	}
+ * }
+ * class Dog {
+ * 	public var barkedSignaler(default, null):Signaler&lt;String&gt;;
+ * 	public function new():Void {
+ * 		barkedSignaler = new DirectSignaler(this);
+ * 	}
+ * 	public inline function bark():Void {
+ * 		barkedSignaler.dispatch("Woof");
+ * 	}
+ * }
+ * </pre>
+ ]]></haxe_doc>
+	</typedef>
 	<class path="Enum" params="T" file="/usr/lib/haxe/std/Enum.hx" extern="1"><haxe_doc>
 	An abstract type that represents an Enum.
 	See [Type] for the haXe Reflection API.
@@ -1074,6 +1068,21 @@
 	 * </li></ul>
 	 ]]></haxe_doc>
 		</addBubblingTarget>
+		<addNotificationTarget public="1" set="method">
+			<f a="value">
+				<c path="hsl.haxe.Signaler"><e path="Void"/></c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[
+	 * Adds a notification target to the signaler. The signaler will notify to this notification target in bubbling processes,
+	 * however, the data inside the signal will not be passed to this notification target.
+	 * 
+	 * <ul><li>
+	 * If you are familiar with events in ActionScript 3.0, or as3-signals by Robert Penner: those systems do not have an
+	 * equivalent to this method, as they don't allow you to manually define where events/signals bubble to.
+	 * </li></ul>
+	 ]]></haxe_doc>
+		</addNotificationTarget>
 		<bind public="1" set="method">
 			<f a="listener">
 				<f a="">
@@ -1166,6 +1175,16 @@
 	 * does not have the passed value as a bubbling target, calling this method has no effect.
 	 </haxe_doc>
 		</removeBubblingTarget>
+		<removeNotificationTarget public="1" set="method">
+			<f a="value">
+				<c path="hsl.haxe.Signaler"><e path="Void"/></c>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>
+	 * Removes a notification target from the signaler. The signaler will stop notifying this notification target. If the
+	 * signaler does not have the passed value as a notification target, calling this method has no effect.
+	 </haxe_doc>
+		</removeNotificationTarget>
 		<unbind public="1" set="method">
 			<f a="listener">
 				<f a="">
@@ -1216,6 +1235,7 @@
 		<implements path="hsl.haxe.Signaler"><c path="hsl.haxe.DirectSignaler.Datatype"/></implements>
 		<bubblingTargets><c path="List"><c path="hsl.haxe.Signaler"><c path="hsl.haxe.DirectSignaler.Datatype"/></c></c></bubblingTargets>
 		<isListenedTo public="1" get="getIsListenedTo" set="null"><e path="Bool"/></isListenedTo>
+		<notificationTargets><c path="List"><c path="hsl.haxe.Signaler"><e path="Void"/></c></c></notificationTargets>
 		<rejectNullData><e path="Bool"/></rejectNullData>
 		<sentinel><c path="hsl.haxe._DirectSignaler.SentinelBond"><c path="hsl.haxe.DirectSignaler.Datatype"/></c></sentinel>
 		<subject public="1" set="null"><t path="hsl.haxe.Subject"/></subject>
@@ -1225,41 +1245,45 @@
 	 * The fully qualified class names of the subject.
 	 </haxe_doc>
 		</subjectClassNames>
-		<addBubblingTarget public="1" set="method" line="66"><f a="value">
+		<addBubblingTarget public="1" set="method" line="64"><f a="value">
 	<c path="hsl.haxe.Signaler"><c path="hsl.haxe.DirectSignaler.Datatype"/></c>
 	<e path="Void"/>
 </f></addBubblingTarget>
-		<bind public="1" set="method" line="72"><f a="listener">
+		<addNotificationTarget public="1" set="method" line="70"><f a="value">
+	<c path="hsl.haxe.Signaler"><e path="Void"/></c>
+	<e path="Void"/>
+</f></addNotificationTarget>
+		<bind public="1" set="method" line="76"><f a="listener">
 	<f a="">
 		<c path="hsl.haxe.DirectSignaler.Datatype"/>
 		<d/>
 	</f>
 	<c path="hsl.haxe.Bond"/>
 </f></bind>
-		<bindAdvanced public="1" set="method" line="75"><f a="listener">
+		<bindAdvanced public="1" set="method" line="86"><f a="listener">
 	<f a="">
 		<c path="hsl.haxe.Signal"><c path="hsl.haxe.DirectSignaler.Datatype"/></c>
 		<d/>
 	</f>
 	<c path="hsl.haxe.Bond"/>
 </f></bindAdvanced>
-		<bindVoid public="1" set="method" line="78"><f a="listener">
+		<bindVoid public="1" set="method" line="96"><f a="listener">
 	<f a=""><d/></f>
 	<c path="hsl.haxe.Bond"/>
 </f></bindVoid>
-		<bubble get="inline" set="null" line="81"><f a="data:origin">
+		<bubble get="inline" set="null" line="106"><f a="data:origin">
 	<c path="hsl.haxe.DirectSignaler.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<e path="Void"/>
 </f></bubble>
-		<dispatch public="1" set="method" line="86"><f a="?data:?origin:?positionInformation">
+		<dispatch public="1" set="method" line="121"><f a="?data:?origin:?positionInformation">
 	<c path="hsl.haxe.DirectSignaler.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="haxe.PosInfos"/>
 	<e path="Void"/>
 </f></dispatch>
-		<getIsListenedTo set="method" line="120"><f a=""><e path="Bool"/></f></getIsListenedTo>
-		<getOrigin get="inline" set="null" line="126">
+		<getIsListenedTo set="method" line="162"><f a=""><e path="Bool"/></f></getIsListenedTo>
+		<getOrigin get="inline" set="null" line="168">
 			<f a="origin">
 				<t path="hsl.haxe.Subject"/>
 				<t path="hsl.haxe.Subject"/>
@@ -1268,7 +1292,7 @@
 	 * Returns the passed origin if it is not null. Returns the subject of this signaler if the passed origin is null.
 	 </haxe_doc>
 		</getOrigin>
-		<verifyCaller set="method" line="145">
+		<verifyCaller set="method" line="188">
 			<f a="positionInformation">
 				<t path="haxe.PosInfos"/>
 				<e path="Void"/>
@@ -1285,29 +1309,33 @@
 	 * "everything should be made accessible, if you know what you're doing".
 	 </haxe_doc>
 		</verifyCaller>
-		<removeBubblingTarget public="1" set="method" line="156"><f a="value">
+		<removeBubblingTarget public="1" set="method" line="200"><f a="value">
 	<c path="hsl.haxe.Signaler"><c path="hsl.haxe.DirectSignaler.Datatype"/></c>
 	<e path="Void"/>
 </f></removeBubblingTarget>
-		<unbind public="1" set="method" line="166"><f a="listener">
+		<removeNotificationTarget public="1" set="method" line="205"><f a="value">
+	<c path="hsl.haxe.Signaler"><e path="Void"/></c>
+	<e path="Void"/>
+</f></removeNotificationTarget>
+		<unbind public="1" set="method" line="215"><f a="listener">
 	<f a="">
 		<c path="hsl.haxe.DirectSignaler.Datatype"/>
 		<d/>
 	</f>
 	<e path="Void"/>
 </f></unbind>
-		<unbindAdvanced public="1" set="method" line="169"><f a="listener">
+		<unbindAdvanced public="1" set="method" line="218"><f a="listener">
 	<f a="">
 		<c path="hsl.haxe.Signal"><c path="hsl.haxe.DirectSignaler.Datatype"/></c>
 		<d/>
 	</f>
 	<e path="Void"/>
 </f></unbindAdvanced>
-		<unbindVoid public="1" set="method" line="172"><f a="listener">
+		<unbindVoid public="1" set="method" line="221"><f a="listener">
 	<f a=""><d/></f>
 	<e path="Void"/>
 </f></unbindVoid>
-		<new public="1" set="method" line="56">
+		<new public="1" set="method" line="54">
 			<f a="subject:?rejectNullData">
 				<t path="hsl.haxe.Subject"/>
 				<e path="Bool"/>
@@ -1332,7 +1360,7 @@
 		<destroyed><e path="Bool"/></destroyed>
 		<next><c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.LinkedBond.Datatype"/></c></next>
 		<previous><c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.LinkedBond.Datatype"/></c></previous>
-		<callListener public="1" set="method" line="195">
+		<callListener public="1" set="method" line="244">
 			<f a="data:currentTarget:origin:propagationStatus">
 				<c path="hsl.haxe._DirectSignaler.LinkedBond.Datatype"/>
 				<t path="hsl.haxe.Subject"/>
@@ -1344,7 +1372,7 @@
 	 * Calls the listener stored inside. Classes that extend this one should override this method.
 	 </haxe_doc>
 		</callListener>
-		<determineEquals set="method" line="202">
+		<determineEquals set="method" line="251">
 			<f a="value">
 				<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.LinkedBond.Datatype"/></c>
 				<e path="Bool"/>
@@ -1354,9 +1382,9 @@
 	 * this one should override this method.
 	 </haxe_doc>
 		</determineEquals>
-		<destroy public="1" set="method" line="205" override="1"><f a=""><e path="Void"/></f></destroy>
-		<unlink get="inline" set="null" line="212"><f a=""><e path="Void"/></f></unlink>
-		<new public="1" set="method" line="185"><f a=""><e path="Void"/></f></new>
+		<destroy public="1" set="method" line="254" override="1"><f a=""><e path="Void"/></f></destroy>
+		<unlink get="inline" set="null" line="261"><f a=""><e path="Void"/></f></unlink>
+		<new public="1" set="method" line="234"><f a=""><e path="Void"/></f></new>
 		<haxe_doc>
  * A doubly linked bond. The bond has a reference to the next and the previous bond in the list.
  </haxe_doc>
@@ -1369,7 +1397,7 @@
 	 * Indicates whether this sentinel is connected to other bonds (true), or not (false).
 	 </haxe_doc>
 		</isConnected>
-		<add public="1" get="inline" set="null" line="242">
+		<add public="1" get="inline" set="null" line="291">
 			<f a="value">
 				<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.SentinelBond.Datatype"/></c>
 				<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.SentinelBond.Datatype"/></c>
@@ -1379,20 +1407,20 @@
 	 * in the list.
 	 </haxe_doc>
 		</add>
-		<callListener public="1" set="method" line="247" override="1"><f a="data:currentTarget:origin:propagationStatus">
+		<callListener public="1" set="method" line="296" override="1"><f a="data:currentTarget:origin:propagationStatus">
 	<c path="hsl.haxe._DirectSignaler.SentinelBond.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="hsl.haxe.Subject"/>
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<getIsConnected get="inline" set="null" line="258">
+		<getIsConnected get="inline" set="null" line="307">
 			<f a=""><e path="Bool"/></f>
 			<haxe_doc>
 	 * Determines whether this sentinel is connected to other bonds (true), or not (false).
 	 </haxe_doc>
 		</getIsConnected>
-		<remove public="1" get="inline" set="null" line="268">
+		<remove public="1" get="inline" set="null" line="317">
 			<f a="value">
 				<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.SentinelBond.Datatype"/></c>
 				<e path="Void"/>
@@ -1403,7 +1431,7 @@
 	 * The sentinel will look for the first bond equal to the passed value connected to it, and destroy it.
 	 </haxe_doc>
 		</remove>
-		<new public="1" set="method" line="234">
+		<new public="1" set="method" line="283">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Creates a new sentinel bond.
@@ -1421,18 +1449,18 @@
 	<c path="hsl.haxe._DirectSignaler.RegularBond.Datatype"/>
 	<e path="Void"/>
 </f></listener>
-		<callListener public="1" set="method" line="288" override="1"><f a="data:currentTarget:origin:propagationStatus">
+		<callListener public="1" set="method" line="337" override="1"><f a="data:currentTarget:origin:propagationStatus">
 	<c path="hsl.haxe._DirectSignaler.RegularBond.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="hsl.haxe.Subject"/>
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<determineEquals set="method" line="294" override="1"><f a="value">
+		<determineEquals set="method" line="343" override="1"><f a="value">
 	<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.RegularBond.Datatype"/></c>
 	<e path="Bool"/>
 </f></determineEquals>
-		<new public="1" set="method" line="284"><f a="listener">
+		<new public="1" set="method" line="333"><f a="listener">
 	<f a="">
 		<c path="hsl.haxe._DirectSignaler.RegularBond.Datatype"/>
 		<e path="Void"/>
@@ -1446,18 +1474,18 @@
 	<class path="hsl.haxe._DirectSignaler.NiladicBond" params="Datatype" file="../hsl-pico source/hsl/haxe/DirectSignaler.hx" private="1" module="hsl.haxe.DirectSignaler">
 		<extends path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.NiladicBond.Datatype"/></extends>
 		<listener><f a=""><e path="Void"/></f></listener>
-		<callListener public="1" set="method" line="317" override="1"><f a="data:currentTarget:origin:propagationStatus">
+		<callListener public="1" set="method" line="366" override="1"><f a="data:currentTarget:origin:propagationStatus">
 	<c path="hsl.haxe._DirectSignaler.NiladicBond.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="hsl.haxe.Subject"/>
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<determineEquals set="method" line="323" override="1"><f a="value">
+		<determineEquals set="method" line="372" override="1"><f a="value">
 	<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.NiladicBond.Datatype"/></c>
 	<e path="Bool"/>
 </f></determineEquals>
-		<new public="1" set="method" line="313">
+		<new public="1" set="method" line="362">
 			<f a="listener">
 				<f a=""><e path="Void"/></f>
 				<e path="Void"/>
@@ -1476,18 +1504,18 @@
 	<c path="hsl.haxe.Signal"><c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/></c>
 	<e path="Void"/>
 </f></listener>
-		<callListener public="1" set="method" line="346" override="1"><f a="data:currentTarget:origin:propagationStatus">
+		<callListener public="1" set="method" line="395" override="1"><f a="data:currentTarget:origin:propagationStatus">
 	<c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="hsl.haxe.Subject"/>
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<determineEquals set="method" line="358" override="1"><f a="value">
+		<determineEquals set="method" line="407" override="1"><f a="value">
 	<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/></c>
 	<e path="Bool"/>
 </f></determineEquals>
-		<new public="1" set="method" line="342">
+		<new public="1" set="method" line="391">
 			<f a="listener">
 				<f a="">
 					<c path="hsl.haxe.Signal"><c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/></c>
@@ -1504,9 +1532,9 @@
  </haxe_doc>
 	</class>
 	<class path="hsl.haxe._DirectSignaler.PropagationStatus" params="" file="../hsl-pico source/hsl/haxe/DirectSignaler.hx" private="1" module="hsl.haxe.DirectSignaler">
-		<IMMEDIATELY_STOPPED public="1" get="inline" set="null" line="370" static="1"><c path="Int"/></IMMEDIATELY_STOPPED>
-		<STOPPED public="1" get="inline" set="null" line="371" static="1"><c path="Int"/></STOPPED>
-		<UNDISTURBED public="1" get="inline" set="null" line="372" static="1"><c path="Int"/></UNDISTURBED>
+		<IMMEDIATELY_STOPPED public="1" get="inline" set="null" line="419" static="1"><c path="Int"/></IMMEDIATELY_STOPPED>
+		<STOPPED public="1" get="inline" set="null" line="420" static="1"><c path="Int"/></STOPPED>
+		<UNDISTURBED public="1" get="inline" set="null" line="421" static="1"><c path="Int"/></UNDISTURBED>
 	</class>
 	<class path="Reflect" params="" file="/usr/lib/haxe/std/Reflect.hx" extern="1">
 		<hasField public="1" set="method" static="1">
@@ -1637,6 +1665,13 @@
 	abstract interface in an untyped manner. Use with care.
 </haxe_doc>
 	</class>
+	<typedef path="haxe.PosInfos" params="" file="/usr/lib/haxe/std/haxe/PosInfos.hx"><a>
+	<methodName><c path="String"/></methodName>
+	<lineNumber><c path="Int"/></lineNumber>
+	<fileName><c path="String"/></fileName>
+	<customParams><c path="Array"><d/></c></customParams>
+	<className><c path="String"/></className>
+</a></typedef>
 	<class path="haxe.exception.Exception" params="" file="../hsl-pico source/haxe/exception/Exception.hx">
 		<baseException public="1" get="getBaseException" set="null">
 			<c path="haxe.exception.Exception"/>
@@ -1652,12 +1687,6 @@
 	 * this property is null.
 	 </haxe_doc>
 		</innerException>
-		<positionInformation public="1" set="null">
-			<t path="haxe.PosInfos"/>
-			<haxe_doc>
-	 * The info about the place this exception was thrown.
-	 </haxe_doc>
-		</positionInformation>
 		<message public="1" set="null">
 			<c path="String"/>
 			<haxe_doc>
@@ -1676,7 +1705,7 @@
 	 * The same as the stackTrace property, only more accurately typed.
 	 </haxe_doc>
 		</stackTraceArray>
-		<generateStackTrace get="inline" set="null" line="83">
+		<generateStackTrace get="inline" set="null" line="77">
 			<f a="numberOfStackTraceShifts">
 				<c path="Int"/>
 				<e path="Void"/>
@@ -1686,19 +1715,18 @@
 	 * corrupted stacktrace.
 	 </haxe_doc>
 		</generateStackTrace>
-		<getBaseException get="inline" set="null" line="96">
+		<getBaseException get="inline" set="null" line="90">
 			<f a=""><c path="haxe.exception.Exception"/></f>
 			<haxe_doc>
 	 * Gets the base exception of this one.
 	 </haxe_doc>
 		</getBaseException>
-		<toString set="method" line="103"><f a=""><c path="String"/></f></toString>
-		<new public="1" set="method" line="65">
-			<f a="?message:?innerException:?numberOfStackTraceShifts:?positionInformation">
+		<toString set="method" line="97"><f a=""><c path="String"/></f></toString>
+		<new public="1" set="method" line="60">
+			<f a="?message:?innerException:?numberOfStackTraceShifts">
 				<c path="String"/>
 				<c path="haxe.exception.Exception"/>
 				<c path="Int"/>
-				<t path="haxe.PosInfos"/>
 				<e path="Void"/>
 			</f>
 			<haxe_doc>
@@ -1709,13 +1737,6 @@
  * General base class for exceptions.
  </haxe_doc>
 	</class>
-	<typedef path="haxe.PosInfos" params="" file="/usr/lib/haxe/std/haxe/PosInfos.hx"><a>
-	<methodName><c path="String"/></methodName>
-	<lineNumber><c path="Int"/></lineNumber>
-	<fileName><c path="String"/></fileName>
-	<customParams><c path="Array"><d/></c></customParams>
-	<className><c path="String"/></className>
-</a></typedef>
 	<class path="StringBuf" params="" file="/usr/lib/haxe/std/StringBuf.hx">
 		<add public="1" get="inline" set="null" line="46">
 			<f a="?x">
@@ -1919,11 +1940,10 @@
 	</class>
 	<class path="haxe.exception.ArgumentNullException" params="" file="../hsl-pico source/haxe/exception/ArgumentNullException.hx">
 		<extends path="haxe.exception.Exception"/>
-		<new public="1" set="method" line="37">
-			<f a="?argumentName:?numberOfStackTraceShifts:?positionInformation">
+		<new public="1" set="method" line="36">
+			<f a="?argumentName:?numberOfStackTraceShifts">
 				<c path="String"/>
 				<c path="Int"/>
-				<t path="haxe.PosInfos"/>
 				<e path="Void"/>
 			</f>
 			<haxe_doc>
