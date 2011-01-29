@@ -53,6 +53,6 @@ class LoadProgressTranslator implements Translator<LoadProgress> {
 			// TODO: throw a more exception instead of this lame one.
 			throw "The nativeEvent argument must be a ProgressEvent.";
 		}
-		return new Translation<LoadProgress>(new LoadProgress(progressEvent.bytesLoaded, progressEvent.bytesTotal), progressEvent.target);
+		return new Translation<LoadProgress>(new LoadProgress(cast progressEvent.bytesLoaded, cast progressEvent.bytesTotal), progressEvent.target);
 	}
 }
