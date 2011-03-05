@@ -11,7 +11,7 @@ class BondDestroyTestCase extends UnitTestCaseBase {
 		cat = new Cat();
 		dog = new Dog();
 	}
-	public function testBondHalting():Void {
+	public function testBondDestroying():Void {
 		assertFalse(cat.isRunning);
 		var bond:Bond = dog.barkedSignaler.bindVoid(cat.startRunning);
 		assertFalse(cat.isRunning);

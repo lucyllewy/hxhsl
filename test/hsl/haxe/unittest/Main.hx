@@ -13,6 +13,7 @@ class Main {
 		testRunner.add(new BondHaltTestCase());
 		testRunner.add(new NotificationTestCase());
 		testRunner.add(new BondDestroyTestCase());
+		testRunner.add(new BondDestroyOnUseTestCase());
 		testRunner.add(new IsListenedToTestCase());
 		testRunner.add(new StopPropagationTestCase());
 		#if !production

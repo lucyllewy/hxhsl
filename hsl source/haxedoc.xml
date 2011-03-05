@@ -543,28 +543,42 @@
 	 * Indicates whether the bond has been halted (true) or not (false). See the halt method for more information.
 	 </haxe_doc>
 		</halted>
-		<destroy public="1" set="method" line="54">
+		<willDestroyOnUse>
+			<e path="Bool"/>
+			<haxe_doc>
+	 * Indicates whether the bond will be destroyed right after it is used (true) or not (false).
+	 </haxe_doc>
+		</willDestroyOnUse>
+		<destroy public="1" set="method" line="58">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Destroys the bond. The signaler that created this bond will no longer notify listeners through it. Bond cannot be
 	 * "undestroyed". To temporary suspend the bond from notifying the associated listener, use the halt method.
 	 </haxe_doc>
 		</destroy>
-		<halt public="1" get="inline" set="null" line="60">
+		<destroyOnUse public="1" set="method" line="65">
+			<f a=""><c path="hsl.haxe.Bond"/></f>
+			<haxe_doc>
+	 * Destroys the bond right after it is used. Whether this bond has already been used at the moment this method is called does
+	 * not matter: the bond will be destroyed on its first use after this method has been called. This method returns this bond
+	 * itself.
+	 </haxe_doc>
+		</destroyOnUse>
+		<halt public="1" get="inline" set="null" line="73">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Halts the bond. The bond will ignore any calls, and will not notify any listeners, until the resume method is called. If
 	 * the bond was already halted, calling this method has no effect.
 	 </haxe_doc>
 		</halt>
-		<resume public="1" get="inline" set="null" line="67">
+		<resume public="1" get="inline" set="null" line="80">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Resumes the bond, after it has been halted by calling the halt method. If the bond was not halted, calling this method has
 	 * no effect. See the halt method for more information.
 	 </haxe_doc>
 		</resume>
-		<new public="1" set="method" line="44">
+		<new public="1" set="method" line="48">
 			<f a=""><e path="Void"/></f>
 			<haxe_doc>
 	 * Creates a new bond.
@@ -1456,7 +1470,7 @@
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<determineEquals set="method" line="343" override="1"><f a="value">
+		<determineEquals set="method" line="346" override="1"><f a="value">
 	<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.RegularBond.Datatype"/></c>
 	<e path="Bool"/>
 </f></determineEquals>
@@ -1474,18 +1488,18 @@
 	<class path="hsl.haxe._DirectSignaler.NiladicBond" params="Datatype" file="../hsl-pico source/hsl/haxe/DirectSignaler.hx" private="1" module="hsl.haxe.DirectSignaler">
 		<extends path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.NiladicBond.Datatype"/></extends>
 		<listener><f a=""><e path="Void"/></f></listener>
-		<callListener public="1" set="method" line="366" override="1"><f a="data:currentTarget:origin:propagationStatus">
+		<callListener public="1" set="method" line="369" override="1"><f a="data:currentTarget:origin:propagationStatus">
 	<c path="hsl.haxe._DirectSignaler.NiladicBond.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="hsl.haxe.Subject"/>
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<determineEquals set="method" line="372" override="1"><f a="value">
+		<determineEquals set="method" line="378" override="1"><f a="value">
 	<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.NiladicBond.Datatype"/></c>
 	<e path="Bool"/>
 </f></determineEquals>
-		<new public="1" set="method" line="362">
+		<new public="1" set="method" line="365">
 			<f a="listener">
 				<f a=""><e path="Void"/></f>
 				<e path="Void"/>
@@ -1504,18 +1518,18 @@
 	<c path="hsl.haxe.Signal"><c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/></c>
 	<e path="Void"/>
 </f></listener>
-		<callListener public="1" set="method" line="395" override="1"><f a="data:currentTarget:origin:propagationStatus">
+		<callListener public="1" set="method" line="401" override="1"><f a="data:currentTarget:origin:propagationStatus">
 	<c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/>
 	<t path="hsl.haxe.Subject"/>
 	<t path="hsl.haxe.Subject"/>
 	<c path="Int"/>
 	<c path="Int"/>
 </f></callListener>
-		<determineEquals set="method" line="407" override="1"><f a="value">
+		<determineEquals set="method" line="416" override="1"><f a="value">
 	<c path="hsl.haxe._DirectSignaler.LinkedBond"><c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/></c>
 	<e path="Bool"/>
 </f></determineEquals>
-		<new public="1" set="method" line="391">
+		<new public="1" set="method" line="397">
 			<f a="listener">
 				<f a="">
 					<c path="hsl.haxe.Signal"><c path="hsl.haxe._DirectSignaler.AdvancedBond.Datatype"/></c>
@@ -1532,9 +1546,9 @@
  </haxe_doc>
 	</class>
 	<class path="hsl.haxe._DirectSignaler.PropagationStatus" params="" file="../hsl-pico source/hsl/haxe/DirectSignaler.hx" private="1" module="hsl.haxe.DirectSignaler">
-		<IMMEDIATELY_STOPPED public="1" get="inline" set="null" line="419" static="1"><c path="Int"/></IMMEDIATELY_STOPPED>
-		<STOPPED public="1" get="inline" set="null" line="420" static="1"><c path="Int"/></STOPPED>
-		<UNDISTURBED public="1" get="inline" set="null" line="421" static="1"><c path="Int"/></UNDISTURBED>
+		<IMMEDIATELY_STOPPED public="1" get="inline" set="null" line="428" static="1"><c path="Int"/></IMMEDIATELY_STOPPED>
+		<STOPPED public="1" get="inline" set="null" line="429" static="1"><c path="Int"/></STOPPED>
+		<UNDISTURBED public="1" get="inline" set="null" line="430" static="1"><c path="Int"/></UNDISTURBED>
 	</class>
 	<class path="Reflect" params="" file="/usr/lib/haxe/std/Reflect.hx" extern="1">
 		<hasField public="1" set="method" static="1">

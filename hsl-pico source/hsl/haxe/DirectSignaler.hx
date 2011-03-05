@@ -242,7 +242,7 @@ private class LinkedBond<Datatype> extends Bond {
 	 * Calls the listener stored inside. Classes that extend this one should override this method.
 	 */
 	public function callListener(data:Datatype, currentTarget:Subject, origin:Subject, propagationStatus:Int):Int {
-		return propagationStatus;
+		return 0;
 	}
 	/**
 	 * Determines whether the passed bond equals this one. Returns true if they are equal; false otherwise. Classes that extend
@@ -337,6 +337,9 @@ private class RegularBond<Datatype> extends LinkedBond<Datatype> {
 	public override function callListener(data:Datatype, currentTarget:Subject, origin:Subject, propagationStatus:Int):Int {
 		if (false == halted) {
 			listener(data);
+			if (willDestroyOnUse) {
+				unlink();
+			}
 		}
 		return propagationStatus;
 	}
@@ -366,6 +369,9 @@ private class NiladicBond<Datatype> extends LinkedBond<Datatype> {
 	public override function callListener(data:Datatype, currentTarget:Subject, origin:Subject, propagationStatus:Int):Int {
 		if (false == halted) {
 			listener();
+			if (willDestroyOnUse) {
+				unlink();
+			}
 		}
 		return propagationStatus;
 	}
@@ -396,6 +402,9 @@ private class AdvancedBond<Datatype> extends LinkedBond<Datatype> {
 		if (halted == false) {
 			var signal:Signal<Datatype> = new Signal<Datatype>(data, this, currentTarget, origin);
 			listener(signal);
+			if (willDestroyOnUse) {
+				unlink();
+			}
 			if (signal.immediatePropagationStopped) {
 				return PropagationStatus.IMMEDIATELY_STOPPED;
 			} else if (signal.propagationStopped) {

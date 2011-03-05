@@ -39,6 +39,10 @@ class Bond {
 	 */
 	public var halted(default, null):Bool;
 	/**
+	 * Indicates whether the bond will be destroyed right after it is used (true) or not (false).
+	 */
+	private var willDestroyOnUse:Bool;
+	/**
 	 * Creates a new bond.
 	 */
 	public function new():Void {
@@ -52,6 +56,15 @@ class Bond {
 	 * "undestroyed". To temporary suspend the bond from notifying the associated listener, use the halt method.
 	 */
 	public function destroy():Void {
+	}
+	/**
+	 * Destroys the bond right after it is used. Whether this bond has already been used at the moment this method is called does
+	 * not matter: the bond will be destroyed on its first use after this method has been called. This method returns this bond
+	 * itself.
+	 */
+	public function destroyOnUse():Bond {
+		willDestroyOnUse = true;
+		return this;
 	}
 	/**
 	 * Halts the bond. The bond will ignore any calls, and will not notify any listeners, until the resume method is called. If

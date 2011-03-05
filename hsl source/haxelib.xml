@@ -4,6 +4,6 @@
 	<tag v="cross" />
 	<tag v="event" />
 	<description>HSL, pronounced "hustle", stands for haXe Signaling Library. It makes writing event-driven code in haXe hassle-free.</description>
-	<depends name="hsl-pico-1" version="1.5" />
-	<version name="1.5">Fixed issues with C++ target. Added NME/Jeash support. Added JavaScript touch event support for mobile devices. Added a bunch of other JavaScript and AVM2 shortcuts.</version>
+	<depends name="hsl-pico-1" version="1.6" />
+	<version name="1.6">Added one-off bond functionality.</version>
 </project>
