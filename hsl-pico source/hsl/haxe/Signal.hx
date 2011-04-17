@@ -150,7 +150,7 @@ class Signal<Datatype> {
 	}
 	/**
 	 * Stops all propagation of the signal. The subject currently dispatching this signal (as found in the target property of
-	 * this the signal) stops doing so right away. Any other listeners that are listening are not notified.
+	 * this signal) stops doing so right away. Any other listeners that are listening are not notified.
 	 * 
 	 * <ul><li>
 	 * If you are familiar with events in ActionScript 3.0, jQuery, or any other system that was based on DOM level 3 events:
@@ -215,7 +215,7 @@ class Signal<Datatype> {
 	}
 	/**
 	 * Stops the bubbling of the signal. The subject currently dispatching this signal (as found in the target property of this
-	 * the signal) will not bubble it to its bubbling targets. Calling this method does not prevent other listeners of the same
+	 * signal) will not bubble it to its bubbling targets. Calling this method does not prevent other listeners of the same
 	 * signaler from being called: see stopImmediatePropagation for that functionality.
 	 * 
 	 * <ul><li>
