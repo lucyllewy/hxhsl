@@ -43,6 +43,7 @@ import js.Lib;
 	 * Creates a new delta translator.
 	 */
 	public function new():Void {
+		super();
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<Int> {
 		var event:Dynamic = getEvent(nativeEvent);

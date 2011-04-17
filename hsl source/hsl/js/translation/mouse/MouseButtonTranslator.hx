@@ -40,6 +40,7 @@ class MouseButtonTranslator extends JSTranslatorBase, implements Translator<Mous
 	 * Creates a new modifier keys state translator.
 	 */
 	public function new():Void {
+		super();
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<MouseButton> {
 		var event:Dynamic = getEvent(nativeEvent);

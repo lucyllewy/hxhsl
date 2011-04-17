@@ -43,6 +43,7 @@ import js.Dom;
 	 * Creates a new mouse condition translator.
 	 */
 	public function new():Void {
+		super();
 	}
 	public function translate(nativeEvent:NativeEvent):Translation<MouseCondition> {
 		var event:Dynamic = getEvent(nativeEvent);
