@@ -1,5 +1,5 @@
 ﻿/**
- * Copyright (c) 2009-2010, The HSL Contributors.
+ * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
  *
