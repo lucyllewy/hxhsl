@@ -45,7 +45,7 @@ interface Signaler<Datatype> {
 	 * This property can be used for speed optimizations. If a signaler is not listened to, its subject does not have to
 	 * calculate a value if that value will only be sent in a signal.
 	 * 
-	 * In this example the "Ball" class only calculates the distance if a listener is added to the signaler:
+	 * In this example the ball only calculates the distance if a listener is added to the signaler:
 	 * <pre>
 	 * package;
 	 * import hsl.haxe.direct.DirectSignaler;

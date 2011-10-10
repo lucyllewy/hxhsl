@@ -36,7 +36,7 @@ package hsl.haxe;
  * 
  * Any class can act as a subject. Subjects can have any number of signalers.
  * 
- * In this example, the "buddy" variable (an instance of the "Dog" class) is a subject. The main class is a listener.
+ * In this example, buddy - an instance of the "Dog" class - is a subject. The main class is a listener.
  * <pre>
  * package;
  * import hsl.haxe.direct.DirectSignaler;

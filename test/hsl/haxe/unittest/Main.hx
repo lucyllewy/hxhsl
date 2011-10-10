@@ -20,6 +20,7 @@ class Main {
 		testRunner.add(new IllegalDispatchTestCase());
 		#end
 		testRunner.add(new StaticDispatchTestCase());
+		testRunner.add(new MergingSignalerTestCase());
 		testRunner.add(new TrackableTestCase());
 		#if !production
 		testRunner.add(new ReadOnlyTrackableTestCase());
