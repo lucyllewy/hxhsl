@@ -28,6 +28,7 @@ package hsl.avm2.translating;
 import flash.events.IEventDispatcher;
 import haxe.PosInfos;
 import hsl.avm2.translation.DatalessTranslator;
+import hsl.haxe.translation.NativeEvent;
 import hsl.haxe.translating.TranslatingSignalerBase;
 import hsl.haxe.translation.Translator;
 import hsl.haxe.Subject;
@@ -89,6 +90,9 @@ class AVM2Signaler<Datatype> extends TranslatingSignalerBase<Datatype> {
 	}
 	private function addInternalListener():Void {
 		nativeDispatcher.addEventListener(nativeEventType, dispatchNative);
+	}
+	private override function disturbNative(nativeEvent:NativeEvent):Void {
+		nativeEvent.stopImmediatePropagation();
 	}
 	private function removeInternalListener():Void {
 		nativeDispatcher.removeEventListener(nativeEventType, dispatchNative);

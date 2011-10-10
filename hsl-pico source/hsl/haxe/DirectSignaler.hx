@@ -34,6 +34,12 @@ import haxe.exception.Exception;
 class DirectSignaler<Datatype> implements Signaler<Datatype> {
 	private var bubblingTargets:List<Signaler<Datatype>>;
 	public var isListenedTo(getIsListenedTo, never):Bool;
+	/**
+	 * Whether the most recent signal propagated without being disturbed. So, whether stopPropagation and
+	 * stopImmediatePropagation were not called. Used by translating signalers to determine whether the native event should be
+	 * disturbed or not.
+	 */
+	private var mostRecentPropagationUndisturbed:Bool;
 	private var notificationTargets:List<Signaler<Void>>;
 	private var rejectNullData:Bool;
 	private var sentinel:SentinelBond<Datatype>;
@@ -155,7 +161,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		// Grab the origin.
 		origin = getOrigin(origin);
 		// Call all the listeners and bubble the signal, if propagation was not stopped.
-		if (PropagationStatus.UNDISTURBED == sentinel.callListener(data, subject, origin, PropagationStatus.UNDISTURBED)) {
+		if (mostRecentPropagationUndisturbed = PropagationStatus.UNDISTURBED == sentinel.callListener(data, subject, origin, PropagationStatus.UNDISTURBED)) {
 			bubble(data, origin);
 		}
 	}

@@ -25,6 +25,9 @@ class Main {
 		#if !production
 		testRunner.add(new ReadOnlyTrackableTestCase());
 		#end
+		#if flash9
+		testRunner.add(new hsl.avm2.unittest.StopPropagationTestCase());
+		#end
 		testRunner.run();
 	}
 }

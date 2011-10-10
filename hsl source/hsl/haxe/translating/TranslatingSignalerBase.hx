@@ -56,7 +56,14 @@ class TranslatingSignalerBase<Datatype> extends DirectSignaler<Datatype> {
 			throw new Exception("The translate method of the translator returned null, which is not allowed. It should return a translation with null values inside, instead.");
 		}
 		#end
+		// Dispatch the signal.
 		dispatch(translation.data, translation.origin);
+		// If the propagation of the signal above was disturbed, disturb the propagation of the original event as well.
+		if (false == mostRecentPropagationUndisturbed) {
+			disturbNative(nativeEvent);
+		}
+	}
+	private function disturbNative(nativeEvent:NativeEvent):Void {
 	}
 	/**
 	 * Stops translating translating and re-dispatching native events/signals. Translating signalers will likely add references
