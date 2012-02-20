@@ -66,6 +66,6 @@ class MouseLocationTranslator implements Translator<MouseLocation> {
 			#else
 			mouseEvent.target;
 			#end
-		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, new Point(target.stage.mouseX, target.stage.mouseY)), target);
+		return new Translation<MouseLocation>(new MouseLocation(mouseEvent.localX, mouseEvent.localY, new Point(mouseEvent.stageX, mouseEvent.stageY)), target);
 	}
 }
