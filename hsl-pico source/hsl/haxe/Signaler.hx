@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -66,7 +66,7 @@ interface Signaler<Datatype> {
 	 * }
 	 * </pre>
 	 */
-	public var isListenedTo(getIsListenedTo, null):Bool;
+	public var isListenedTo(get_isListenedTo, null):Bool;
 	/**
 	 * The subject this signaler belongs to.
 	 */
@@ -147,7 +147,7 @@ interface Signaler<Datatype> {
 	#else
 	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:haxe.PosInfos):Void;
 	#end
-	private function getIsListenedTo():Bool;
+	private function get_isListenedTo():Bool;
 	/**
 	 * Removes a bubbling target from the signaler. The signaler will stop bubbling to this bubbling target. If the signaler
 	 * does not have the passed value as a bubbling target, calling this method has no effect.

@@ -33,7 +33,7 @@ import hsl.haxe.Signaler;
  */
 class NullSignaler<Datatype> implements Signaler<Datatype> {
 	public var subject(default, null):Subject;
-	public var isListenedTo(getIsListenedTo, null):Bool;
+	public var isListenedTo(get_isListenedTo, null):Bool;
 	/**
 	 * Creates a new null signaler. The passed subject will be stored as the subject property of this signaler.
 	 */
@@ -60,7 +60,7 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 	public function dispatch(?data:Datatype, ?origin:Subject, ?positionInformation:haxe.PosInfos):Void {
 	}
 	#end
-	private function getIsListenedTo():Bool {
+	private function get_isListenedTo():Bool {
 		return false;
 	}
 	public function removeBubblingTarget(value:Signaler<Datatype>):Void {

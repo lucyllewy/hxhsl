@@ -34,7 +34,7 @@ import hsl.haxe.Signaler;
  */
 class DirectSignaler<Datatype> implements Signaler<Datatype> {
 	private var bubblingTargets:List<Signaler<Datatype>>;
-	public var isListenedTo(getIsListenedTo, never):Bool;
+	public var isListenedTo(get_isListenedTo, never):Bool;
 	/**
 	 * Whether the most recent signal propagated without being disturbed. So, whether stopPropagation and
 	 * stopImmediatePropagation were not called. Used by translating signalers to determine whether the native event should be
@@ -166,7 +166,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 			bubble(data, origin);
 		}
 	}
-	private function getIsListenedTo():Bool {
+	private function get_isListenedTo():Bool {
 		return sentinel.isConnected;
 	}
 	/**
@@ -283,7 +283,7 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
 	/**
 	 * Indicates whether this sentinel is connected to other bonds (true), or not (false).
 	 */
-	public var isConnected(getIsConnected, null):Bool;
+	public var isConnected(get_isConnected, null):Bool;
 	/**
 	 * Creates a new sentinel bond.
 	 */
@@ -311,7 +311,7 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
 	/**
 	 * Determines whether this sentinel is connected to other bonds (true), or not (false).
 	 */
-	private inline function getIsConnected():Bool {
+	private inline function get_isConnected():Bool {
 		// TODO: This type of equality check could be slower than nescessary in PHP as such checks might involve comparison of
 		// properties, rather than references. Some conditional compiling code here might speed things up for that target.
 		return next != this;

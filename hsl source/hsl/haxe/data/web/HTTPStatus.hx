@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -34,7 +34,7 @@ class HTTPStatus {
 	/**
 	 * The class of the HTTP status. The class is determined by the first digit of the HTTP status code.
 	 */
-	public var statusClass(getStatusClass, null):HTTPStatusClass;
+	public var statusClass(get_statusClass, null):HTTPStatusClass;
 	/**
 	 * The status code of the HTTP status.
 	 */
@@ -46,7 +46,7 @@ class HTTPStatus {
 		this.statusCode = statusCode;
 	}
 	// We're using a getter here, because we expect this property will not be accessed often.
-	private inline function getStatusClass():HTTPStatusClass {
+	private inline function get_statusClass():HTTPStatusClass {
 		switch (Math.floor(statusCode * .01)) {
 			case 1:
 			return HTTPStatusClass.informational;

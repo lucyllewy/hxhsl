@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -40,7 +40,7 @@ class Exception {
 	 * The initial exception that triggered the chain of exceptions resulting in this exception to be thrown. If this exception
 	 * does not have any inner exceptions, this property is equal to this exception.
 	 */
-	public var baseException(getBaseException, null):Exception;
+	public var baseException(get_baseException, null):Exception;
 	/**
 	 * The exception that was thrown causing this exception to be thrown. If this exception does not have any inner exceptions,
 	 * this property is null.
@@ -92,7 +92,7 @@ class Exception {
 	/**
 	 * Gets the base exception of this one.
 	 */
-	private inline function getBaseException():Exception {
+	private inline function get_baseException():Exception {
 		var result:Exception = this;
 		while (null != result.innerException) {
 			result = result.innerException;

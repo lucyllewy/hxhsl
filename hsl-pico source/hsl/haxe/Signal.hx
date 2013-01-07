@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -108,7 +108,7 @@ class Signal<Datatype> {
 	/**
 	 * Deprecated. Equal to the data property.
 	 */
-	public var data1(getData, null):Datatype;
+	public var data1(get_data1, null):Datatype;
 	/**
 	 * Indicates whether stopImmediatePropagation method was called on this signal (true) or not (false).
 	 */
@@ -145,7 +145,7 @@ class Signal<Datatype> {
 		propagationStopped = false;
 		#end
 	}
-	private inline function getData():Datatype {
+	private inline function get_data1():Datatype {
 		return data;
 	}
 	/**
