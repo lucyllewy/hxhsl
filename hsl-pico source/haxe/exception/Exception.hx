@@ -25,7 +25,12 @@
  * this software.
  */
 package haxe.exception;
+
+#if haxe_211
+import haxe.CallStack;
+#else
 import haxe.Stack;
+#end
 
 /**
  * General base class for exceptions.
