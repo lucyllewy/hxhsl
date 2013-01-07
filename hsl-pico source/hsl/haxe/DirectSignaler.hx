@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -27,6 +27,7 @@
 package hsl.haxe;
 import haxe.exception.ArgumentNullException;
 import haxe.exception.Exception;
+import hsl.haxe.Signaler;
 
 /**
  * A signaler that dispatches signals directly.
@@ -79,7 +80,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		}
 		notificationTargets.add(value);
 	}
-	public function bind(listener:Datatype -> Dynamic):Bond {
+	public function bind(listener:Datatype -> IgnoredReturnType):Bond {
 		#if !production
 		// If the passed listener is null, throw an exception. Having null for a listener will produce errors when the listener
 		// is called.
@@ -89,7 +90,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		#end
 		return sentinel.add(new RegularBond(listener));
 	}
-	public function bindAdvanced(listener:Signal<Datatype> -> Dynamic):Bond {
+	public function bindAdvanced(listener:Signal<Datatype> -> IgnoredReturnType):Bond {
 		#if !production
 		// If the passed listener is null, throw an exception. Having null for a listener will produce errors when the listener
 		// is called.
@@ -99,7 +100,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		#end
 		return sentinel.add(new AdvancedBond<Datatype>(listener));
 	}
-	public function bindVoid(listener:Void -> Dynamic):Bond {
+	public function bindVoid(listener:Void -> IgnoredReturnType):Bond {
 		#if !production
 		// If the passed listener is null, throw an exception. Having null for a listener will produce errors when the listener
 		// is called.
@@ -131,7 +132,7 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		// As the automagic position information cannot be used in AS3, use the stacktrace to grab the position information. The
 		// following code could be faster, as Stack.callStack() is more expensive than it could be.
 		var positionInformation:haxe.PosInfos = null;
-		for (stackItem in haxe.Stack.callStack().slice(1)) {
+		for (stackItem in haxe #if haxe_211 .CallStack #else .Stack #end .callStack().slice(1)) {
 			switch (stackItem) {
 				case FilePos(innerStackItem, fileName, line):
 				switch (innerStackItem) {
@@ -218,13 +219,13 @@ class DirectSignaler<Datatype> implements Signaler<Datatype> {
 		return "[Signaler isListenedTo=" + isListenedTo + "]";
 	}
 	#end
-	public function unbind(listener:Datatype -> Dynamic):Void {
+	public function unbind(listener:Datatype -> IgnoredReturnType):Void {
 		sentinel.remove(new RegularBond(listener));
 	}
-	public function unbindAdvanced(listener:Signal<Datatype> -> Dynamic):Void {
+	public function unbindAdvanced(listener:Signal<Datatype> -> IgnoredReturnType):Void {
 		sentinel.remove(new AdvancedBond<Datatype>(listener));
 	}
-	public function unbindVoid(listener:Void -> Dynamic):Void {
+	public function unbindVoid(listener:Void -> IgnoredReturnType):Void {
 		sentinel.remove(new NiladicBond<Datatype>(listener));
 	}
 }
@@ -335,8 +336,8 @@ private class SentinelBond<Datatype> extends LinkedBond<Datatype> {
  * A regular bond is a bond that is created in result of a call to the bind method.
  */
 private class RegularBond<Datatype> extends LinkedBond<Datatype> {
-	private var listener:Datatype -> Void;
-	public function new(listener:Datatype -> Void):Void {
+	private var listener:Datatype -> IgnoredReturnType;
+	public function new(listener:Datatype -> IgnoredReturnType):Void {
 		super();
 		this.listener = listener;
 	}
@@ -364,11 +365,11 @@ private class RegularBond<Datatype> extends LinkedBond<Datatype> {
  * A niladic bond is a bond that is created in result of a call to the bindVoid method.
  */
 private class NiladicBond<Datatype> extends LinkedBond<Datatype> {
-	private var listener:Void -> Void;
+	private var listener:Void -> IgnoredReturnType;
 	/**
 	 * Creates a new niladic bond.
 	 */
-	public function new(listener:Void -> Void):Void {
+	public function new(listener:Void -> IgnoredReturnType):Void {
 		super();
 		this.listener = listener;
 	}
@@ -396,11 +397,11 @@ private class NiladicBond<Datatype> extends LinkedBond<Datatype> {
  * An advanced bond is a bond that is created in result of a call to the bindAdvanced method.
  */
 private class AdvancedBond<Datatype> extends LinkedBond<Datatype> {
-	private var listener:Signal<Datatype> -> Void;
+	private var listener:Signal<Datatype> -> IgnoredReturnType;
 	/**
 	 * Creates a new advanced bond.
 	 */
-	public function new(listener:Signal<Datatype> -> Void):Void {
+	public function new(listener:Signal<Datatype> -> IgnoredReturnType):Void {
 		super();
 		this.listener = listener;
 	}

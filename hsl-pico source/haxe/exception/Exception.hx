@@ -81,7 +81,7 @@ class Exception {
 	 */
 	private inline function generateStackTrace(numberOfStackTraceShifts) {
 		// Shift off the number of stack trace shifts defined in the constructor, plus one for the constructor of this class.
-		stackTraceArray = Stack.callStack().slice(numberOfStackTraceShifts + 1);
+		stackTraceArray = #if haxe_211 CallStack #else Stack #end .callStack().slice(numberOfStackTraceShifts + 1);
 		// Shift off any constructor calls of s-ubclasses of this one.
 		var exceptionClass:Class<Dynamic> = Type.getClass(this);
 		while (Exception != exceptionClass) {
@@ -100,6 +100,6 @@ class Exception {
 		return result;
 	}
 	private function toString():String {
-		return message + Stack.toString(stackTraceArray);
+		return message + #if haxe_211 CallStack #else Stack #end .toString(stackTraceArray);
 	}
 }

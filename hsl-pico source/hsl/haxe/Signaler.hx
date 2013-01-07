@@ -25,6 +25,8 @@
  * this software.
  */
 package hsl.haxe;
+ 
+typedef IgnoredReturnType = #if haxe_211 Void #else Dynamic #end;
 
 /**
  * A signalers is a tool, used by a subject to notify its environment (listeners). Subjects create their signalers, usually in
@@ -102,7 +104,7 @@ interface Signaler<Datatype> {
 	 * system, though the bindAdvanced method of this library has more similarities to addEventListener.
 	 * </li></ul>
 	 */
-	public function bind(listener:Datatype -> Dynamic):Bond;
+	public function bind(listener:Datatype -> IgnoredReturnType):Bond;
 	/**
 	 * Binds this signaler to a listener function that accepts a signal, and returns nothing. Returns the bond between the
 	 * signaler. The bond can be removed by calling either the unbindAdvanced method of the signaler, or the destroy method of
@@ -118,7 +120,7 @@ interface Signaler<Datatype> {
 	 * system.
 	 * </li></ul>
 	 */
-	public function bindAdvanced(listener:Signal<Datatype> -> Dynamic):Bond;
+	public function bindAdvanced(listener:Signal<Datatype> -> IgnoredReturnType):Bond;
 	/**
 	 * Binds this signaler to a listener function that accepts nothing, and returns nothing. Returns the bond between the
 	 * signaler. The bond can be removed by calling either the unbindVoid method of the signaler, or the destroy method of the
@@ -134,7 +136,7 @@ interface Signaler<Datatype> {
 	 * system, though the bindAdvanced method of this library has more similarities to addEventListener.
 	 * </li></ul>
 	 */
-	public function bindVoid(listener:Void -> Dynamic):Bond;
+	public function bindVoid(listener:Void -> IgnoredReturnType):Bond;
 	/**
 	 * Dispatches a signal, containing the passed data. All the listeners that are listening to this signaler will be notified.
 	 * The signal will bubble to all of the bubbling targets that were added to this signaler. This method may only be called
@@ -159,13 +161,13 @@ interface Signaler<Datatype> {
 	/**
 	 * Removed the bond between this signaler and a listener. If such bond does not exist, calling this method has no effect.
 	 */
-	public function unbind(listener:Datatype -> Dynamic):Void;
+	public function unbind(listener:Datatype -> IgnoredReturnType):Void;
 	/**
 	 * Removed the bond between this signaler and a listener. If such bond does not exist, calling this method has no effect.
 	 */
-	public function unbindAdvanced(listener:Signal<Datatype> -> Dynamic):Void;
+	public function unbindAdvanced(listener:Signal<Datatype> -> IgnoredReturnType):Void;
 	/**
 	 * Removed the bond between this signaler and a listener. If such bond does not exist, calling this method has no effect.
 	 */
-	public function unbindVoid(listener:Void -> Dynamic):Void;
+	public function unbindVoid(listener:Void -> IgnoredReturnType):Void;
 }

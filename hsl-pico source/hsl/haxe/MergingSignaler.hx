@@ -91,7 +91,7 @@ class MergingSignaler<Datatype> extends DirectSignaler<Datatype> {
 		// As the automagic position information cannot be used in AS3, use the stacktrace to grab the position information. The
 		// following code could be faster, as Stack.callStack() is more expensive than it could be.
 		var positionInformation:haxe.PosInfos = null;
-		for (stackItem in haxe.Stack.callStack().slice(1)) {
+		for (stackItem in haxe #if haxe_211 .CallStack #else .Stack #end .callStack().slice(1)) {
 			switch (stackItem) {
 				case FilePos(innerStackItem, fileName, line):
 				switch (innerStackItem) {

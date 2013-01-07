@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -91,7 +91,7 @@ class ReadOnlyTrackable<Datatype> {
 		#if !production
 		#if as3
 		var positionInformation:PosInfos = null;
-		for (stackItem in Stack.callStack().slice(1)) {
+		for (stackItem in haxe. #if haxe_211 .CallStack #else .Stack #end .callStack().slice(1)) {
 			switch (stackItem) {
 				case FilePos(innerStackItem, fileName, line):
 				switch (innerStackItem) {

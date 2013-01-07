@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright (c) 2009-2011, The HSL Contributors.
  *
  * This file is part of HSL. HSL, pronounced "hustle", stands for haXe Signaling Library.
@@ -25,6 +25,7 @@
  * this software.
  */
 package hsl.haxe;
+import hsl.haxe.Signaler;
 
 /**
  * This class is a null object implementation of the signaler interface. See
@@ -43,13 +44,13 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 	}
 	public function addNotificationTarget(value:Signaler<Void>):Void {
 	}
-	public function bind(listener:Datatype -> Dynamic):Bond {
+	public function bind(listener:Datatype -> IgnoredReturnType):Bond {
 		return new Bond();
 	}
-	public function bindAdvanced(listener:Signal<Datatype> -> Dynamic):Bond {
+	public function bindAdvanced(listener:Signal<Datatype> -> IgnoredReturnType):Bond {
 		return new Bond();
 	}
-	public function bindVoid(listener:Void -> Dynamic):Bond {
+	public function bindVoid(listener:Void -> IgnoredReturnType):Bond {
 		return new Bond();
 	}
 	#if (as3 || production)
@@ -71,10 +72,10 @@ class NullSignaler<Datatype> implements Signaler<Datatype> {
 		return "[Signaler isListenedTo=false]";
 	}
 	#end
-	public function unbind(listener:Datatype -> Dynamic):Void {
+	public function unbind(listener:Datatype -> IgnoredReturnType):Void {
 	}
-	public function unbindAdvanced(listener:Signal<Datatype> -> Dynamic):Void {
+	public function unbindAdvanced(listener:Signal<Datatype> -> IgnoredReturnType):Void {
 	}
-	public function unbindVoid(listener:Void -> Dynamic):Void {
+	public function unbindVoid(listener:Void -> IgnoredReturnType):Void {
 	}
 }
